@@ -2,6 +2,8 @@ package com.booking.model.slot;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +25,8 @@ import com.booking.model.user.ClubUser;
 @Table(name="CLUB_SLOT_BOOKING")
 @NamedQuery(name="ClubSlotBooking.findAll", query="SELECT o FROM ClubSlotBooking o")
 public class ClubSlotBooking implements Serializable {
+
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -31,6 +35,41 @@ public class ClubSlotBooking implements Serializable {
 	private Integer bookingId;
 	
 	
+	@Column(name="booking_Status")
+	private String bookingStatus;
+	
+	
+	public Integer getPrimaryBookingId() {
+		return primaryBookingId;
+	}
+
+	public void setPrimaryBookingId(Integer primaryBookingId) {
+		this.primaryBookingId = primaryBookingId;
+	}
+
+	@Column(name="PLAYER_COUNT")
+	private Integer playerCount;
+	
+	
+	@Column(name="PRIMARY_BOOKING_ID")
+	private Integer primaryBookingId;
+	
+	public String getBookingStatus() {
+		return bookingStatus;
+	}
+
+	public void setBookingStatus(String bookingStatus) {
+		this.bookingStatus = bookingStatus;
+	}
+
+	public Integer getPlayerCount() {
+		return playerCount;
+	}
+
+	public void setPlayerCount(Integer playerCount) {
+		this.playerCount = playerCount;
+	}
+
 	public ClubSlot getClubSlot() {
 		return clubSlot;
 	}
@@ -55,8 +94,37 @@ public class ClubSlotBooking implements Serializable {
 		this.clubUser = clubUser;
 	}
 
+	
+	
+
+	public Date getSlotDate() {
+		return slotDate;
+	}
+
+	public void setSlotDate(Date slotDate) {
+		this.slotDate = slotDate;
+	}
+
+	@Column(name="slot_date")
+	private Date slotDate;
+	
+	
+
+
 	@Transient
 	private ClubUser clubUser;
+	
+	
+	public List<UserBooking> getUserBooking() {
+		return userBooking;
+	}
+
+	public void setUserBooking(List<UserBooking> userBooking) {
+		this.userBooking = userBooking;
+	}
+
+	@Transient
+	private List<UserBooking> userBooking;
 
 
 	@Column(name="created_by")
@@ -144,6 +212,7 @@ public class ClubSlotBooking implements Serializable {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
 
 
 

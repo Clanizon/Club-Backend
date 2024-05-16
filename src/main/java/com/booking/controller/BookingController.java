@@ -38,7 +38,75 @@ public class BookingController {
 	@RequestMapping(value = "/listuserbooking", method = RequestMethod.POST)
 	public Object listuserbooking(@RequestBody ClubSlotBooking clubSlot) {
 
-		return bookingservice.findByUserId(clubSlot.getUserId());
+		return bookingservice.findByUserBooking(clubSlot.getUserId());
+		// return bookingservice.findAll();
+
+	}
+	
+	@RequestMapping(value = "/listuserbybookingid", method = RequestMethod.POST)
+	public Object listuserbybookingid(@RequestBody ClubSlotBooking clubSlot) {
+
+		return bookingservice.findByBookingId(clubSlot.getBookingId());
+		// return bookingservice.findAll();
+
+	}
+	
+	@RequestMapping(value = "/listbookingbyslotdate", method = RequestMethod.POST)
+	public Object listbookingbyslotdate(@RequestBody ClubSlotBooking clubSlot) {
+
+		return bookingservice.findBySlotDate(clubSlot.getSlotDate());
+		// return bookingservice.findAll();
+
+	}
+	
+	
+	@RequestMapping(value = "/listactivebooking", method = RequestMethod.POST)
+	public Object listActiveBooking(@RequestBody ClubSlotBooking clubSlot) {
+
+		return bookingservice.listActiveBooking(clubSlot.getSlotDate());
+		// return bookingservice.findAll();
+
+	}
+	
+	@RequestMapping(value = "/listuserbookingnew", method = RequestMethod.POST)
+	public Object listuserbookingnew(@RequestBody ClubSlotBooking clubSlot) {
+
+		return bookingservice.findByUserBooking(clubSlot.getUserId());
+		// return bookingservice.findAll();
+
+	}
+	
+	@RequestMapping(value = "/deletebooking", method = RequestMethod.POST)
+	public Object deletebooking(@RequestBody ClubSlotBooking clubSlot) {
+
+		return bookingservice.deleteBooking(clubSlot);
+		// return bookingservice.findAll();
+
+	}
+	
+	
+	@RequestMapping(value = "/updateBooking", method = RequestMethod.POST)
+	public Object updateBooking(@RequestBody ClubSlotBooking clubSlot) {
+
+		return bookingservice.updateBooking(clubSlot);
+		// return bookingservice.findAll();
+
+	}
+	
+	
+
+	@RequestMapping(value = "/bookingupdate", method = RequestMethod.POST)
+	public Object approveBooking(@RequestBody ClubSlotBooking clubSlot) {
+
+		return bookingservice.handleApproval(clubSlot);
+		// return bookingservice.findAll();
+
+	}
+	
+	@RequestMapping(value = "/listapprovallist", method = RequestMethod.POST)
+	public Object listapprovallist(@RequestBody ClubSlotBooking clubSlot) {
+
+		return bookingservice.listapprovallist(clubSlot);
 		// return bookingservice.findAll();
 
 	}

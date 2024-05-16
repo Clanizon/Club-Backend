@@ -1,6 +1,7 @@
 package com.booking.model.slot;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -19,7 +20,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name="CLUB_SLOT")
-@NamedQuery(name="ClubSlot.findAll", query="SELECT o FROM ClubSlot o")
+
 public class ClubSlot implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -30,11 +31,25 @@ public class ClubSlot implements Serializable {
 
 
 	
+	@Column(name="primary_booking_id")
+	private Integer primaryBookingId;
     
 
 
 	public Integer getSlotId() {
 		return slotId;
+	}
+
+
+
+	public Integer getPrimaryBookingId() {
+		return primaryBookingId;
+	}
+
+
+
+	public void setPrimaryBookingId(Integer primaryBookingId) {
+		this.primaryBookingId = primaryBookingId;
 	}
 
 
@@ -61,7 +76,16 @@ public class ClubSlot implements Serializable {
 		return createdDate;
 	}
 	
+	@Column(name="PLAYER_COUNT")
+	private Integer playerCount;
 	
+	public Integer getPlayerCount() {
+		return playerCount;
+	}
+
+	public void setPlayerCount(Integer playerCount) {
+		this.playerCount = playerCount;
+	}
    
 
 
@@ -72,20 +96,36 @@ public class ClubSlot implements Serializable {
 
 
 
-	public Timestamp getSlotDate() {
-		return slotDate;
-	}
-
-
-
-	public void setSlotDate(Timestamp slotDate) {
-		this.slotDate = slotDate;
-	}
 
 
 
 	public Timestamp getSlotStartTimeStamp() {
 		return slotStartTimeStamp;
+	}
+
+
+	
+	public String getSlotStarted() {
+		return slotStarted;
+	}
+
+
+
+	public void setSlotStarted(String slotStarted) {
+		this.slotStarted = slotStarted;
+	}
+
+	@Transient
+	String slotStarted;
+
+	public Date getSlotDate() {
+		return slotDate;
+	}
+
+
+
+	public void setSlotDate(Date slotDate) {
+		this.slotDate = slotDate;
 	}
 
 
@@ -202,7 +242,7 @@ public class ClubSlot implements Serializable {
 	private Timestamp createdDate;
 	
 	@Column(name="slot_date")
-	private Timestamp slotDate;
+	private Date slotDate;
 
 	
 	@Column(name="SlOT_START_TIMESTMP")
@@ -217,7 +257,33 @@ public class ClubSlot implements Serializable {
 	@Column(name="SLOT_STATUS")
 	private String slotStatus;
 	
+	@Column(name="TEE_TIME")
+	private String teeTime;
 	
+    public String getTeeTime() {
+		return teeTime;
+	}
+
+
+
+	public void setTeeTime(String teeTime) {
+		this.teeTime = teeTime;
+	}
+
+	@Transient	
+	private String bookingMessage;
+	
+	
+	public String getBookingMessage() {
+		return bookingMessage;
+	}
+
+
+
+	public void setBookingMessage(String bookingMessage) {
+		this.bookingMessage = bookingMessage;
+	}
+
 	@Column(name="SLOT_AVAILABLE")
 	private String slotAvailable;
 

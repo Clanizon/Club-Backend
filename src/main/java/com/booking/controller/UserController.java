@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.booking.config.TokenProvider;
+import com.booking.dao.ClubConfigDao;
+import com.booking.model.slot.UserBooking;
+import com.booking.model.user.ClubConfig;
 import com.booking.model.user.ClubUser;
 import com.booking.model.user.LoginUser;
 import com.booking.model.user.UserDto;
@@ -37,6 +40,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private ClubConfigDao clubConfigDao;
     
   
 
@@ -78,6 +84,12 @@ public class UserController {
     @RequestMapping(value = "/listuser", method = RequestMethod.POST)
     public Object listuser(@RequestBody OTPModel user) throws AuthenticationException {
     	return userService.findAll();
+    	
+    }
+    
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public Object deleteuser(@RequestBody UserDto user) throws AuthenticationException {
+    	return userService.deleteuser(user.getUserId());
     	
     }
     @RequestMapping(value = "/sendOTP", method = RequestMethod.POST)
@@ -136,11 +148,44 @@ public class UserController {
     	}
     }
     
+    @RequestMapping(value="/updateprofile", method = RequestMethod.POST)
+    public Object updateprofile(@RequestBody UserDto user){
+    	try {
+        return userService.updateProfile(user);
+        }
+    	catch(Exception e) {
+    		return e;
+    	}
+    }
+    
+    
+    
+    
+    @RequestMapping(value="/listuserbookingbydate", method = RequestMethod.POST)
+    public Object listuserbookingbydate(@RequestBody UserBooking user){
+    	try {
+        return userService.listByUserAndDate(user);
+        }
+    	catch(Exception e) {
+    		return e;
+    	}
+    }
+    
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
     public Object saveUser(@RequestBody UserDto user){
     	try {
         return userService.checkandsave(user);
+        }
+    	catch(Exception e) {
+    		return e;
+    	}
+    }
+    
+    @RequestMapping(value="/fetchconfig", method = RequestMethod.POST)
+    public Object fetchconfig(@RequestBody ClubConfig config){
+    	try {
+        return clubConfigDao.findByKey(config.getKey());
         }
     	catch(Exception e) {
     		return e;

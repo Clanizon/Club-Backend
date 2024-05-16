@@ -1,11 +1,13 @@
 package com.booking.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,9 +29,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.booking.dao.UserDao;
+import com.booking.model.SlotBooked;
+import com.booking.model.slot.UserBooking;
 import com.booking.model.user.ClubUser;
+import com.booking.model.user.MetaData;
 import com.booking.model.user.Roles;
 import com.booking.model.user.UserDto;
+import com.booking.dao.UserBookingDao;
 import com.booking.service.RoleService;
 import com.booking.service.UserService;
 import com.booking.uimodel.UIResponse;
@@ -42,6 +48,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UserDao userDao;
+    
+    
+    @Autowired
+    private UserBookingDao userBookingDao;
     
 
 
@@ -93,14 +103,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public ResponseEntity<UIResponse> checkandsave(UserDto user) {
     	UIResponse uiResponse = new UIResponse();
-    	if( userDao.findByUserMobileOrUserEmail(user.getUserMobile(), user.getUserEmail()) !=null) {
-    		uiResponse.setStatus("FAILURE");
-    		Map<String,String> respone= new HashMap<String, String>();
-    		respone.put("response", "User Mobile or Email id Already Exists");
-    		uiResponse.setResponse(respone);
-    		return new ResponseEntity<>(uiResponse, HttpStatus.OK);
-    	}
-    	else {
+		/*
+		 * if( userDao.findByUserMobileOrUserEmail(user.getUserMobile(),
+		 * user.getUserEmail()) !=null) { uiResponse.setStatus("FAILURE");
+		 * Map<String,String> respone= new HashMap<String, String>();
+		 * respone.put("response", "User Mobile or Email id Already Exists");
+		 * uiResponse.setResponse(respone); return new ResponseEntity<>(uiResponse,
+		 * HttpStatus.OK); }
+		 */
+    //	else {
     	
     
     	user.setUserPassword(bcryptEncoder.encode(user.getUserPassword()));
@@ -115,14 +126,19 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		uiResponse.setResponse(userDao.save(convertToEntity(user)));
 		return new ResponseEntity<>(uiResponse, HttpStatus.OK);
     	}
-    	}
+    	//}
 
 
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<ClubUser> findAll() {
+	public List<MetaData> findAll() {
 		// TODO Auto-generated method stub
-		return (List<ClubUser>) userDao.findAll();
+		 List<MetaData> clubuserList= userDao.findAllUserList();
+		 
+		
+		 
+		 return clubuserList;
 	};
 	
 	
@@ -172,7 +188,46 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	@Override
 	public Object updatePassword(UserDto user) {
 		user.setUserPassword(bcryptEncoder.encode(user.getUserPassword()));
+		
 		return userDao.updatePassword(user.getUserMobile(),user.getUserPassword());
+	}
+	
+	
+
+	@Override
+	public Object deleteuser(Integer userId) {
+		// TODO Auto-generated method stub
+		return userDao.deleteByUserId(userId);
+	}
+
+	@Override
+	public ResponseEntity<UIResponse> listByUserAndDate(UserBooking user) {
+		SlotBooked SlotBooked;
+		
+		UIResponse uiResponse = new UIResponse();
+		
+		// TODO Auto-generated method stub
+		 SlotBooked = userBookingDao.findByUserIdSlotDate(user.getUserId(),user.getSlotDate());
+		 if(SlotBooked.getSlotBooked().equals(0)) {
+			 uiResponse.setStatus("SUCCESS");
+			 uiResponse.setResponse(SlotBooked.getSlotBooked());
+		 }else {
+			 uiResponse.setStatus("FAILURE");
+			 uiResponse.setResponse(SlotBooked.getSlotBooked());
+		 }
+		 
+		 return new ResponseEntity<>(uiResponse, HttpStatus.OK); 
+	}
+
+	@Override
+	public ClubUser updateProfile(UserDto user) {
+		// TODO Auto-generated method stub
+		ClubUser dbuser = userDao.findByUserId(user.getUserId());
+		dbuser.setUserFname(user.getUserFname());
+		dbuser.setUserFname(user.getUserFname());
+		dbuser.setUserLname(user.getUserLname());
+		dbuser.setUserMobile(user.getUserMobile());
+		 return userDao.save(dbuser);
 	}
 
 	

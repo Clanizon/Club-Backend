@@ -24,7 +24,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="CLUB_USER")
-@NamedQuery(name="ClubUser.findAll", query="SELECT o FROM ClubUser o")
 public class ClubUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -85,6 +84,37 @@ public class ClubUser implements Serializable {
 	@Column(name="MEMBERSHIP_TYPE")
 	private String membershipType;
 	
+	
+	@Column(name="MEMBERSHIP_NUMBER")
+	private String membershipNumber;
+	
+	public String getMembershipNumber() {
+		return membershipNumber;
+	}
+
+
+
+	public void setMembershipNumber(String membershipNumber) {
+		this.membershipNumber = membershipNumber;
+	}
+
+
+
+	@Column(name="FULL_NAME")
+	private String fullName;
+	
+
+	public String getFullName() {
+		return fullName;
+	}
+
+
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+
 
 	@Column(name="user_address")
 	private String userAddress;

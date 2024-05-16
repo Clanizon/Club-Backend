@@ -11,16 +11,55 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.booking.model.SlotBooked;
 import com.booking.model.slot.ClubSlot;
+import com.booking.model.slot.ClubSlotModel;
 
 
 @Repository
-public interface ClubSlotDao extends CrudRepository<ClubSlot, Long> {
+public interface ClubSlotDao extends CrudRepository<ClubSlot, Integer> {
 
 	List <ClubSlot> findBySlotDateBefore(Timestamp slotDate);
 	
 	List <ClubSlot> findBySlotDateBeforeAndSlotDateAfterAndSlotAvailable(Timestamp slotDate,Timestamp curDate,String slotAvailable);
+	List <ClubSlot> findBySlotStartTimeStampAfterOrderBySlotStartTimeStampAsc(Timestamp slotDate);
 	
+	
+	
+	 @Query(value = "UPDATE CLUB_SLOT set SECONDARY_BOOKING=:secondaryBooking , SLOT_STATUS = :slotStatus,primary_booking_id  =:primaryBookingId, PLAYER_COUNT =PLAYER_COUNT +:playerCount where SLOT_ID =:slotId",
+		     nativeQuery = true) 
+	 List <ClubSlot> findAdminSlot( String secondaryBooking,@Param("primaryBookingId") Integer primaryBookingId);
+			
+	
+	 
+			 @Query(value = " select cs.slot_id as slotId, cs.club_name as clubName, "
+			 		+ "cs.created_by as createdBy, cs.created_date as createdDate, cs.player_count as playerCount, "
+			 		+ "cs.primary_booking_id as primaryBookingId, cs.secondary_booking as secondaryBooking, cs.slot_available as "
+			 		+ "slotAvailable, cs.slot_date as slotDate, cs.slot_end_timestmp as slotEndTimestmp, cs.slot_start_timestmp as slotStartTimeStamp, "
+			 		+ "cs.slot_status as slotStatus, cs.tee_time as teeTime from club_slot cs where cs.slot_start_timestmp >:curDate order by cs.slot_start_timestmp asc\n",
+			 		
+		       nativeQuery = true)
+			 List <ClubSlotModel> findAdminSlot(Timestamp curDate);
+			 
+			 
+			 
+			 
+			 
+	 
+	
+	
+	List <ClubSlot> findBySlotStartTimeStampAfterAndSlotAvailableOrderBySlotStartTimeStampAsc(Timestamp curDate,String slotAvailable);
+	
+	
+	 @Query(value = " select cs.slot_id as slotId, cs.club_name as clubName, "
+		 		+ "cs.created_by as createdBy, cs.created_date as createdDate, cs.player_count as playerCount, "
+		 		+ "cs.primary_booking_id as primaryBookingId, cs.secondary_booking as secondaryBooking, cs.slot_available as "
+		 		+ "slotAvailable, cs.slot_date as slotDate, cs.slot_end_timestmp as slotEndTimestmp, cs.slot_start_timestmp as slotStartTimeStamp, "
+		 		+ "cs.slot_status as slotStatus, cs.tee_time as teeTime from club_slot cs where cs.slot_start_timestmp >=:curDate and cs.slot_end_timestmp <=:stop and cs.tee_time =:teeTime",
+		 		
+	       nativeQuery = true)
+		 List <ClubSlotModel> findBySlotStartTimeStampAfterAndSlotEndTimeStampBefore(Timestamp curDate,Timestamp stop,String teeTime);
+	//List <ClubSlot> findBySlotStartTimeStampAfterAndSlotEndTimeStampBefore(Timestamp start,Timestamp stop);
 	
 	ClubSlot findBySlotId(Integer slotId);
 	
@@ -28,17 +67,25 @@ public interface ClubSlotDao extends CrudRepository<ClubSlot, Long> {
 	 @Transactional
 	 @Modifying
 	 
-	 @Query(value = "UPDATE CLUB_SLOT set SLOT_STATUS = :slotStatus where SLOT_ID =:slotId",
-     nativeQuery = true)
+	 @Query(value = "UPDATE CLUB_SLOT set SECONDARY_BOOKING=:secondaryBooking , SLOT_STATUS = :slotStatus,primary_booking_id  =:primaryBookingId, PLAYER_COUNT =PLAYER_COUNT +:playerCount where SLOT_ID =:slotId",
+     nativeQuery = true) 
 	 int updateSlotStatus(@Param("slotStatus") String slotStatus,
-			 @Param("slotId") Integer slotId);
+			 @Param("slotId") Integer slotId, @Param("playerCount") Integer playerCount,@Param("secondaryBooking") String secondaryBooking,@Param("primaryBookingId") Integer primaryBookingId);
+	 
 	 
 	 
 	 @Transactional
 	 @Modifying
-	 @Query(value = "UPDATE CLUB_SLOT set SLOT_AVAILABLE = :slotAvailable where SLOT_DATE =cast(:slotDate AS timestamp)",
+	 @Query(value = "UPDATE CLUB_SLOT set SLOT_AVAILABLE = :slotAvailable where DATE(SLOT_DATE) = DATE(:slotDate);",
 		     nativeQuery = true)
 			 int updateSlotAvailability(@Param("slotAvailable") String slotAvailable,
 					 @Param("slotDate") String slotDate);
+	 
+	 
+	 @Transactional
+	 @Modifying
+	 @Query(value = "Delete from club_slot cs where cs.slot_start_timestmp >=:curDate and cs.slot_start_timestmp <=:stop and cs.tee_time =:teeTime",
+		     nativeQuery = true)
+			 int deleteslot(@Param("curDate") Timestamp curDate,@Param("stop") Timestamp stop,@Param("teeTime") String teeTime);
 	
 }

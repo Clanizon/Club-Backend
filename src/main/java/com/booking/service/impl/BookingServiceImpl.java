@@ -1,6 +1,11 @@
 package com.booking.service.impl;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,9 +15,11 @@ import org.springframework.stereotype.Service;
 
 import com.booking.dao.ClubSlotBookingDao;
 import com.booking.dao.ClubSlotDao;
+import com.booking.dao.UserBookingDao;
 import com.booking.dao.UserDao;
 import com.booking.model.slot.ClubSlot;
 import com.booking.model.slot.ClubSlotBooking;
+import com.booking.model.slot.UserBooking;
 import com.booking.model.user.ClubUser;
 import com.booking.service.BookingService;
 import com.booking.uimodel.UIResponse;
@@ -36,25 +43,48 @@ public class BookingServiceImpl implements BookingService {
 	  
 	  @Autowired
 	  private UserDao userDao;
+	  
+	  @Autowired
+	  private UserBookingDao userbookDao;
 
  
 
    
 
+		@SuppressWarnings("unused")
 		@Override
 		public Object save(ClubSlotBooking clubSlotBooking) {
 			// TODO Auto-generated method stub
 			ClubSlotBooking newbooking = new ClubSlotBooking();
 			UIResponse uiResponse = new UIResponse();
 			ClubSlot clubSlot = slotDao.findBySlotId(clubSlotBooking.getSlotId());
+			
+			List<UserBooking> userList= new ArrayList<UserBooking>();
 			if (clubSlot != null)
 			{
+				clubSlotBooking.setSlotDate(clubSlot.getSlotDate());
 								if(clubSlot.getSlotStatus().equals("Created")) {
 									    if(clubSlotBooking.getBookingType().equals("Primary"))
 									    {
 													newbooking = slotBookingDao.save(clubSlotBooking);
-													slotDao.updateSlotStatus("Primary Booked", clubSlotBooking.getSlotId());
+													int id=newbooking.getBookingId();
 													
+													if(newbooking!= null ) {
+														newbooking.getUserBooking().forEach(user->{
+															user.setBookingId(id);
+														
+															userList.add(user);
+															
+														});
+														userbookDao.saveAll(userList);
+													}
+													if(clubSlotBooking.getPlayerCount().equals(4) || clubSlotBooking.getSecondaryBooking().equals("N")) {
+														slotDao.updateSlotStatus("Secondary Booked", clubSlotBooking.getSlotId(),clubSlotBooking.getPlayerCount(),clubSlotBooking.getSecondaryBooking(),clubSlotBooking.getPrimaryBookingId());
+													}else {
+														slotDao.updateSlotStatus("Primary Booked", clubSlotBooking.getSlotId(),clubSlotBooking.getPlayerCount(),clubSlotBooking.getSecondaryBooking(),clubSlotBooking.getPrimaryBookingId());
+
+													}
+													newbooking.setClubSlot(clubSlot);
 											    	uiResponse.setStatus("SUCCESS");
 											    	uiResponse.setStatusMessage("Primary Booking Created Successfuly");
 											    	uiResponse.setResponse(newbooking);
@@ -67,8 +97,23 @@ public class BookingServiceImpl implements BookingService {
 						     }else if(clubSlot.getSlotStatus().equals("Primary Booked")){
 						    	 if(clubSlotBooking.getBookingType().equals("Secondary"))
 								    {
+
 												newbooking = slotBookingDao.save(clubSlotBooking);
-												slotDao.updateSlotStatus("Secondary Booked", clubSlotBooking.getSlotId());
+												int id=newbooking.getBookingId();
+												if(newbooking!= null ) {
+													newbooking.getUserBooking().forEach(user->{
+														user.setBookingId(id);
+													
+														userList.add(user);
+														
+													});
+													userbookDao.saveAll(userList);
+												}
+												
+												if(newbooking.getSlotId()!=null) {
+													newbooking.setClubSlot(clubSlot);
+												}
+												slotDao.updateSlotStatus("Secondary Booked", clubSlotBooking.getSlotId(),clubSlotBooking.getPlayerCount(),"N",clubSlotBooking.getPrimaryBookingId());
 												
 										    	uiResponse.setStatus("SUCCESS");
 										    	uiResponse.setStatusMessage("Secondary Booking Created Successfuly");
@@ -114,7 +159,11 @@ public class BookingServiceImpl implements BookingService {
 					}
 
 				});
-			return slotBookingList;
+
+List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterlsit.getClubSlot()!=null)      
+                    .sorted(Comparator.comparing(fo->fo.getClubSlot().getSlotStartTimeStamp()))
+                    .collect(Collectors.toList());
+			return res;
 		}
 	
 	
@@ -134,6 +183,145 @@ public class BookingServiceImpl implements BookingService {
 			
 		});
 		return slotBookingList;
+	}
+	
+	@Override
+	public Object handleApproval(ClubSlotBooking booking) {
+		// TODO Auto-generated method stub
+		slotBookingDao.updateApprovalStatus(booking.getBookingStatus(),booking.getBookingId());
+		userbookDao.updateApprovalStatus(booking.getBookingStatus(),booking.getBookingId());
+		
+		if(booking!=null && booking.getBookingStatus().equals("Approved")) {
+			
+			
+		}else {
+			slotDao.updateSlotStatus("Primary Booked", booking.getSlotId(),-(booking.getPlayerCount()),booking.getSecondaryBooking(),booking.getPrimaryBookingId());
+		}
+		
+		return "Booking Approval Updated Successfully";
+		
+
+		
+	}
+	
+	
+	@Override
+	public List<UserBooking> findByUserBooking(Integer userId) {
+		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
+		List<UserBooking> slotBookingList =  userbookDao.findByUserId(userId);
+		if(slotBookingList!=null)
+		slotBookingList.forEach(slb->{
+			if(slb.getSlotId()!=null) {	
+				ClubSlot slotDetail = new ClubSlot();
+				slotDetail=slotDao.findBySlotId(slb.getSlotId());
+				System.out.println(slotDetail);
+				slb.setClubSlot(slotDetail);
+			}
+			
+			
+		});
+		return slotBookingList;
+	}
+
+
+
+
+	@Override
+	public List<ClubSlotBooking> findBySlotDate(Date slotDate) {
+		// TODO Auto-generated method stub
+		return slotBookingDao.findBySlotDate(slotDate);
+	}
+
+
+
+
+	@Override
+	public Object deleteBooking(ClubSlotBooking clubSlot) {
+		// TODO Auto-generated method stub
+		 slotBookingDao.updateApprovalStatus("Booking Cancelled",clubSlot.getBookingId());
+		userbookDao.updateApprovalStatus("Booking Cancelled",clubSlot.getBookingId());
+		if(clubSlot.getBookingType().equals("Secondary")){
+		slotDao.updateSlotStatus("Primary Booked", clubSlot.getSlotId(),-(clubSlot.getPlayerCount()),"Y",clubSlot.getBookingId());
+	    }else {
+	    	slotDao.updateSlotStatus("Created", clubSlot.getSlotId(),-(clubSlot.getPlayerCount()),"Y",clubSlot.getBookingId());
+	    }
+		return "Successfully Deleted";
+		
+	}
+
+
+
+
+	@Override
+	public Object listapprovallist(ClubSlotBooking clubSlot) {
+		// TODO Auto-generated method stub
+		
+		List<ClubSlotBooking> slotBookingList = slotBookingDao.findByPrimaryBookingIdAndBookingStatus(clubSlot.getUserId(),"Request for Approval");
+		if(slotBookingList!=null ) {
+			slotBookingList.forEach(slot->{
+				ClubSlot slotDetail = new ClubSlot();
+				slotDetail=slotDao.findBySlotId(slot.getSlotId());
+				System.out.println(slotDetail);
+				slot.setClubSlot(slotDetail);
+			});
+		}
+		
+		return slotBookingList;
+	}
+
+
+
+
+	@Override
+	public List<UserBooking> findByBookingId(Integer bookingid) {
+		// TODO Auto-generated method stub
+		return userbookDao.findByBookingId(bookingid);
+	}
+	
+
+	@Override
+	public List<UserBooking> updateBooking(ClubSlotBooking booking) {
+		// TODO Auto-generated method stub
+		slotBookingDao.save(booking);
+		List<UserBooking>  userList = new ArrayList<>();
+		if(booking.getBookingId()!=null) {
+			userbookDao.deleteByBookingId(booking.getBookingId());
+		}
+		booking.getUserBooking().forEach(user->{
+			
+				user.setBookingId(booking.getBookingId());
+			
+				userList.add(user);
+				
+	
+			
+		});
+		return (List<UserBooking>) userbookDao.saveAll(userList);
+	}
+
+
+
+
+	@Override
+	public Object listActiveBooking(Date slotDate) {
+		// TODO Auto-generated method stub
+		List<ClubSlotBooking> activeBookinglist  = new  ArrayList<>();
+		activeBookinglist= slotBookingDao.findBySlotDateAndBookingStatusNot(slotDate, "Booking Cancelled");
+		activeBookinglist.forEach(booking->{
+			ClubSlot slotDetail = new ClubSlot();
+			slotDetail=slotDao.findBySlotId(booking.getSlotId());
+			System.out.println(slotDetail);
+			booking.setClubSlot(slotDetail);
+		});
+		
+
+
+List<ClubSlotBooking> res = activeBookinglist.stream()             
+                    .sorted(Comparator.comparing(fo->fo.getClubSlot().getSlotStartTimeStamp()))
+                    .collect(Collectors.toList());		
+		return res;
+		  
 	}
 
 	
