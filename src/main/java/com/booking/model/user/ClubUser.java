@@ -39,8 +39,39 @@ public class ClubUser implements Serializable {
 	@Column(name="created_date")
 	private Timestamp createdDate;
 
+	public String getOtp() {
+		return otp;
+	}
+
+
+
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+
+
+
+	public Timestamp getOtpCreatedTime() {
+		return otpCreatedTime;
+	}
+
+
+
+	public void setOtpCreatedTime(Timestamp otpCreatedTime) {
+		this.otpCreatedTime = otpCreatedTime;
+	}
+
+
+
 	@Column(name="DOB")
 	private Timestamp dateofBirth;
+	
+	@Column(name="OTP")
+	private String otp;
+	
+	@Column(name="OTP_CREATED_TIME")
+	private Timestamp otpCreatedTime;
+	
 	
 	public Timestamp getDateofBirth() {
 		return dateofBirth;
@@ -300,7 +331,21 @@ public class ClubUser implements Serializable {
 	@Column(name="user_state")
 	private String userState;
 	
+	@Column(name="status")
+	private String status;
 	
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	    @JoinTable(name = "USER_ROLES",

@@ -17,6 +17,8 @@ import com.booking.model.user.MetaData;
 @Repository
 public interface UserDao extends CrudRepository<ClubUser, Long> {
 	ClubUser findByUserMobile(String usermobile);
+	String findByOtp(String otp);
+
 	ClubUser findByUserId(Integer userId);
 	
 	@Transactional

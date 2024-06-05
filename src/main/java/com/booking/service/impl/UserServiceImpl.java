@@ -1,14 +1,19 @@
 package com.booking.service.impl;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,6 +22,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
@@ -42,6 +49,7 @@ import com.booking.uimodel.UIResponse;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private RoleService roleService;
@@ -53,7 +61,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Autowired
     private UserBookingDao userBookingDao;
     
-
+   @Autowired
+   OtpServiceImpl otpServiceImpl;
 
 	 @PersistenceContext
 	 private EntityManager entityManager;
@@ -80,10 +89,47 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
  
     @Override
-    public ClubUser findOne(String username) {
-        return userDao.findByUserMobile(username);
+    public ClubUser findOne(String userMobile) {
+        ClubUser mobileNumber = userDao.findByUserMobile(userMobile);
+
+     
+        // Generate OTP
+        String token = otpServiceImpl.generateOtp(6);
+
+        // Set OTP to the found user
+        mobileNumber.setOtp(token);
+
+        // Save the updated user
+        userDao.save(mobileNumber);
+
+        // Send OTP via WhatsApp
+        otpServiceImpl.sendWhatsappMessage(userMobile, mobileNumber.getOtp());
+        logger.info("OTP sent successfully to {}", userMobile);
+        logger.info("OTP sent successfully to {}", mobileNumber.getUserMobile());
+        return mobileNumber;
     }
 
+//    @Override
+//    public ClubUser findOne(String userMobile) {
+////    	ClubUser user = new ClubUser();
+////    	
+////    	System.out.println(user.getUserMobile());
+////
+//   	ClubUser mobileNumber = userDao.findByUserMobile(userMobile);
+////    	
+//    	System.out.println(mobileNumber.getUserMobile());
+////		
+////    	String	token = otpServiceImpl.generateOtp(6);
+////		
+////    	user.setOtp(token);
+////    	
+////    int data =	otpServiceImpl.sendWhatsappMessage(userMobile, token);
+//    	
+//    	
+//    	
+//    	return mobileNumber;
+//    }
+    
     @Override
     public ClubUser save(UserDto user) {
     	
@@ -232,6 +278,5 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 	
 	
-
 	
 }
