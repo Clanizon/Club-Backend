@@ -3,6 +3,9 @@ package com.booking.model.user;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserDto {
     
@@ -258,6 +261,17 @@ public class UserDto {
 
 	@Column(name="user_state")
 	private String userState;
-  
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Transient
+	private String  otpNumber;
+	public String getOtpNumber() {
+		return otpNumber;
+	}
+
+
+
+	public void setOtpNumber(String otpNumber) {
+		this.otpNumber = otpNumber;
+	}
     
 }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.booking.config.TokenProvider;
 import com.booking.dao.ClubConfigDao;
+import com.booking.dao.UserDao;
 import com.booking.model.slot.UserBooking;
 import com.booking.model.user.ClubConfig;
 import com.booking.model.user.ClubUser;
@@ -26,6 +29,7 @@ import com.booking.model.user.UserDto;
 import com.booking.service.ApiHelper;
 import com.booking.service.UserService;
 import com.booking.uimodel.OTPModel;
+import com.booking.uimodel.UIResponse;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -39,7 +43,11 @@ public class UserController {
     private TokenProvider jwtTokenUtil;
 
     @Autowired
+    private UserDao userDao;
+    
+    @Autowired
     private UserService userService;
+  
     
     @Autowired
     private ClubConfigDao clubConfigDao;
@@ -115,9 +123,74 @@ public class UserController {
     	}
     	 else
 			 return "User not exist";
-        
-        
     }
+    
+    
+    @RequestMapping(value = "/forgetpassword", method = RequestMethod.POST)
+    public Object forgetPassword(@RequestBody ClubUser loginUser) {
+    	
+    	ClubUser user = userDao.findByUserMobileOrUserEmail(loginUser.getUserMobile(), loginUser.getUserEmail());
+    	UIResponse uiResponse = new UIResponse();
+   	 if(user!=null && user.getUserEmail()!=null) {
+   		 try {
+			userService.updateResetPasswordToken(user, loginUser.getUserEmail());
+			uiResponse.setResponse(user);
+			uiResponse.setStatus("SUCCESS");
+        	uiResponse.setStatusMessage("Valid User ");
+		} catch (Exception e) {
+			uiResponse.setStatus("Failure");
+        	uiResponse.setStatusMessage("In Valid User ");
+			e.printStackTrace();		}
+   	 }
+    	else if(user.getUserMobile()!=null) {
+    		userService.findOne(loginUser.getUserMobile());
+    		uiResponse.setStatus("SUCCESS");
+        	uiResponse.setStatusMessage("Valid User ");
+        }
+    	else {
+    		uiResponse.setStatus("Failure");
+        	uiResponse.setStatusMessage("In Valid User ");
+    	}
+            uiResponse.setResponse(user);
+    	
+    	return new ResponseEntity<>(uiResponse, HttpStatus.OK);
+    	
+    }
+    
+//    @RequestMapping(value = "/forgetpassword", method = RequestMethod.POST)
+//    public ResponseEntity<UIResponse> forgetPassword(@RequestBody ClubUser loginUser) {
+//        ClubUser user = userDao.findByUserMobileOrUserEmail(loginUser.getUserMobile(), loginUser.getUserEmail());
+//        UIResponse uiResponse = new UIResponse();
+//
+//        if (user != null) {
+//          
+//                if (user.getUserMobile() != null && !user.getUserMobile().isEmpty()) {
+//                    // Send OTP via WhatsApp
+//                     userService.findOne(user.getUserMobile());
+//                    
+//                        uiResponse.setStatus("SUCCESS");
+//                        uiResponse.setStatusMessage("OTP sent to mobile");
+//                    }
+//                 else if (user.getUserEmail() != null && !user.getUserEmail().isEmpty()) {
+//                    // Send OTP via Email
+//                    userService.updateResetPasswordToken(user, user.getUserEmail());
+//                    uiResponse.setStatus("SUCCESS");
+//                    uiResponse.setStatusMessage("OTP sent to email");
+//                } else {
+//                    uiResponse.setStatus("FAILURE");
+//                    uiResponse.setStatusMessage("No valid contact information found");
+//                }
+//                uiResponse.setResponse(user);
+//           
+//        } else {
+//            uiResponse.setStatus("FAILURE");
+//            uiResponse.setStatusMessage("Invalid User");
+//        }
+//
+//        return new ResponseEntity<>(uiResponse, HttpStatus.OK);
+//    }
+//    
+    
     @RequestMapping(value = "/isUserExist", method = RequestMethod.POST)
     public Object isUserExist(@RequestBody LoginUser loginUser) throws AuthenticationException {
     	ClubUser user;
@@ -139,13 +212,16 @@ public class UserController {
         return "{\"message\" : \"User not exist\" }";
     }
     @RequestMapping(value="/updatepassword", method = RequestMethod.POST)
-    public Object updatePassword(@RequestBody UserDto user){
-    	try {
-        return userService.updatePassword(user);
+    public ResponseEntity<String> updatePassword(@RequestBody UserDto user) {
+        try {
+            String result = userService.validateOtp(user.getOtpNumber(), user);
+            if ("Invalid OTP".equals(result)) {
+                return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while updating the password", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    	catch(Exception e) {
-    		return e;
-    	}
     }
     
     @RequestMapping(value="/updateprofile", method = RequestMethod.POST)

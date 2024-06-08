@@ -12,6 +12,7 @@ import com.booking.uimodel.UIResponse;
 
 public interface UserService {
     ClubUser save(UserDto user);
+    ClubUser findByUserEmail(ClubUser userEmail);
     Object updatePassword(UserDto user);
     ClubUser saveorupdate(UserDto user);
     
@@ -22,5 +23,7 @@ public interface UserService {
 	ResponseEntity<UIResponse> checkandsave(UserDto user);
 	Object deleteuser(Integer userId);
 	ResponseEntity<UIResponse> listByUserAndDate(UserBooking user);
+	void updateResetPasswordToken(ClubUser user,String email);
+	String validateOtp(String otp,UserDto user);
 	
 }

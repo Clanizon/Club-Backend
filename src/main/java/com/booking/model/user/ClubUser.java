@@ -16,6 +16,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -39,6 +42,21 @@ public class ClubUser implements Serializable {
 	@Column(name="created_date")
 	private Timestamp createdDate;
 
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Transient
+	private String  otpNumber;
+	public String getOtpNumber() {
+		return otpNumber;
+	}
+
+
+
+	public void setOtpNumber(String otpNumber) {
+		this.otpNumber = otpNumber;
+	}
+
+
+
 	public String getOtp() {
 		return otp;
 	}
@@ -50,27 +68,13 @@ public class ClubUser implements Serializable {
 	}
 
 
-
-	public Timestamp getOtpCreatedTime() {
-		return otpCreatedTime;
-	}
-
-
-
-	public void setOtpCreatedTime(Timestamp otpCreatedTime) {
-		this.otpCreatedTime = otpCreatedTime;
-	}
-
-
-
 	@Column(name="DOB")
 	private Timestamp dateofBirth;
 	
 	@Column(name="OTP")
 	private String otp;
 	
-	@Column(name="OTP_CREATED_TIME")
-	private Timestamp otpCreatedTime;
+
 	
 	
 	public Timestamp getDateofBirth() {

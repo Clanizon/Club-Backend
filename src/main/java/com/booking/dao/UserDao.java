@@ -16,8 +16,12 @@ import com.booking.model.user.MetaData;
 
 @Repository
 public interface UserDao extends CrudRepository<ClubUser, Long> {
+	
 	ClubUser findByUserMobile(String usermobile);
-	String findByOtp(String otp);
+	@Transactional
+	@Query(value = "SELECT * FROM CLUB_USER WHERE user_email ILIKE :userEmail", nativeQuery = true)
+	ClubUser findByUserEmail(@Param("userEmail")String userEmail);
+	ClubUser findByOtp(String otp);
 
 	ClubUser findByUserId(Integer userId);
 	
@@ -43,8 +47,11 @@ public interface UserDao extends CrudRepository<ClubUser, Long> {
 	
 	@Transactional
 	 @Modifying
-	 @Query(value = "UPDATE club_user set user_password =:password where user_mobile = :userId",
+	 @Query(value = "UPDATE club_user set user_password =:password where user_email = :userId",
 	            nativeQuery = true)
-	int updatePassword(@Param("userId") String userId,
-			 @Param("password") String password);
+	int updatePassword(@Param("userId") String userId,@Param("password") String password);
+	
+	
+	
+	
 }

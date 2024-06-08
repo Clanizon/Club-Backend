@@ -3,6 +3,7 @@ package com.booking.service.impl;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -46,6 +47,8 @@ import com.booking.dao.UserBookingDao;
 import com.booking.service.RoleService;
 import com.booking.service.UserService;
 import com.booking.uimodel.UIResponse;
+import com.booking.util.EmailService;
+import com.booking.util.SendEmailSmtp;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -57,6 +60,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Autowired
     private UserDao userDao;
     
+    @Autowired
+	EmailService emailService;
+    
+    @Autowired	
+	private SendEmailSmtp sendEmailSmtpService;
     
     @Autowired
     private UserBookingDao userBookingDao;
@@ -90,23 +98,23 @@ public class UserServiceImpl implements UserDetailsService, UserService {
  
     @Override
     public ClubUser findOne(String userMobile) {
-        ClubUser mobileNumber = userDao.findByUserMobile(userMobile);
+    //    ClubUser mobileNumber = userDao.findByUserMobile(userMobile);
 
-     
-        // Generate OTP
-        String token = otpServiceImpl.generateOtp(6);
-
-        // Set OTP to the found user
-        mobileNumber.setOtp(token);
-
-        // Save the updated user
-        userDao.save(mobileNumber);
-
-        // Send OTP via WhatsApp
-        otpServiceImpl.sendWhatsappMessage(userMobile, mobileNumber.getOtp());
-        logger.info("OTP sent successfully to {}", userMobile);
-        logger.info("OTP sent successfully to {}", mobileNumber.getUserMobile());
-        return mobileNumber;
+//     
+//        // Generate OTP
+//        String token = emailService.generateOtp(6);
+//
+//        // Set OTP to the found user
+//        mobileNumber.setOtp(token);
+//
+//        // Save the updated user
+//        userDao.save(mobileNumber);
+//
+//        // Send OTP via WhatsApp
+//        otpServiceImpl.sendWhatsappMessage(userMobile, mobileNumber.getOtp());
+//        logger.info("OTP sent successfully to {}", userMobile);
+//        logger.info("OTP sent successfully to {}", mobileNumber.getUserMobile());
+        return userDao.findByUserMobile(userMobile);
     }
 
 //    @Override
@@ -276,7 +284,61 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		 return userDao.save(dbuser);
 	}
 
+	@Override
+	public ClubUser findByUserEmail(ClubUser userEmail) {
+		// TODO Auto-generated method stub
+		return userDao.findByUserEmail(userEmail.getUserEmail());
+	}
+
+	@Override
+	public void updateResetPasswordToken(ClubUser user, String email) {
+
+		String token=emailService.generateOtp(6);
+           user.setOtp(token);
+           sendEmailSmtpService.sendTokenEmail(email, token, user);
+           logger.info("email sent successfully to {}",email);
+           
+           userDao.save(user);
+	}
+
+	@Override
+	public String validateOtp(String otp, UserDto user) {
+	    String success = "OTP has been validated and password has been updated";
+	    String invalid = "Invalid OTP";
+	    ClubUser clubUser = userDao.findByUserEmail(user.getUserEmail());
+        if (clubUser == null) {
+            return invalid;
+        }
+
+        // Validate OTP
+        if (clubUser.getOtp().equals(otp)) {
+            // Encode the new password
+            String encodedPassword = bcryptEncoder.encode(user.getUserPassword());
+
+            // Update the user's password
+            userDao.updatePassword(user.getUserEmail(), encodedPassword);
+
+            return success;
+        }
+
+        return invalid;
+    }
+	}
+
+//	public boolean otpToWhatsapp(ClubUser user) {
+//	    try {
+//	        String token = emailService.generateOtp(6);  // Generate a 6-digit OTP
+//	        user.setOtp(token);  // Set the OTP in the user object
+//	        otpServiceImpl.sendWhatsappMessage(user, token);  // Send the OTP via WhatsApp
+//	        logger.info("OTP sent successfully to {}", user.getUserMobile());
+//	        return true;  // Return true to indicate success
+//	    } catch (Exception e) {
+//	        logger.error("Failed to send OTP to {}: {}", user.getUserMobile(), e.getMessage());
+//	        return false;  // Return false to indicate failure
+//	    }
+//	}
+//	
 	
 	
-	
-}
+
+
