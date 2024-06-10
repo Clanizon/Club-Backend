@@ -34,6 +34,12 @@ public class EmailService {
 		
 		@Value( "${spring.mail.properties.mail.smtp.starttls.enable}" )
 		private String starttls;
+		
+		@Value( "${spring.mail.dvp.from}" )
+		private String from;
+		
+		@Value( "${spring.mail.fmea.password}" )
+		private String password;
 
 		public void sendTestEmail(String to, String subject, String body,String userEmail) throws MessagingException {
 
@@ -86,15 +92,19 @@ public class EmailService {
 		public void sendEmail(String to, String subject, String body,String userEmail) throws MessagingException {
 
 
-			String from = "esgemailservice@dovercorp.com";// sender email address
-			String password = "BM@3we4rt5";// sender email password
+		//	String from = "esgemailservice@dovercorp.com";// sender email address
+		// password = "BM@3we4rt5";// sender email password
 
 			// SMTP server properties
 			Properties props = new Properties();
-			props.put("mail.smtp.host", "smtp.dovercorporation.com");
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.port", "25");
+//			props.put("mail.smtp.host", "smtp.dovercorporation.com");
+//			props.put("mail.smtp.auth", "true");
+//			props.put("mail.smtp.port", "25");
 
+			props.put("mail.smtp.host", host);
+			props.put("mail.smtp.auth",auth);
+			props.put("mail.smtp.port",port);
+			props.put("mail.smtp.starttls.enable", starttls);
 			// create session
 
 			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
