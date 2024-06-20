@@ -187,12 +187,12 @@ public class SlotServiceImpl implements SlotService {
 		
 		 try {	
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager
-			            .getConnection("jdbc:postgresql://localhost:5432/Clubdb",
-			            		userName, password);
 //			conn = DriverManager
-//		            .getConnection("jdbc:postgresql://ownntendb.cpiw6y42k42b.ap-south-1.rds.amazonaws.com/ClubDB",
-//		            		userName, password);
+//			            .getConnection("jdbc:postgresql://localhost:5432/Clubdb",
+//			            		userName, password);
+			conn = DriverManager
+		            .getConnection("jdbc:postgresql://ownntendb.cpiw6y42k42b.ap-south-1.rds.amazonaws.com/ClubDB",
+		            		userName, password);
 			  conn.setAutoCommit(false);
 				//String slotSaveSQl= "INSERT INTO public.club_slot( club_name) 	VALUES ( ?)";
 
