@@ -127,26 +127,26 @@ public class UserController {
     
     
     @RequestMapping(value = "/forgetpassword", method = RequestMethod.POST)
-    public Object forgetPassword(@RequestBody ClubUser loginUser) {
+    public ResponseEntity<UIResponse> forgetPassword(@RequestBody ClubUser loginUser) {
     	
     	ClubUser user = userDao.findByUserMobileOrUserEmail(loginUser.getUserMobile(), loginUser.getUserEmail());
     	UIResponse uiResponse = new UIResponse();
    	 if(user!=null && user.getUserEmail()!=null) {
-   		 try {
+   	//	 try {
 			userService.updateResetPasswordToken(user, loginUser.getUserEmail());
 			uiResponse.setResponse(user);
 			uiResponse.setStatus("SUCCESS");
         	uiResponse.setStatusMessage("Valid User ");
-		} catch (Exception e) {
-			uiResponse.setStatus("Failure");
-        	uiResponse.setStatusMessage("In Valid User ");
-			e.printStackTrace();		}
+//		} catch (Exception e) {
+//			uiResponse.setStatus("Failure");
+//        	uiResponse.setStatusMessage("In Valid User ");
+//			e.printStackTrace();		}
    	 }
-    	else if(user.getUserMobile()!=null) {
-    		userService.findOne(loginUser.getUserMobile());
-    		uiResponse.setStatus("SUCCESS");
-        	uiResponse.setStatusMessage("Valid User ");
-        }
+//    	else if(user.getUserMobile()!=null) {
+//    		userService.findOne(loginUser.getUserMobile());
+//    		uiResponse.setStatus("SUCCESS");
+//        	uiResponse.setStatusMessage("Valid User ");
+//        }
     	else {
     		uiResponse.setStatus("Failure");
         	uiResponse.setStatusMessage("In Valid User ");
