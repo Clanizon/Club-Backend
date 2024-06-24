@@ -3,6 +3,7 @@ package com.booking.model.slot;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,6 +32,18 @@ public class ClubSlot implements Serializable {
 
 
 	
+	@Transient
+	private List<Integer> slotDays;
+	public List<Integer> getSlotDays() {
+		return slotDays;
+	}
+
+
+
+	public void setSlotDays(List<Integer> slotDays) {
+		this.slotDays = slotDays;
+	}
+
 	@Column(name="primary_booking_id")
 	private Integer primaryBookingId;
     

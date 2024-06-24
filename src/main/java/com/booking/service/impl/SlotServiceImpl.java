@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -147,9 +148,14 @@ public class SlotServiceImpl implements SlotService {
 								indianDateTime.toLocalTime().equals(endTime)) ) {
 					System.out.println("-TRUEEEEEE-----");
 					ldt = ldt.plusMinutes(clubSlot.getSlotDuration());
+					
 					clubSlots.setSlotEndTimeStamp(getTimestamp(ldt));
+					System.out.println("ldt.getDayOfWeek().getValue()");
+					System.out.println(ldt.getDayOfWeek().getValue());
+					if(CollectionUtils.isNotEmpty(clubSlots.getSlotDays()) && clubSlots.getSlotDays().contains(ldt.getDayOfWeek().getValue())) {
 					clubSlots.setSlotAvailable("Y");
 					slotList.add(clubSlots);
+					}
 				}else {
 					System.out.println("-FALSE-----");
 					ldt = ldt.plusMinutes(clubSlot.getSlotDuration());
@@ -187,12 +193,9 @@ public class SlotServiceImpl implements SlotService {
 		
 		 try {	
 			Class.forName("org.postgresql.Driver");
-//			conn = DriverManager
-//			            .getConnection("jdbc:postgresql://localhost:5432/Clubdb",
-//			            		userName, password);
 			conn = DriverManager
-		            .getConnection("jdbc:postgresql://ownntendb.cpiw6y42k42b.ap-south-1.rds.amazonaws.com/ClubDB",
-		            		userName, password);
+			            .getConnection("jdbc:postgresql://database-1.cnaee60qc6yl.us-east-2.rds.amazonaws.com/clubdb",
+			            		userName, password);
 			  conn.setAutoCommit(false);
 				//String slotSaveSQl= "INSERT INTO public.club_slot( club_name) 	VALUES ( ?)";
 
@@ -386,8 +389,11 @@ public class SlotServiceImpl implements SlotService {
 
 		ZoneId zoneId = ZoneId.of(timeZoneId);
 		ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
+		System.out.println("zonedDateTime.getDayOfWeek()");
+		System.out.println(zonedDateTime.getDayOfWeek().getValue());
 		Timestamp timestamp = Timestamp.valueOf(zonedDateTime.toLocalDateTime());
-
+		System.out.println("timestamp.getDayOfWeek()");
+		
 		return timestamp;
 	}
 
