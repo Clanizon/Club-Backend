@@ -2,6 +2,7 @@ package com.booking.dao;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -48,8 +49,8 @@ public interface ClubSlotDao extends CrudRepository<ClubSlot, Integer> {
 	 
 	
 	
-	List <ClubSlot> findBySlotStartTimeStampAfterAndSlotAvailableOrderBySlotStartTimeStampAsc(Timestamp curDate,String slotAvailable);
-	
+	//List <ClubSlot> findBySlotStartTimeStampAfterAndSlotAvailableOrderBySlotStartTimeStampAsc(Timestamp curDate,String slotAvailable);
+	List <ClubSlot>	findBySlotStartTimeStampAfterAndSlotAvailableAndSlotStatusNotOrderBySlotStartTimeStampAsc(Timestamp slotStartTimeStamp, String slotAvailable, String slotStatus);
 	
 	 @Query(value = " select cs.slot_id as slotId, cs.club_name as clubName, "
 		 		+ "cs.created_by as createdBy, cs.created_date as createdDate, cs.player_count as playerCount, "
@@ -63,6 +64,7 @@ public interface ClubSlotDao extends CrudRepository<ClubSlot, Integer> {
 	
 	ClubSlot findBySlotId(Integer slotId);
 	
+   
 
 	 @Transactional
 	 @Modifying
@@ -71,6 +73,14 @@ public interface ClubSlotDao extends CrudRepository<ClubSlot, Integer> {
      nativeQuery = true) 
 	 int updateSlotStatus(@Param("slotStatus") String slotStatus,
 			 @Param("slotId") Integer slotId, @Param("playerCount") Integer playerCount,@Param("secondaryBooking") String secondaryBooking,@Param("primaryBookingId") Integer primaryBookingId);
+	 
+	 
+	 @Transactional
+	 @Modifying
+	 
+	 @Query(value = "UPDATE CLUB_SLOT set  SLOT_STATUS = :slotStatus where SLOT_ID =:slotId",
+     nativeQuery = true) 
+	 int updateSlotStatusBySlotId(@Param("slotStatus") String slotStatus, @Param("slotId") Integer slotId);
 	 
 	 
 	 
@@ -82,10 +92,14 @@ public interface ClubSlotDao extends CrudRepository<ClubSlot, Integer> {
 					 @Param("slotDate") String slotDate);
 	 
 	 
-	 @Transactional
+//	 @Modifying
+//	 @Transactional
+//	 @Query(value = "DELETE FROM club_slot cs WHERE cs.slot_start_timestmp >= :curDate AND cs.slot_start_timestmp <= :stop AND cs.tee_time = :teeTime AND DAYOFWEEK(cs.slot_start_timestmp) IN (:slotDays)", nativeQuery = true)
+//	 int deleteSlot(@Param("curDate") Timestamp curDate, @Param("stop") Timestamp stop, @Param("teeTime") String teeTime, @Param("slotDays") List<Integer> slotDays);
+//
 	 @Modifying
-	 @Query(value = "Delete from club_slot cs where cs.slot_start_timestmp >=:curDate and cs.slot_start_timestmp <=:stop and cs.tee_time =:teeTime",
-		     nativeQuery = true)
-			 int deleteslot(@Param("curDate") Timestamp curDate,@Param("stop") Timestamp stop,@Param("teeTime") String teeTime);
-	
+	    @Transactional
+	    @Query(value = "DELETE FROM club_slot cs WHERE cs.slot_start_timestmp >= :curDate AND cs.slot_start_timestmp <= :stop AND cs.tee_time = :teeTime AND EXTRACT(DOW FROM slot_start_timestmp) IN (:slotDays)", nativeQuery = true)
+	    int deleteSlotsWithinDateRangeAndOnSpecificDays(@Param("curDate") Timestamp curDate, @Param("stop") Timestamp stop,@Param("teeTime") String teeTime,@Param("slotDays") List<Integer> slotDays);
+
 }

@@ -32,6 +32,22 @@ public class SlotController {
        
     }
     
+    @RequestMapping(value = "/blockslot", method = RequestMethod.POST)
+    public Object blockSlot(@RequestBody ClubSlot clubSlot) {
+
+       
+        return slotservice.vipSlot(clubSlot);
+       
+    }
+    
+    @RequestMapping(value = "/BlockIndividualSlot", method = RequestMethod.POST)
+    public Object blockIndividualSlot(@RequestBody ClubSlot clubSlot) {
+
+       
+        return slotservice.individuaSlotBlock(clubSlot);
+       
+    }
+    
     @RequestMapping(value = "/deleteslotrange", method = RequestMethod.POST)
     public Object DeleteSlot(@RequestBody ClubSlot clubSlot) {
 

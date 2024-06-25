@@ -119,7 +119,6 @@ public class SlotServiceImpl implements SlotService {
 			System.out.println("ldt");
 			System.out.println(ldt);
 			System.out.println(ldt.atZone(zoneId).toLocalTime());
-
 			System.out.println("Start Time");
 			System.out.println(startTime);
 			System.out.println("-------");
@@ -140,37 +139,40 @@ public class SlotServiceImpl implements SlotService {
 				  System.out.println("indianDateTime.toLocalTime");
 				System.out.println(indianDateTime.toLocalTime());
 				System.out.println(clubSlots.getSlotDate());
-		
-
-				if( ( indianDateTime.toLocalTime().isAfter(startTime) ||  
+		        
+			
+				
+				 if( ( indianDateTime.toLocalTime().isAfter(startTime) ||  
 						indianDateTime.toLocalTime().equals(startTime))  && 
 						( indianDateTime.toLocalTime().isBefore(endTime) || 
 								indianDateTime.toLocalTime().equals(endTime)) ) {
 					System.out.println("-TRUEEEEEE-----");
 					ldt = ldt.plusMinutes(clubSlot.getSlotDuration());
-					
 					clubSlots.setSlotEndTimeStamp(getTimestamp(ldt));
 					System.out.println("ldt.getDayOfWeek().getValue()");
 					System.out.println(ldt.getDayOfWeek().getValue());
 					if(CollectionUtils.isNotEmpty(clubSlots.getSlotDays()) && clubSlots.getSlotDays().contains(ldt.getDayOfWeek().getValue())) {
 					clubSlots.setSlotAvailable("Y");
+					//clubSlots.setVipSlot(clubSlot.getVipSlot());
 					slotList.add(clubSlots);
 					}
+					
 				}else {
 					System.out.println("-FALSE-----");
 					ldt = ldt.plusMinutes(clubSlot.getSlotDuration());
 				}	
 				
+				 
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			// Prepare for the next loop.
-
 		}
-	 
-		saveSlotNative(slotList);
 	
+	
+		 saveSlotNative(slotList);
+	 
 		outputMap.put("Status","Success");
 		outputMap.put("Message","Slot Record Added successfully");
 		outputMap.put("Data",slotList);
@@ -181,10 +183,178 @@ public class SlotServiceImpl implements SlotService {
 	  }
 	   
 	
-	
-	
-	
+	@Override
+	public Map<String, Object> vipSlot(ClubSlot clubSlot) {
+		// TODO Auto-generated method stub
+		Map<String, Object> outputMap = new HashMap<String, Object>();
 
+		// LocalDateTime start = getLocalDateTime(clubSlot.getSlotStartTimeStamp());
+		// LocalDateTime stop = getLocalDateTime(clubSlot.getSlotEndTimeStamp());
+		
+		List<ClubSlotModel> existingSlotList =  slotDao.findBySlotStartTimeStampAfterAndSlotEndTimeStampBefore(clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime());
+		
+		if(existingSlotList!=null && !existingSlotList.isEmpty()) {
+			outputMap.put("Status","Failure");
+			outputMap.put("Message","Slot Record already Exists.Please delete existing slot records and proceed.");
+			outputMap.put("Data",existingSlotList);
+		}
+		else {
+     
+		LocalDateTime start = clubSlot.getSlotStartTimeStamp().toLocalDateTime();
+		LocalDateTime stop = clubSlot.getSlotEndTimeStamp().toLocalDateTime();
+		String timeZoneId = "Asia/Kolkata"; // Indian time zone
+		ZoneId zoneId = ZoneId.of(timeZoneId);
+		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		//LocalTime startTime = LocalTime.parse(clubSlot.getStart(), formatter);
+		//LocalTime endTime = LocalTime.parse(clubSlot.getEnd(), formatter);
+		
+
+
+		List<LocalDateTime> slots = new ArrayList<>();
+		List<ClubSlot> slotList = new ArrayList<>();
+	
+		LocalDateTime ldt = start;
+		 ZoneId sourceZone = ZoneId.systemDefault();
+
+		LocalTime startTime=start.atZone(sourceZone).withZoneSameInstant(zoneId).toLocalTime();
+		LocalTime endTime=stop.atZone(sourceZone).withZoneSameInstant(zoneId).toLocalTime();
+		while (ldt.isBefore(stop)) {
+			System.out.println("-------");
+			System.out.println("-------");
+			System.out.println("LocalTime");
+			System.out.println(ldt.toLocalTime());
+			System.out.println("ldt.atZone(zoneId)");
+			System.out.println("Stop");
+			System.out.println(stop);
+			System.out.println("ldt");
+			System.out.println(ldt);
+			System.out.println(ldt.atZone(zoneId).toLocalTime());
+			System.out.println("Start Time");
+			System.out.println(startTime);
+			System.out.println("-------");
+			
+		
+			slots.add(ldt);
+			ClubSlot clubSlots = new ClubSlot();
+			clubSlots = SerializationUtils.clone(clubSlot);
+			try {
+				clubSlots.setSlotStartTimeStamp(getTimestamp(ldt));
+			
+				
+				ZonedDateTime indianDateTime = ldt.atZone(sourceZone).withZoneSameInstant(zoneId);
+		        System.out.println("indianDateTime");
+		        System.out.println(indianDateTime);
+		        System.out.println(Date.valueOf(indianDateTime.toLocalDate()));
+				clubSlots.setSlotDate(  Date.valueOf(indianDateTime.toLocalDate()));
+				  System.out.println("indianDateTime.toLocalTime");
+				System.out.println(indianDateTime.toLocalTime());
+				System.out.println(clubSlots.getSlotDate());
+		        
+			
+				
+				 if( ( indianDateTime.toLocalTime().isAfter(startTime) ||  
+						indianDateTime.toLocalTime().equals(startTime))  && 
+						( indianDateTime.toLocalTime().isBefore(endTime) || 
+								indianDateTime.toLocalTime().equals(endTime)) ) {
+					System.out.println("-TRUEEEEEE-----");
+					ldt = ldt.plusMinutes(clubSlot.getSlotDuration());
+					clubSlots.setSlotEndTimeStamp(getTimestamp(ldt));
+					System.out.println("ldt.getDayOfWeek().getValue()");
+					System.out.println(ldt.getDayOfWeek().getValue());
+					if(CollectionUtils.isNotEmpty(clubSlots.getSlotDays()) && clubSlots.getSlotDays().contains(ldt.getDayOfWeek().getValue())) {
+					clubSlots.setSlotAvailable("Y");
+					clubSlots.setSlotStatus("Blocked for VIP");
+					slotList.add(clubSlots);
+					}
+					
+				}else {
+					System.out.println("-FALSE-----");
+					ldt = ldt.plusMinutes(clubSlot.getSlotDuration());
+				}	
+				
+				 
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// Prepare for the next loop.
+		}
+	
+		saveSlotNative(slotList);
+	 
+		outputMap.put("Status","Success");
+		outputMap.put("Message","Slot Record Added successfully");
+		outputMap.put("Data",slotList);
+		
+		}
+	
+		return outputMap;
+	}
+	
+	
+private void updateSlotNative(List<ClubSlot> slotList) {
+	Connection conn = null;
+	
+	 try {	
+		Class.forName("org.postgresql.Driver");
+		conn = DriverManager
+		            .getConnection("jdbc:postgresql://database-1.cnaee60qc6yl.us-east-2.rds.amazonaws.com/clubdb",
+		            		userName, password);
+		  conn.setAutoCommit(false);
+			//String slotSaveSQl= "INSERT INTO public.club_slot( club_name) 	VALUES ( ?)";
+
+			String slotSaveSQl= "UPDATE public.club_slot\r\n"
+					+ "	SET slot_id=?, club_name=?, created_by=?, created_date=?, player_count=?, primary_booking_id=?, secondary_booking=?, slot_available=?, slot_date=?, slot_end_timestmp=?, slot_start_timestmp=?, slot_status=?, tee_time=?\r\n"
+					+ "	WHERE slot_status = 'Blocked for VIP'";
+			PreparedStatement stmt = conn.prepareStatement(slotSaveSQl);
+
+			   
+			   slotList.forEach(slot->{
+				   try {
+					   Iterable<ClubSlot> soltId = slotDao.findAll();	   
+					stmt.setInt(1, ((ClubSlot) soltId).getSlotId());
+					stmt.setString(2, slot.getClubName());
+					stmt.setString(3, slot.getCreatedBy());
+					stmt.setTimestamp(4, slot.getCreatedDate());
+					stmt.setString(5, slot.getSecondaryBooking());
+					stmt.setDate(6, slot.getSlotDate());
+					stmt.setTimestamp(7, slot.getSlotEndTimeStamp());
+					stmt.setTimestamp(8, slot.getSlotStartTimeStamp());
+					stmt.setString(9, slot.getSlotStatus());
+					stmt.setString(10, slot.getSlotAvailable());
+					stmt.setInt(11, slot.getPlayerCount());
+					if(slot.getPrimaryBookingId()!=null) {
+						stmt.setInt(12, slot.getPrimaryBookingId());
+					}else {
+						stmt.setInt(12, 0);
+					}
+					stmt.setString(13, slot.getTeeTime());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				   try {
+					   stmt.addBatch();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				   
+			   });
+			   
+			   stmt.executeBatch();
+			   conn.commit();
+			   conn.close();
+
+	} catch (ClassNotFoundException | SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+ 
+
+
+}
 	
 
 	private void saveSlotNative(List<ClubSlot> slotList) {
@@ -315,7 +485,7 @@ public class SlotServiceImpl implements SlotService {
         DateTimeFormatter formatterdisp = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
 		List<ClubSlot> slotList = slotDao
-				.findBySlotStartTimeStampAfterAndSlotAvailableOrderBySlotStartTimeStampAsc(timestampnow, "Y");
+				.findBySlotStartTimeStampAfterAndSlotAvailableAndSlotStatusNotOrderBySlotStartTimeStampAsc(timestampnow, "Y","Blocked for VIP");
 		slotList.forEach(slot -> {
 			if (slot.getSlotStartTimeStamp().after(futureTimeStamp)) { //Success only 04-07-2023 18:30:30 UTC
 		
@@ -455,7 +625,7 @@ public class SlotServiceImpl implements SlotService {
 		
 		SlotBooked slotBooked = userBookingDao.findBySlotRangeandTeeTime(clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime());
 		if(slotBooked.getSlotBooked().equals(0)){
-			int deletecount =  slotDao.deleteslot(clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime());
+			int deletecount =  slotDao.deleteSlotsWithinDateRangeAndOnSpecificDays(clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime(),clubSlot.getSlotDays());
 			outputMap.put("Status", "Success");
 			outputMap.put("Message", "Record Deleted Successfully");
 			outputMap.put("Data", deletecount);
@@ -470,5 +640,17 @@ public class SlotServiceImpl implements SlotService {
 		
 		return outputMap;
 	}
+
+
+	@Override
+	public Map<String, Object> individuaSlotBlock(ClubSlot clubSlot) {
+		Map<String, Object> outputMap = new HashMap<String, Object>();
+	int updatedSlot =	slotDao.updateSlotStatusBySlotId(clubSlot.getSlotStatus(), clubSlot.getSlotId());
+		outputMap.put("Status", "Success");
+		outputMap.put("Message", "Successfully Slot booked for VIP");
+		outputMap.put("Data", updatedSlot);
+		return outputMap;
+	}
+
 
 }

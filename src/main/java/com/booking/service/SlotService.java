@@ -7,7 +7,11 @@ import com.booking.model.slot.ClubSlot;
 
 public interface SlotService {
 	Map<String, Object> save(ClubSlot clubSlot);
+	
+	Map<String, Object> vipSlot(ClubSlot clubSlot);
     
+	Map<String, Object> individuaSlotBlock(ClubSlot clubSlot);
+	
     List<ClubSlot> listBookingSlot();
 
 	List<ClubSlot> findBySlotStatus(String status);

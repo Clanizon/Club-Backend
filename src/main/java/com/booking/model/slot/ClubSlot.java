@@ -34,6 +34,9 @@ public class ClubSlot implements Serializable {
 	
 	@Transient
 	private List<Integer> slotDays;
+	
+
+
 	public List<Integer> getSlotDays() {
 		return slotDays;
 	}
