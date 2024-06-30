@@ -260,12 +260,13 @@ List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterl
 	public Object deleteUserBooking(ClubSlotBooking clubSlot) {
 		Map<String, Object> outputMap = new HashMap<String, Object>();
 		
-		ClubSlotBooking bookId =slotBookingDao.findByBookingId(clubSlot.getBookingId());
+		//ClubSlotBooking bookId =slotBookingDao.findByBookingId(clubSlot.getBookingId());
 		
 		
-		ClubSlot slotTime = slotDao.findBySlotId(clubSlot.getSlotId());
+	//	ClubSlot slotTime = slotDao.findBySlotId(clubSlot.getSlotId());
 		
-		Timestamp slotedTime = slotTime.getSlotStartTimeStamp();
+		Timestamp slotedTime = clubSlot.getSlotStartTimestamp();
+		
 		
 		 // Convert Timestamp to LocalDateTime
 	   // Timestamp createdTimestamp = bookId.getCreatedDate();
