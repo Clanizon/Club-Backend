@@ -84,6 +84,14 @@ public class BookingController {
 
 	}
 	
+	@RequestMapping(value = "/DeleteUserBooking", method = RequestMethod.POST)
+	public Object deleteUserbooking(@RequestBody ClubSlotBooking clubSlot) {
+
+		return bookingservice.deleteBooking(clubSlot);
+		// return bookingservice.findAll();
+
+	}
+	
 	
 	@RequestMapping(value = "/updateBooking", method = RequestMethod.POST)
 	public Object updateBooking(@RequestBody ClubSlotBooking clubSlot) {

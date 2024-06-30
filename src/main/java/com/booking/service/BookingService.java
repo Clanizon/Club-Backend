@@ -22,6 +22,8 @@ public interface BookingService {
 	
 	Object deleteBooking(ClubSlotBooking bookingId);
 
+	Object deleteUserBooking(ClubSlotBooking bookingId);
+	
 	Object handleApproval(ClubSlotBooking booking);
 
 	Object listapprovallist(ClubSlotBooking clubSlot);

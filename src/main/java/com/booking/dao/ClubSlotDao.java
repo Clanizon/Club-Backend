@@ -19,6 +19,7 @@ import com.booking.model.slot.ClubSlotModel;
 
 @Repository
 public interface ClubSlotDao extends CrudRepository<ClubSlot, Integer> {
+	
 
 	List <ClubSlot> findBySlotDateBefore(Timestamp slotDate);
 	

@@ -281,6 +281,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		dbuser.setUserFname(user.getUserFname());
 		dbuser.setUserLname(user.getUserLname());
 		dbuser.setUserMobile(user.getUserMobile());
+		dbuser.setUserEmail(user.getUserEmail());;
 		 return userDao.save(dbuser);
 	}
 

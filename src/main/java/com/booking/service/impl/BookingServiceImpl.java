@@ -2,9 +2,13 @@ package com.booking.service.impl;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
@@ -241,15 +245,56 @@ List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterl
 		// TODO Auto-generated method stub
 		 slotBookingDao.updateApprovalStatus("Booking Cancelled",clubSlot.getBookingId());
 		userbookDao.updateApprovalStatus("Booking Cancelled",clubSlot.getBookingId());
+		
 		if(clubSlot.getBookingType().equals("Secondary")){
 		slotDao.updateSlotStatus("Primary Booked", clubSlot.getSlotId(),-(clubSlot.getPlayerCount()),"Y",clubSlot.getBookingId());
-	    }else {
+	    }
+		else {
 	    	slotDao.updateSlotStatus("Created", clubSlot.getSlotId(),-(clubSlot.getPlayerCount()),"Y",clubSlot.getBookingId());
 	    }
 		return "Successfully Deleted";
 		
 	}
 
+	@Override
+	public Object deleteUserBooking(ClubSlotBooking clubSlot) {
+		Map<String, Object> outputMap = new HashMap<String, Object>();
+		
+		ClubSlotBooking bookId =slotBookingDao.findByBookingId(clubSlot.getBookingId());
+		
+		
+		ClubSlot slotTime = slotDao.findBySlotId(clubSlot.getSlotId());
+		
+		Timestamp slotedTime = slotTime.getSlotStartTimeStamp();
+		
+		 // Convert Timestamp to LocalDateTime
+	   // Timestamp createdTimestamp = bookId.getCreatedDate();
+	    LocalDateTime createdDateTime = slotedTime.toLocalDateTime();
+	    	    
+	    // Get the current date and time
+	    LocalDateTime now = LocalDateTime.now();
+	    System.out.println("---------"+now);
+	    // Get the threshold time (24 hours before the booking time)
+	    LocalDateTime thresholdTime = createdDateTime.minusHours(24);
+	    // Check if the current time is before the threshold time
+	    if (now.isBefore(thresholdTime)) {
+	        // Update approval status to "Booking Cancelled"
+	        slotBookingDao.updateApprovalStatus("Booking Cancelled", clubSlot.getBookingId());
+	        userbookDao.updateApprovalStatus("Booking Cancelled", clubSlot.getBookingId());
+
+	        // Check the booking type and update slot status accordingly
+//	        if (bookingType.equals("Primary")) {
+	            slotDao.updateSlotStatus("Created", clubSlot.getSlotId(), -(clubSlot.getPlayerCount()), "Y", clubSlot.getBookingId());
+	            outputMap.put("Status", "Successfully Deleted");
+	        } else {
+	        	outputMap.put("Status", "Failed");
+				outputMap.put("Message", "Booking cannot be deleted as it is within 24 hours of the booking time.");
+	        }
+	      //  return "Successfully Deleted";
+	   // } 
+	    //return "Successfully Deleted";
+		return outputMap;
+	}
 
 
 
