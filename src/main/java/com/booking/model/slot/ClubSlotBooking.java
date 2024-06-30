@@ -87,15 +87,16 @@ public class ClubSlotBooking implements Serializable {
 	
 	
 	@Transient
-	private Timestamp slotStartTimestamp;
+	private Timestamp slotStartTimeStamp;
 	
-	
-	public Timestamp getSlotStartTimestamp() {
-		return slotStartTimestamp;
+
+
+	public Timestamp getSlotStartTimeStamp() {
+		return slotStartTimeStamp;
 	}
 
-	public void setSlotStartTimestamp(Timestamp slotStartTimestamp) {
-		this.slotStartTimestamp = slotStartTimestamp;
+	public void setSlotStartTimeStamp(Timestamp slotStartTimeStamp) {
+		this.slotStartTimeStamp = slotStartTimeStamp;
 	}
 
 	public ClubUser getClubUser() {

@@ -259,17 +259,14 @@ List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterl
 	@Override
 	public Object deleteUserBooking(ClubSlotBooking clubSlot) {
 		Map<String, Object> outputMap = new HashMap<String, Object>();
+				
+		ClubSlot slotTime = slotDao.findBySlotId(clubSlot.getSlotId());
 		
-		//ClubSlotBooking bookId =slotBookingDao.findByBookingId(clubSlot.getBookingId());
-		
-		
-	//	ClubSlot slotTime = slotDao.findBySlotId(clubSlot.getSlotId());
-		
-		Timestamp slotedTime = clubSlot.getSlotStartTimestamp();
-		
+		Timestamp slotedTime = clubSlot.getSlotStartTimeStamp();
+		//Timestamp slotedTime = slotTime.getSlotStartTimestamp();
+
 		
 		 // Convert Timestamp to LocalDateTime
-	   // Timestamp createdTimestamp = bookId.getCreatedDate();
 	    LocalDateTime createdDateTime = slotedTime.toLocalDateTime();
 	    	    
 	    // Get the current date and time
@@ -280,8 +277,8 @@ List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterl
 	    // Check if the current time is before the threshold time
 	    if (now.isBefore(thresholdTime)) {
 	        // Update approval status to "Booking Cancelled"
-	        slotBookingDao.updateApprovalStatus("Booking Cancelled", clubSlot.getBookingId());
-	        userbookDao.updateApprovalStatus("Booking Cancelled", clubSlot.getBookingId());
+	        slotBookingDao.updateApprovalStatus("Cancelled By User", clubSlot.getBookingId());
+	        userbookDao.updateApprovalStatus("Cancelled By User", clubSlot.getBookingId());
 
 	        // Check the booking type and update slot status accordingly
 //	        if (bookingType.equals("Primary")) {
