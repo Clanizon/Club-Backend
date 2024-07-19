@@ -48,6 +48,14 @@ public class SlotController {
        
     }
     
+    @RequestMapping(value = "/UnBlockIndividualSlot", method = RequestMethod.POST)
+    public Object unblockIndividualSlot(@RequestBody ClubSlot clubSlot) {
+
+       
+        return slotservice.individuaSlotUnBlock(clubSlot);
+       
+    }
+    
     @RequestMapping(value = "/deleteslotrange", method = RequestMethod.POST)
     public Object DeleteSlot(@RequestBody ClubSlot clubSlot) {
 

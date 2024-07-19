@@ -46,7 +46,7 @@ public interface ClubSlotDao extends CrudRepository<ClubSlot, Integer> {
 			 
 			 
 			 
-			 
+			
 	 
 	
 	
@@ -61,7 +61,51 @@ public interface ClubSlotDao extends CrudRepository<ClubSlot, Integer> {
 		 		
 	       nativeQuery = true)
 		 List <ClubSlotModel> findBySlotStartTimeStampAfterAndSlotEndTimeStampBefore(Timestamp curDate,Timestamp stop,String teeTime);
+
+//	    @Modifying
+//	    @Transactional
+//	    @Query(value = "WITH updated AS (" +
+//	                   "UPDATE club_slot " +
+//	                   "SET slot_status = :slotStatus " +
+//	                   "WHERE slot_start_timestmp >= :curDate " +
+//	                   "AND slot_start_timestmp <= :stop " +
+//	                   "AND tee_time = :teeTime " +
+//	                   "RETURNING slot_id, club_name, created_by, created_date, player_count, primary_booking_id, secondary_booking, slot_available, slot_date, slot_end_timestmp, slot_start_timestmp, slot_status, tee_time" +
+//	                   ") " +
+//	                   "SELECT * FROM updated", 
+//	           nativeQuery = true)
+//	    List<ClubSlot> updateSlotStatusAndFindUpdated(@Param("slotStatus") String slotStatus, 
+//	                                                       @Param("curDate") Timestamp curDate, 
+//	                                                       @Param("stop") Timestamp stop, 
+//	                                                       @Param("teeTime") String teeTime);
+	 @Query(value ="select cs.slot_id as slotId, cs.club_name as clubName, "
+		 		+ "cs.created_by as createdBy, cs.created_date as createdDate, cs.player_count as playerCount, "
+		 		+ "cs.primary_booking_id as primaryBookingId, cs.secondary_booking as secondaryBooking, cs.slot_available as "
+		 		+ "slotAvailable, cs.slot_date as slotDate, cs.slot_end_timestmp as slotEndTimestmp, cs.slot_start_timestmp as slotStartTimeStamp, "
+		 		+ "cs.slot_status as slotStatus, cs.tee_time as teeTime from club_slot cs where cs.slot_start_timestmp >=:curDate and cs.slot_Start_timestmp <=:stop and cs.tee_time =:teeTime",
+	       nativeQuery = true)
+List<ClubSlotModel> findBySlotStartTimeStampGreaterThanEqualAndSlotStartTimeStampLessThanEqual( Timestamp curDate, Timestamp stop,  String teeTime);
+//	 @Modifying
+//	    @Transactional
+//	    @Query(value = "UPDATE club_slot " +
+//	                   "SET slot_status = :slotStatus " +
+//	                   "WHERE slot_start_timestmp >= :curDate " +
+//	                   "AND slot_start_timestmp <= :stop " +
+//	                   "AND tee_time = :teeTime", 
+//	           nativeQuery = true)
+//	 List<ClubSlot> updateSlotStatus(@Param("slotStatus") String slotStatus, 
+//	                         @Param("curDate") Timestamp curDate, 
+//	                         @Param("stop") Timestamp stop, 
+//	                         @Param("teeTime") String teeTime);
+	 
+	// List <ClubSlotModel> blockSlotsWithinDateRangeAndOnSpecificDays(@Param("curDate") Timestamp curDate,@Param("stop") Timestamp stop,@Param("teeTime") String teeTime);
 	//List <ClubSlot> findBySlotStartTimeStampAfterAndSlotEndTimeStampBefore(Timestamp start,Timestamp stop);
+	
+	
+//	 @Query(value = " select * from club_slot cs where cs.slot_start_timestmp >=:curDate and cs.slot_end_timestmp <=:stop and cs.tee_time =:teeTime",
+//		 		
+//	       nativeQuery = true)
+//		 List <ClubSlotModel> findAllBySlotStartTimeStampAfterAndSlotEndTimeStampBefore(Timestamp curDate,Timestamp stop,String teeTime);
 	
 	ClubSlot findBySlotId(Integer slotId);
 	

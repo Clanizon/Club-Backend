@@ -12,6 +12,8 @@ public interface SlotService {
     
 	Map<String, Object> individuaSlotBlock(ClubSlot clubSlot);
 	
+	Map<String, Object> individuaSlotUnBlock(ClubSlot clubSlot);
+	
     List<ClubSlot> listBookingSlot();
 
 	List<ClubSlot> findBySlotStatus(String status);

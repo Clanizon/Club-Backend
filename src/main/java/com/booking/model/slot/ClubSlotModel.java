@@ -33,4 +33,5 @@ public interface ClubSlotModel {
 
 	String getSlotAvailable();
 
+	String setSlotStatus();
 }

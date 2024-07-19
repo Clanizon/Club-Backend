@@ -14,7 +14,9 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -76,18 +78,39 @@ public class SlotServiceImpl implements SlotService {
 
 		// TODO Auto-generated method stub
 		Map<String, Object> outputMap = new HashMap<String, Object>();
-
+		List<ClubSlot> slotList = new ArrayList<>();
 		// LocalDateTime start = getLocalDateTime(clubSlot.getSlotStartTimeStamp());
 		// LocalDateTime stop = getLocalDateTime(clubSlot.getSlotEndTimeStamp());
 		
 		List<ClubSlotModel> existingSlotList =  slotDao.findBySlotStartTimeStampAfterAndSlotEndTimeStampBefore(clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime());
-		
-		if(existingSlotList!=null && !existingSlotList.isEmpty()) {
-			outputMap.put("Status","Failure");
-			outputMap.put("Message","Slot Record already Exists.Please delete existing slot records and proceed.");
-			outputMap.put("Data",existingSlotList);
-			
+		//boolean isOverlap = false;
+//		if(existingSlotList!=null && !existingSlotList.isEmpty()) {
+//			outputMap.put("Status","Failure");
+//			outputMap.put("Message","Slot Record already Exists.Please delete existing slot records and proceed.");
+//			outputMap.put("Data",existingSlotList);
+//			
+//		}
+		boolean isOverlap = false;
+                                  
+		// Get list of days between start and end timestamp
+		List<java.util.Date> daysBetween = getDaysBetween(clubSlot.getSlotStartTimeStamp(), clubSlot.getSlotEndTimeStamp());
+
+		// Check for overlapping slots in the database for each day
+		for (java.util.Date day : daysBetween) {
+		    for (ClubSlotModel dbSlot : existingSlotList) {
+		        if (slotsOverlapForDay(clubSlot, dbSlot, day)) {
+		            isOverlap = true;
+		            break;
+		        }
+		    }
+		    if (isOverlap) break; // Break outer loop if overlap found
 		}
+
+		if (isOverlap) {
+		    outputMap.put("Status", "Failure");
+		    outputMap.put("Message", "Slot Record already Exists. Please delete existing slot records and proceed.");
+		    outputMap.put("Data", existingSlotList);
+		} 
 		else {
         
 		LocalDateTime start = clubSlot.getSlotStartTimeStamp().toLocalDateTime();
@@ -101,14 +124,14 @@ public class SlotServiceImpl implements SlotService {
 
 
 		List<LocalDateTime> slots = new ArrayList<>();
-		List<ClubSlot> slotList = new ArrayList<>();
+	//	List<ClubSlot> slotList = new ArrayList<>();
 	
 		LocalDateTime ldt = start;
 		 ZoneId sourceZone = ZoneId.systemDefault();
 
 		LocalTime startTime=start.atZone(sourceZone).withZoneSameInstant(zoneId).toLocalTime();
 		LocalTime endTime=stop.atZone(sourceZone).withZoneSameInstant(zoneId).toLocalTime();
-		while (ldt.isBefore(stop)) {
+		while (ldt.isBefore(stop) || ldt.equals(stop)) {
 			System.out.println("-------");
 			System.out.println("-------");
 			System.out.println("LocalTime");
@@ -153,7 +176,6 @@ public class SlotServiceImpl implements SlotService {
 					System.out.println(ldt.getDayOfWeek().getValue());
 					if(CollectionUtils.isNotEmpty(clubSlots.getSlotDays()) && clubSlots.getSlotDays().contains(ldt.getDayOfWeek().getValue())) {
 					clubSlots.setSlotAvailable("Y");
-					//clubSlots.setVipSlot(clubSlot.getVipSlot());
 					slotList.add(clubSlots);
 					}
 					
@@ -181,182 +203,197 @@ public class SlotServiceImpl implements SlotService {
 		
 		return outputMap;
 	  }
-	   
+
+	private boolean slotsOverlapForDay(ClubSlot slot1, ClubSlotModel slot2, java.util.Date day) {
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(day);
+
+	    // Get the start and end time for the input slot on the given day
+	    cal.set(Calendar.HOUR_OF_DAY, slot1.getSlotStartTimeStamp().getHours());
+	    cal.set(Calendar.MINUTE, slot1.getSlotStartTimeStamp().getMinutes());
+	    Date slot1Start = new Date(cal.getTime().getTime());
+
+	    cal.set(Calendar.HOUR_OF_DAY, slot1.getSlotEndTimeStamp().getHours());
+	    cal.set(Calendar.MINUTE, slot1.getSlotEndTimeStamp().getMinutes());
+	    Date slot1End = new Date(cal.getTime().getTime());
+
+	    // Get the start and end time for the existing slot on the given day
+	    cal.set(Calendar.HOUR_OF_DAY, slot2.getSlotStartTimeStamp().getHours());
+	    cal.set(Calendar.MINUTE, slot2.getSlotStartTimeStamp().getMinutes());
+	    Date slot2Start = new Date(cal.getTime().getTime());
+
+	    cal.set(Calendar.HOUR_OF_DAY, slot2.getSlotEndTimeStmp().getHours());
+	    cal.set(Calendar.MINUTE, slot2.getSlotEndTimeStmp().getMinutes());
+	    Date slot2End = new Date(cal.getTime().getTime());
+
+	    return (slot1Start.before(slot2End) && slot1Start.after(slot2Start)) ||
+	           (slot1End.before(slot2End) && slot1End.after(slot2Start)) ||
+	           (slot2Start.before(slot1End) && slot2Start.after(slot1Start)) ||
+	           (slot2End.before(slot1End) && slot2End.after(slot1Start)) ||
+	           (slot1Start.equals(slot2Start)) ||
+	           (slot1End.equals(slot2End));
+	}
+
+	// Method to get list of days between two dates
+	private List<java.util.Date> getDaysBetween(java.util.Date start, java.util.Date end) {
+	    List<java.util.Date> dates = new ArrayList<>();
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(start);
+
+	    while (cal.getTime().before(end) || cal.getTime().equals(end)) {
+	        dates.add(cal.getTime());
+	        cal.add(Calendar.DATE, 1);
+	    }
+	    return dates;
+	}
+	
+//	@Override
+//	public Map<String, Object> vipSlot(ClubSlot clubSlot) {
+//		// TODO Auto-generated method stub
+//		Map<String, Object> outputMap = new HashMap<String, Object>();
+//
+//		// LocalDateTime start = getLocalDateTime(clubSlot.getSlotStartTimeStamp());
+//		// LocalDateTime stop = getLocalDateTime(clubSlot.getSlotEndTimeStamp());
+//		
+//		List<ClubSlotModel> existingSlotList =  slotDao.findBySlotStartTimeStampAfterAndSlotEndTimeStampBefore(clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime());
+//		
+//		if(existingSlotList!=null && !existingSlotList.isEmpty()) {
+//			outputMap.put("Status","Failure");
+//			outputMap.put("Message","Slot Record already Exists.Please delete existing slot records and proceed.");
+//			outputMap.put("Data",existingSlotList);
+//		}
+//		else {
+//     
+//		LocalDateTime start = clubSlot.getSlotStartTimeStamp().toLocalDateTime();
+//		LocalDateTime stop = clubSlot.getSlotEndTimeStamp().toLocalDateTime();
+//		String timeZoneId = "Asia/Kolkata"; // Indian time zone
+//		ZoneId zoneId = ZoneId.of(timeZoneId);
+//		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+//		//LocalTime startTime = LocalTime.parse(clubSlot.getStart(), formatter);
+//		//LocalTime endTime = LocalTime.parse(clubSlot.getEnd(), formatter);
+//		
+//
+//
+//		List<LocalDateTime> slots = new ArrayList<>();
+//		List<ClubSlot> slotList = new ArrayList<>();
+//	
+//		LocalDateTime ldt = start;
+//		 ZoneId sourceZone = ZoneId.systemDefault();
+//
+//		LocalTime startTime=start.atZone(sourceZone).withZoneSameInstant(zoneId).toLocalTime();
+//		LocalTime endTime=stop.atZone(sourceZone).withZoneSameInstant(zoneId).toLocalTime();
+//		while (ldt.isBefore(stop)) {
+//			System.out.println("-------");
+//			System.out.println("-------");
+//			System.out.println("LocalTime");
+//			System.out.println(ldt.toLocalTime());
+//			System.out.println("ldt.atZone(zoneId)");
+//			System.out.println("Stop");
+//			System.out.println(stop);
+//			System.out.println("ldt");
+//			System.out.println(ldt);
+//			System.out.println(ldt.atZone(zoneId).toLocalTime());
+//			System.out.println("Start Time");
+//			System.out.println(startTime);
+//			System.out.println("-------");
+//			
+//		
+//			slots.add(ldt);
+//			ClubSlot clubSlots = new ClubSlot();
+//			clubSlots = SerializationUtils.clone(clubSlot);
+//			try {
+//				clubSlots.setSlotStartTimeStamp(getTimestamp(ldt));
+//			
+//				
+//				ZonedDateTime indianDateTime = ldt.atZone(sourceZone).withZoneSameInstant(zoneId);
+//		        System.out.println("indianDateTime");
+//		        System.out.println(indianDateTime);
+//		        System.out.println(Date.valueOf(indianDateTime.toLocalDate()));
+//				clubSlots.setSlotDate(  Date.valueOf(indianDateTime.toLocalDate()));
+//				  System.out.println("indianDateTime.toLocalTime");
+//				System.out.println(indianDateTime.toLocalTime());
+//				System.out.println(clubSlots.getSlotDate());
+//		        
+//			
+//				
+//				 if( ( indianDateTime.toLocalTime().isAfter(startTime) ||  
+//						indianDateTime.toLocalTime().equals(startTime))  && 
+//						( indianDateTime.toLocalTime().isBefore(endTime) || 
+//								indianDateTime.toLocalTime().equals(endTime)) ) {
+//					System.out.println("-TRUEEEEEE-----");
+//					ldt = ldt.plusMinutes(clubSlot.getSlotDuration());
+//					clubSlots.setSlotEndTimeStamp(getTimestamp(ldt));
+//					System.out.println("ldt.getDayOfWeek().getValue()");
+//					System.out.println(ldt.getDayOfWeek().getValue());
+//					if(CollectionUtils.isNotEmpty(clubSlots.getSlotDays()) && clubSlots.getSlotDays().contains(ldt.getDayOfWeek().getValue())) {
+//					clubSlots.setSlotAvailable("Y");
+//					clubSlots.setSlotStatus("Blocked for VIP");
+//					slotList.add(clubSlots);
+//					}
+//					
+//				}else {
+//					System.out.println("-FALSE-----");
+//					ldt = ldt.plusMinutes(clubSlot.getSlotDuration());
+//				}	
+//				
+//				 
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			// Prepare for the next loop.
+//		}
+//	
+//		saveSlotNative(slotList);
+//	 
+//		outputMap.put("Status","Success");
+//		outputMap.put("Message","Slot Record Added successfully");
+//		outputMap.put("Data",slotList);
+//		
+//		}
+//	
+//		return outputMap;
+//	}
 	
 	@Override
 	public Map<String, Object> vipSlot(ClubSlot clubSlot) {
 		// TODO Auto-generated method stub
 		Map<String, Object> outputMap = new HashMap<String, Object>();
-
-		// LocalDateTime start = getLocalDateTime(clubSlot.getSlotStartTimeStamp());
-		// LocalDateTime stop = getLocalDateTime(clubSlot.getSlotEndTimeStamp());
 		
-		List<ClubSlotModel> existingSlotList =  slotDao.findBySlotStartTimeStampAfterAndSlotEndTimeStampBefore(clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime());
-		
-		if(existingSlotList!=null && !existingSlotList.isEmpty()) {
-			outputMap.put("Status","Failure");
-			outputMap.put("Message","Slot Record already Exists.Please delete existing slot records and proceed.");
-			outputMap.put("Data",existingSlotList);
-		}
-		else {
-     
-		LocalDateTime start = clubSlot.getSlotStartTimeStamp().toLocalDateTime();
-		LocalDateTime stop = clubSlot.getSlotEndTimeStamp().toLocalDateTime();
-		String timeZoneId = "Asia/Kolkata"; // Indian time zone
-		ZoneId zoneId = ZoneId.of(timeZoneId);
-		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-		//LocalTime startTime = LocalTime.parse(clubSlot.getStart(), formatter);
-		//LocalTime endTime = LocalTime.parse(clubSlot.getEnd(), formatter);
-		
+			List<ClubSlotModel> existingSlotList =  slotDao.findBySlotStartTimeStampGreaterThanEqualAndSlotStartTimeStampLessThanEqual( clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime());
 
+			   boolean slotBlockedForVIP = false;
 
-		List<LocalDateTime> slots = new ArrayList<>();
-		List<ClubSlot> slotList = new ArrayList<>();
-	
-		LocalDateTime ldt = start;
-		 ZoneId sourceZone = ZoneId.systemDefault();
+			    if (existingSlotList != null && !existingSlotList.isEmpty()) {
+			        for (ClubSlotModel slot : existingSlotList) {
+			            // Check if the slot has already been blocked for VIP
+			            if ("Blocked for VIP".equals(slot.getSlotStatus())) {
+			                slotBlockedForVIP = true;
+			                break;  // No need to continue checking other slots
+			            }
+			        }
 
-		LocalTime startTime=start.atZone(sourceZone).withZoneSameInstant(zoneId).toLocalTime();
-		LocalTime endTime=stop.atZone(sourceZone).withZoneSameInstant(zoneId).toLocalTime();
-		while (ldt.isBefore(stop)) {
-			System.out.println("-------");
-			System.out.println("-------");
-			System.out.println("LocalTime");
-			System.out.println(ldt.toLocalTime());
-			System.out.println("ldt.atZone(zoneId)");
-			System.out.println("Stop");
-			System.out.println(stop);
-			System.out.println("ldt");
-			System.out.println(ldt);
-			System.out.println(ldt.atZone(zoneId).toLocalTime());
-			System.out.println("Start Time");
-			System.out.println(startTime);
-			System.out.println("-------");
-			
-		
-			slots.add(ldt);
-			ClubSlot clubSlots = new ClubSlot();
-			clubSlots = SerializationUtils.clone(clubSlot);
-			try {
-				clubSlots.setSlotStartTimeStamp(getTimestamp(ldt));
-			
-				
-				ZonedDateTime indianDateTime = ldt.atZone(sourceZone).withZoneSameInstant(zoneId);
-		        System.out.println("indianDateTime");
-		        System.out.println(indianDateTime);
-		        System.out.println(Date.valueOf(indianDateTime.toLocalDate()));
-				clubSlots.setSlotDate(  Date.valueOf(indianDateTime.toLocalDate()));
-				  System.out.println("indianDateTime.toLocalTime");
-				System.out.println(indianDateTime.toLocalTime());
-				System.out.println(clubSlots.getSlotDate());
-		        
-			
-				
-				 if( ( indianDateTime.toLocalTime().isAfter(startTime) ||  
-						indianDateTime.toLocalTime().equals(startTime))  && 
-						( indianDateTime.toLocalTime().isBefore(endTime) || 
-								indianDateTime.toLocalTime().equals(endTime)) ) {
-					System.out.println("-TRUEEEEEE-----");
-					ldt = ldt.plusMinutes(clubSlot.getSlotDuration());
-					clubSlots.setSlotEndTimeStamp(getTimestamp(ldt));
-					System.out.println("ldt.getDayOfWeek().getValue()");
-					System.out.println(ldt.getDayOfWeek().getValue());
-					if(CollectionUtils.isNotEmpty(clubSlots.getSlotDays()) && clubSlots.getSlotDays().contains(ldt.getDayOfWeek().getValue())) {
-					clubSlots.setSlotAvailable("Y");
-					clubSlots.setSlotStatus("Blocked for VIP");
-					slotList.add(clubSlots);
-					}
-					
-				}else {
-					System.out.println("-FALSE-----");
-					ldt = ldt.plusMinutes(clubSlot.getSlotDuration());
-				}	
-				
-				 
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// Prepare for the next loop.
-		}
-	
-		saveSlotNative(slotList);
-	 
-		outputMap.put("Status","Success");
-		outputMap.put("Message","Slot Record Added successfully");
-		outputMap.put("Data",slotList);
-		
-		}
-	
-		return outputMap;
-	}
-	
-	
-private void updateSlotNative(List<ClubSlot> slotList) {
-	Connection conn = null;
-	
-	 try {	
-		Class.forName("org.postgresql.Driver");
-		conn = DriverManager
-		            .getConnection("jdbc:postgresql://database-1.cnaee60qc6yl.us-east-2.rds.amazonaws.com/clubdb",
-		            		userName, password);
-		  conn.setAutoCommit(false);
-			//String slotSaveSQl= "INSERT INTO public.club_slot( club_name) 	VALUES ( ?)";
+			        if (slotBlockedForVIP) {
+			            outputMap.put("Status", "Failure");
+			            outputMap.put("Message", "Already slot has been blocked");
+			        } else {
+			            // Update each slot individually
+			            for (ClubSlotModel slot : existingSlotList) {
+			                slotDao.updateSlotStatusBySlotId(clubSlot.getSlotStatus(), slot.getSlotId());
+			            }
+			            outputMap.put("Status", "Success");
+			            outputMap.put("Message", "Existing Slot Record Blocked successfully");
+			            outputMap.put("Data", existingSlotList);
+			        }
+			    } else {
+			        outputMap.put("Status", "Failure");
+			        outputMap.put("Message", "There is no open slots to be blocked for the given range");
+			    }
 
-			String slotSaveSQl= "UPDATE public.club_slot\r\n"
-					+ "	SET slot_id=?, club_name=?, created_by=?, created_date=?, player_count=?, primary_booking_id=?, secondary_booking=?, slot_available=?, slot_date=?, slot_end_timestmp=?, slot_start_timestmp=?, slot_status=?, tee_time=?\r\n"
-					+ "	WHERE slot_status = 'Blocked for VIP'";
-			PreparedStatement stmt = conn.prepareStatement(slotSaveSQl);
-
-			   
-			   slotList.forEach(slot->{
-				   try {
-					   Iterable<ClubSlot> soltId = slotDao.findAll();	   
-					stmt.setInt(1, ((ClubSlot) soltId).getSlotId());
-					stmt.setString(2, slot.getClubName());
-					stmt.setString(3, slot.getCreatedBy());
-					stmt.setTimestamp(4, slot.getCreatedDate());
-					stmt.setString(5, slot.getSecondaryBooking());
-					stmt.setDate(6, slot.getSlotDate());
-					stmt.setTimestamp(7, slot.getSlotEndTimeStamp());
-					stmt.setTimestamp(8, slot.getSlotStartTimeStamp());
-					stmt.setString(9, slot.getSlotStatus());
-					stmt.setString(10, slot.getSlotAvailable());
-					stmt.setInt(11, slot.getPlayerCount());
-					if(slot.getPrimaryBookingId()!=null) {
-						stmt.setInt(12, slot.getPrimaryBookingId());
-					}else {
-						stmt.setInt(12, 0);
-					}
-					stmt.setString(13, slot.getTeeTime());
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				   try {
-					   stmt.addBatch();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				   
-			   });
-			   
-			   stmt.executeBatch();
-			   conn.commit();
-			   conn.close();
-
-	} catch (ClassNotFoundException | SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
- 
-
-
+			    return outputMap;
 }
-	
 
+	
 	private void saveSlotNative(List<ClubSlot> slotList) {
 		
 		Connection conn = null;
@@ -366,6 +403,9 @@ private void updateSlotNative(List<ClubSlot> slotList) {
 			conn = DriverManager
 			            .getConnection("jdbc:postgresql://database-1.cnaee60qc6yl.us-east-2.rds.amazonaws.com/clubdb",
 			            		userName, password);
+//			conn = DriverManager
+//		            .getConnection("jdbc:postgresql://localhost:5432/Clubdb",
+//		            		userName, password);
 			  conn.setAutoCommit(false);
 				//String slotSaveSQl= "INSERT INTO public.club_slot( club_name) 	VALUES ( ?)";
 
@@ -560,11 +600,21 @@ private void updateSlotNative(List<ClubSlot> slotList) {
 		ZoneId zoneId = ZoneId.of(timeZoneId);
 		ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
 		System.out.println("zonedDateTime.getDayOfWeek()");
-		System.out.println(zonedDateTime.getDayOfWeek().getValue());
 		Timestamp timestamp = Timestamp.valueOf(zonedDateTime.toLocalDateTime());
 		System.out.println("timestamp.getDayOfWeek()");
 		
 		return timestamp;
+//		  String timeZoneId = "Asia/Kolkata"; // Indian time zone
+//
+//		    ZoneId zoneId = ZoneId.of(timeZoneId);
+//		    ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
+//
+//		    // Truncate the LocalDateTime to remove seconds and nanoseconds
+//		    LocalDateTime truncatedLocalDateTime = zonedDateTime.toLocalDateTime().truncatedTo(ChronoUnit.MINUTES);
+//		    
+//		    Timestamp timestamp = Timestamp.valueOf(truncatedLocalDateTime);
+//
+//		    return timestamp;
 	}
 
 	public LocalDateTime getLocalDateTime(Timestamp timestamp) {
@@ -612,25 +662,24 @@ private void updateSlotNative(List<ClubSlot> slotList) {
 	}
 
 
-
-
-
-
-
-
 	@Override
 	public Map<String, Object> delete(ClubSlot clubSlot) {
 		// TODO Auto-generated method stub
 		Map<String, Object> outputMap = new HashMap<String, Object>();
 		
 		SlotBooked slotBooked = userBookingDao.findBySlotRangeandTeeTime(clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime());
-		if(slotBooked.getSlotBooked().equals(0)){
+		
+		 if(slotBooked.getSlotBooked().equals(0)){
 			int deletecount =  slotDao.deleteSlotsWithinDateRangeAndOnSpecificDays(clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime(),clubSlot.getSlotDays());
+			
 			outputMap.put("Status", "Success");
 			outputMap.put("Message", "Record Deleted Successfully");
-			outputMap.put("Data", deletecount);
+			outputMap.put("Data", slotBooked);
+			System.out.println("****************************************"+deletecount);
 			
-		}else {
+		}
+			
+		else {
 			outputMap.put("Status", "Failure");
 			outputMap.put("Message", "Booking Exists for the Slot.please Delete Booking and delete slot");
 		}
@@ -647,9 +696,19 @@ private void updateSlotNative(List<ClubSlot> slotList) {
 		Map<String, Object> outputMap = new HashMap<String, Object>();
 	int updatedSlot =	slotDao.updateSlotStatusBySlotId(clubSlot.getSlotStatus(), clubSlot.getSlotId());
 		outputMap.put("Status", "Success");
-		outputMap.put("Message", "Successfully Slot booked for VIP");
+		outputMap.put("Message", "Successfully Slot blocked for VIP");
 		outputMap.put("Data", updatedSlot);
 		return outputMap;
+	}
+
+	@Override
+	public Map<String, Object> individuaSlotUnBlock(ClubSlot clubSlot) {
+		Map<String, Object> outputMap = new HashMap<String, Object>();
+		int updatedSlot =	slotDao.updateSlotStatusBySlotId(clubSlot.getSlotStatus(), clubSlot.getSlotId());
+			outputMap.put("Status", "Success");
+			outputMap.put("Message", "Successfully VIP slot has been unblocked");
+			outputMap.put("Data", updatedSlot);
+			return outputMap;
 	}
 
 
