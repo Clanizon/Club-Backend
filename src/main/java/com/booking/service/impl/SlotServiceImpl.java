@@ -166,10 +166,10 @@ public class SlotServiceImpl implements SlotService {
 			
 				
 				 if( ( indianDateTime.toLocalTime().isAfter(startTime) ||  
-						indianDateTime.toLocalTime().equals(startTime))  && 
+						indianDateTime.toLocalTime().equals(startTime)) && 
 						( indianDateTime.toLocalTime().isBefore(endTime) || 
 								indianDateTime.toLocalTime().equals(endTime)) ) {
-					System.out.println("-TRUEEEEEE-----");
+					System.out.println("-TRUEEEEEE-----");     
 					ldt = ldt.plusMinutes(clubSlot.getSlotDuration());
 					clubSlots.setSlotEndTimeStamp(getTimestamp(ldt));
 					System.out.println("ldt.getDayOfWeek().getValue()");

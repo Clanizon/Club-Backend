@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.booking.dao.ClubConfigDao;
 import com.booking.dao.ClubSlotBookingDao;
 import com.booking.dao.ClubSlotDao;
 import com.booking.dao.UserBookingDao;
@@ -24,6 +25,7 @@ import com.booking.dao.UserDao;
 import com.booking.model.slot.ClubSlot;
 import com.booking.model.slot.ClubSlotBooking;
 import com.booking.model.slot.UserBooking;
+import com.booking.model.user.ClubConfig;
 import com.booking.model.user.ClubUser;
 import com.booking.service.BookingService;
 import com.booking.uimodel.UIResponse;
@@ -51,7 +53,8 @@ public class BookingServiceImpl implements BookingService {
 	  @Autowired
 	  private UserBookingDao userbookDao;
 
- 
+	  @Autowired
+	 private ClubConfigDao clubConfigDao;
 
    
 
@@ -259,21 +262,19 @@ List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterl
 	@Override
 	public Object deleteUserBooking(ClubSlotBooking clubSlot) {
 		Map<String, Object> outputMap = new HashMap<String, Object>();
-				
-		ClubSlot slotTime = slotDao.findBySlotId(clubSlot.getSlotId());
-		
+						
 		Timestamp slotedTime = clubSlot.getSlotStartTimeStamp();
 		//Timestamp slotedTime = slotTime.getSlotStartTimestamp();
 
-		
 		 // Convert Timestamp to LocalDateTime
 	    LocalDateTime createdDateTime = slotedTime.toLocalDateTime();
-	    	    
 	    // Get the current date and time
-	    LocalDateTime now = LocalDateTime.now();
-	    System.out.println("---------"+now);
+         LocalDateTime now = LocalDateTime.now();
+   	    System.out.println("---------"+now);
+	    ClubConfig hrs = clubConfigDao.findByKey("hourcancellinglimit");
+	    int limit = hrs.getHoursLimit();
 	    // Get the threshold time (24 hours before the booking time)
-	    LocalDateTime thresholdTime = createdDateTime.minusHours(24);
+	    LocalDateTime thresholdTime = createdDateTime.minusHours(limit);
 	    // Check if the current time is before the threshold time
 	    if (now.isBefore(thresholdTime)) {
 	        // Update approval status to "Booking Cancelled"
@@ -286,7 +287,7 @@ List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterl
 	            outputMap.put("Status", "Successfully Deleted");
 	        } else {
 	        	outputMap.put("Status", "Failed");
-				outputMap.put("Message", "Booking cannot be deleted as it is within 24 hours of the booking time.");
+				outputMap.put("Message", "Booking cannot be deleted as it is within "+limit+" hours of the booking time.");
 	        }
 	      //  return "Successfully Deleted";
 	   // } 

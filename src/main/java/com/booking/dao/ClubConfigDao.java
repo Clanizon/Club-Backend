@@ -12,4 +12,5 @@ public interface ClubConfigDao extends CrudRepository<ClubConfig, Long> {
 	ClubConfig findByKey(String key);
 	ClubConfig findByConfigId(String key);
 	
+	
 }

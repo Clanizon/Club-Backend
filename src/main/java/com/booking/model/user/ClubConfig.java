@@ -84,13 +84,24 @@ public class ClubConfig implements Serializable {
 	@Column(name="DATE_MODIFIED")
 	private Timestamp dateModified;
 	
+
 	@Column(name="CATEGORY")
 	private String category;
 	
 	@Column(name="MODIFIED_BY")
 	private String modifiedBy;
 	
+	@Column(name="HOURS_LIMIT")
+	private Integer hoursLimit;
 
+
+	public Integer getHoursLimit() {
+		return hoursLimit;
+	}
+
+	public void setHoursLimit(Integer hoursLimit) {
+		this.hoursLimit = hoursLimit;
+	}
 
 
 	
