@@ -83,6 +83,7 @@ public interface ClubSlotDao extends CrudRepository<ClubSlot, Integer> {
 		 		+ "cs.primary_booking_id as primaryBookingId, cs.secondary_booking as secondaryBooking, cs.slot_available as "
 		 		+ "slotAvailable, cs.slot_date as slotDate, cs.slot_end_timestmp as slotEndTimestmp, cs.slot_start_timestmp as slotStartTimeStamp, "
 		 		+ "cs.slot_status as slotStatus, cs.tee_time as teeTime from club_slot cs where cs.slot_start_timestmp >=:curDate and cs.slot_Start_timestmp <=:stop and cs.tee_time =:teeTime",
+		 		
 	       nativeQuery = true)
 List<ClubSlotModel> findBySlotStartTimeStampGreaterThanEqualAndSlotStartTimeStampLessThanEqual( Timestamp curDate, Timestamp stop,  String teeTime);
 //	 @Modifying

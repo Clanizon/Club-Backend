@@ -21,7 +21,7 @@ public interface ClubSlotBookingDao extends CrudRepository<ClubSlotBooking, Inte
 	ClubSlotBooking findByBookingId(Integer bookingId);
 	
 	List<ClubSlotBooking> findBySlotDate(Date slotdate);
-	
+	ClubSlotBooking findBySlotId(Integer integer);
 	List<ClubSlotBooking> findBySlotDateAndBookingStatusNot(Date slotdate,String Status);
 	
 	List<ClubSlotBooking>  findByPrimaryBookingIdAndBookingStatus(Integer bookingId,String bookingStatus);

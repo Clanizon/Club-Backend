@@ -38,6 +38,7 @@ import com.booking.dao.ClubSlotDao;
 import com.booking.dao.UserBookingDao;
 import com.booking.model.SlotBooked;
 import com.booking.model.slot.ClubSlot;
+import com.booking.model.slot.ClubSlotBooking;
 import com.booking.model.slot.ClubSlotModel;
 import com.booking.model.user.ClubConfig;
 import com.booking.service.SlotService;
@@ -358,39 +359,105 @@ public class SlotServiceImpl implements SlotService {
 	@Override
 	public Map<String, Object> vipSlot(ClubSlot clubSlot) {
 		// TODO Auto-generated method stub
-		Map<String, Object> outputMap = new HashMap<String, Object>();
+		Map<String, Object> outputMap = new HashMap<>();
+		 List<ClubSlotModel> listOfSlot = new ArrayList<>();
 		
-			List<ClubSlotModel> existingSlotList =  slotDao.findBySlotStartTimeStampGreaterThanEqualAndSlotStartTimeStampLessThanEqual( clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime());
+	    // Split the date range into individual dates
+	    List<java.util.Date> daysBetween = getDaysBetween(clubSlot.getSlotStartTimeStamp(), clubSlot.getSlotEndTimeStamp());
 
-			   boolean slotBlockedForVIP = false;
+	    boolean slotBlockedForVIP = false;
+	    boolean blockedAnySlot = false;
 
-			    if (existingSlotList != null && !existingSlotList.isEmpty()) {
-			        for (ClubSlotModel slot : existingSlotList) {
-			            // Check if the slot has already been blocked for VIP
-			            if ("Blocked for VIP".equals(slot.getSlotStatus())) {
-			                slotBlockedForVIP = true;
-			                break;  // No need to continue checking other slots
-			            }
-			        }
+	    for (java.util.Date day : daysBetween) {
+	        Calendar startCal = Calendar.getInstance();
+	        startCal.setTime(day);
+	        startCal.set(Calendar.HOUR_OF_DAY, clubSlot.getSlotStartTimeStamp().getHours());
+	        startCal.set(Calendar.MINUTE, clubSlot.getSlotStartTimeStamp().getMinutes());
+	        java.util.Date slotStartTime = startCal.getTime();
 
-			        if (slotBlockedForVIP) {
-			            outputMap.put("Status", "Failure");
-			            outputMap.put("Message", "Already slot has been blocked");
-			        } else {
-			            // Update each slot individually
-			            for (ClubSlotModel slot : existingSlotList) {
-			                slotDao.updateSlotStatusBySlotId(clubSlot.getSlotStatus(), slot.getSlotId());
-			            }
-			            outputMap.put("Status", "Success");
-			            outputMap.put("Message", "Existing Slot Record Blocked successfully");
-			            outputMap.put("Data", existingSlotList);
-			        }
-			    } else {
-			        outputMap.put("Status", "Failure");
-			        outputMap.put("Message", "There is no open slots to be blocked for the given range");
-			    }
+	        Calendar endCal = Calendar.getInstance();
+	        endCal.setTime(day);
+	        endCal.set(Calendar.HOUR_OF_DAY, clubSlot.getSlotEndTimeStamp().getHours());
+	        endCal.set(Calendar.MINUTE, clubSlot.getSlotEndTimeStamp().getMinutes());
+	        java.util.Date slotEndTime = endCal.getTime();
 
-			    return outputMap;
+	        // Fetch the slots that fall within the specified time range and tee time
+	        List<ClubSlotModel> existingSlotList = slotDao.findBySlotStartTimeStampGreaterThanEqualAndSlotStartTimeStampLessThanEqual(
+	            new Timestamp(slotStartTime.getTime()), 
+	            new Timestamp(slotEndTime.getTime()), 
+	            clubSlot.getTeeTime()
+	        );
+
+	        // Check if any slots were found
+	        if (existingSlotList != null && !existingSlotList.isEmpty()) {
+	        	
+	            for (ClubSlotModel slot : existingSlotList) {
+	                // Check if the slot has already been blocked for VIP
+                    listOfSlot.add(slot);
+
+	                if ("Blocked for VIP".equals(slot.getSlotStatus()) || "Primary Booked".equals(slot.getSlotStatus())) {
+	                    slotBlockedForVIP = true;
+	                    break; // No need to continue checking other slots for this day
+	                }
+	            }
+
+	            if (slotBlockedForVIP) {
+	                outputMap.put("Status", "Failure");
+	                outputMap.put("Message", "Already slot has been Blocked or Booked.");
+	                return outputMap;
+	            } 
+	        }
+	    }
+	    if(!listOfSlot.isEmpty()) {
+            // Update each slot individually
+            for (ClubSlotModel slot : listOfSlot) {
+            	
+                slotDao.updateSlotStatusBySlotId(clubSlot.getSlotStatus(), slot.getSlotId());
+            }
+            blockedAnySlot = true;
+        }
+	    if (blockedAnySlot) {
+	        outputMap.put("Status", "Success");
+	        outputMap.put("Message", "Existing Slot Record Blocked successfully");
+	    } else {
+	        outputMap.put("Status", "Failure");
+	        outputMap.put("Message", "There is no open slots to be blocked for the given range");
+	    }
+
+	    return outputMap;
+//		Map<String, Object> outputMap = new HashMap<String, Object>();
+//		
+//			List<ClubSlotModel> existingSlotList =  slotDao.findBySlotStartTimeStampGreaterThanEqualAndSlotStartTimeStampLessThanEqual( clubSlot.getSlotStartTimeStamp(),clubSlot.getSlotEndTimeStamp(),clubSlot.getTeeTime(),clubSlot.getSlotDays());
+//
+//			   boolean slotBlockedForVIP = false;
+//
+//			    if (existingSlotList != null && !existingSlotList.isEmpty()) {
+//			        for (ClubSlotModel slot : existingSlotList) {
+//			            // Check if the slot has already been blocked for VIP
+//			            if ("Blocked for VIP".equals(slot.getSlotStatus())) {
+//			                slotBlockedForVIP = true;
+//			                break;  // No need to continue checking other slots
+//			            }
+//			        }
+//
+//			        if (slotBlockedForVIP) {
+//			            outputMap.put("Status", "Failure");
+//			            outputMap.put("Message", "Already slot has been blocked");
+//			        } else {
+//			            // Update each slot individually
+//			            for (ClubSlotModel slot : existingSlotList) {
+//			                slotDao.updateSlotStatusBySlotId(clubSlot.getSlotStatus(), slot.getSlotId());
+//			            }
+//			            outputMap.put("Status", "Success");
+//			            outputMap.put("Message", "Existing Slot Record Blocked successfully");
+//			            outputMap.put("Data", existingSlotList);
+//			        }
+//			    } else {
+//			        outputMap.put("Status", "Failure");
+//			        outputMap.put("Message", "There is no open slots to be blocked for the given range");
+//			    }
+//
+//			    return outputMap;
 }
 
 	
