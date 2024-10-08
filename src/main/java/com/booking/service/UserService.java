@@ -15,7 +15,7 @@ public interface UserService {
     ClubUser findByUserEmail(ClubUser userEmail);
     Object updatePassword(UserDto user);
     ClubUser saveorupdate(UserDto user);
-    
+    ClubUser findByUserId(Integer userId);
     ClubUser updateProfile(UserDto user);
     List<MetaData> findAll();
     ClubUser findOne(String username);

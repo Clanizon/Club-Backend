@@ -241,9 +241,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 	@Override
 	public Object updatePassword(UserDto user) {
-		user.setUserPassword(bcryptEncoder.encode(user.getUserPassword()));
-		
-		return userDao.updatePassword(user.getUserMobile(),user.getUserPassword());
+		//String updated= user.setUserPassword(bcryptEncoder.encode(user.getUserPassword()));
+		String updated= bcryptEncoder.encode(user.getUserPassword());
+		return userDao.changePassword(user.getUserMobile(),updated);
 	}
 	
 	
@@ -281,7 +281,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		dbuser.setUserFname(user.getUserFname());
 		dbuser.setUserLname(user.getUserLname());
 		dbuser.setUserMobile(user.getUserMobile());
-		dbuser.setUserEmail(user.getUserEmail());;
+		dbuser.setUserEmail(user.getUserEmail());
+		dbuser.setFullName(user.getFullName());
+		dbuser.setMembershipNumber(user.getMembershipNumber());
 		 return userDao.save(dbuser);
 	}
 
@@ -324,6 +326,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         return invalid;
     }
+
+	@Override
+	public ClubUser findByUserId(Integer userId) {
+		// TODO Auto-generated method stub
+		return userDao.findByUserId(userId);
+	}
 	}
 
 //	public boolean otpToWhatsapp(ClubUser user) {

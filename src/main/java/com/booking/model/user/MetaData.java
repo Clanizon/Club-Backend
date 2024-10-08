@@ -10,7 +10,7 @@ public interface MetaData {
 	String getUserFname();
 	String getUserLname();
 	String getUserMobile();
-	
+	String getUserEmail();
 	String getMembershipNumber();
 	
 	

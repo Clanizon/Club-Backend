@@ -95,6 +95,12 @@ public class UserController {
     	
     }
     
+    @RequestMapping(value = "/listuserByUserId", method = RequestMethod.POST)
+    public Object listuserById(@RequestBody UserDto user) throws AuthenticationException {
+    	return userService.findByUserId(user.getUserId());
+    	
+    }
+    
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public Object deleteuser(@RequestBody UserDto user) throws AuthenticationException {
     	return userService.deleteuser(user.getUserId());
@@ -218,6 +224,17 @@ public class UserController {
             if ("Invalid OTP".equals(result)) {
                 return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
             }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while updating the password", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @RequestMapping(value="/changepassword", method = RequestMethod.POST)
+    public ResponseEntity<Object> changePassword(@RequestBody UserDto user) {
+        try {
+            Object result = userService.updatePassword(user);
+            
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("An error occurred while updating the password", HttpStatus.INTERNAL_SERVER_ERROR);

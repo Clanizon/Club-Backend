@@ -29,8 +29,20 @@ public class UserDto {
 	}
 
 
+	@Column(name="FULL_NAME")
+	private String fullName;
 
 
+
+	public String getFullName() {
+		return fullName;
+	}
+
+
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 
 
 	@Column(name="created_by")
@@ -249,6 +261,23 @@ public class UserDto {
 	@Column(name="MEMBERSHIP_TYPE")
 	private String membershipType;
 	
+	@Column(name="MEMBERSHIP_NUMBER")
+	private String membershipNumber;
+
+	public String getMembershipNumber() {
+		return membershipNumber;
+	}
+
+
+
+	public void setMembershipNumber(String membershipNumber) {
+		this.membershipNumber = membershipNumber;
+	}
+
+
+
+
+
 
 	@Column(name="user_lname")
 	private String userFname;

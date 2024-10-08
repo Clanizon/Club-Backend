@@ -33,9 +33,9 @@ public interface UserDao extends CrudRepository<ClubUser, Long> {
 
 	 @Transactional
 	 @Modifying
-	 @Query(value = "select user_id as userId,concat(user_Fname, ' ', user_lname) as userFname,user_lname as userLname,full_name as fullName ,user_mobile as userMobile, membership_number as membershipNumber from club_user order by user_fname asc",
+	 @Query(value = "select user_id as userId,concat(user_Fname, ' ', user_lname) as userFname,user_lname as userLname,full_name as fullName ,user_mobile as userMobile, membership_number as membershipNumber,user_email as userEmail from club_user order by user_fname asc",
 		       nativeQuery = true)
-	 
+	 //concat(user_Fname, ' ', user_lname)
 	 List<MetaData> findAllUserList();
 
 	
@@ -51,7 +51,11 @@ public interface UserDao extends CrudRepository<ClubUser, Long> {
 	            nativeQuery = true)
 	int updatePassword(@Param("userId") String userId,@Param("password") String password);
 	
-	
+	@Transactional
+	 @Modifying
+	 @Query(value = "UPDATE club_user set user_password =:userPassword where user_mobile = :userMobile",
+	            nativeQuery = true)
+	int changePassword(@Param("userMobile") String userMobile,@Param("userPassword") String userPassword);
 	
 	
 }
