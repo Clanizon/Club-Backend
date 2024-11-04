@@ -29,11 +29,53 @@ public class UserBooking implements Serializable {
 	@Transient
 	private ClubSlot clubSlot;
 	
+	@Column(name="updated_date")
+	private Timestamp updatedDate;
+	
+	@Column(name="updated_by")
+	private String updatedBy;
+
+	public Timestamp getUpdatedDate() {
+		return updatedDate;
+	}
+
+
+
+
+
+
+	public void setUpdatedDate(Timestamp updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+
+
+
+
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+
+
+
+
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+
+
+
+
 
 	@Column(name="DATE_MODIFIED")
 	private Timestamp dateModified;
 	
 	
+
 
 	public ClubSlot getClubSlot() {
 		return clubSlot;

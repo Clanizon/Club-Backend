@@ -1,7 +1,13 @@
 package com.booking.uimodel;
 
-public class UIResponse {
+import java.io.Serializable;
 
+public class UIResponse implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String status;
 	private String statusMessage;
 	

@@ -38,7 +38,19 @@ public class ClubSlotBooking implements Serializable {
 	@Column(name="booking_Status")
 	private String bookingStatus;
 	
-	
+	@Column(name="cancelled_by")
+	private String cancelledBy;
+
+
+
+	public String getCancelledBy() {
+		return cancelledBy;
+	}
+
+	public void setCancelledBy(String cancelledBy) {
+		this.cancelledBy = cancelledBy;
+	}
+
 	public Integer getPrimaryBookingId() {
 		return primaryBookingId;
 	}
@@ -50,7 +62,28 @@ public class ClubSlotBooking implements Serializable {
 	@Column(name="PLAYER_COUNT")
 	private Integer playerCount;
 	
+	@Column(name="updated_date")
+	private Timestamp updatedDate;
 	
+	@Column(name="updated_by")
+	private String updatedBy;
+	
+	public Timestamp getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Timestamp updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
 	@Column(name="PRIMARY_BOOKING_ID")
 	private Integer primaryBookingId;
 	
@@ -121,8 +154,17 @@ public class ClubSlotBooking implements Serializable {
 	@Column(name="slot_date")
 	private Date slotDate;
 	
-	
+	@Transient
+	private List<Integer> userIds;
 
+
+	public List<Integer> getUserIds() {
+		return userIds;
+	}
+
+	public void setUserIds(List<Integer> userIds) {
+		this.userIds = userIds;
+	}
 
 	@Transient
 	private ClubUser clubUser;
@@ -146,7 +188,8 @@ public class ClubSlotBooking implements Serializable {
 	@Column(name="PLAYER")
 	private String player;
 
-	
+
+
 	@Column(name="SECONDARY_BOOKING")
 	private String secondaryBooking;
 

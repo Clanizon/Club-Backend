@@ -24,6 +24,7 @@ public interface ClubSlotBookingDao extends CrudRepository<ClubSlotBooking, Inte
 	ClubSlotBooking findBySlotId(Integer integer);
 	List<ClubSlotBooking> findBySlotDateAndBookingStatusNot(Date slotdate,String Status);
 	
+	
 	List<ClubSlotBooking>  findByPrimaryBookingIdAndBookingStatus(Integer bookingId,String bookingStatus);
 	
 	@Transactional
@@ -37,5 +38,11 @@ public interface ClubSlotBookingDao extends CrudRepository<ClubSlotBooking, Inte
 	 @Query(value = "update CLUB_SLOT_BOOKING set booking_status = :bookingStatus where booking_id = :bookingId",
 		       nativeQuery = true)
 	int updateApprovalStatus(String bookingStatus, Integer bookingId);
+	
+	@Transactional
+	 @Modifying
+	 @Query(value = "update CLUB_SLOT_BOOKING set cancelled_by = :cancelledBy,  booking_status = :bookingStatus where booking_id = :bookingId",
+		       nativeQuery = true)
+	int updateApprovalStatusAndCancelledBy(String cancelledBy,String bookingStatus, Integer bookingId);
 	
 }

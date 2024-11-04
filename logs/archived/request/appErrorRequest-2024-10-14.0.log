@@ -1,0 +1,395 @@
+2024-10-14 10:50:37,496 WARN com.zaxxer.hikari.pool.HikariPool$HouseKeeper [HikariPool-1 housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1d12h49m56s421ms605µs400ns).
+2024-10-14 10:50:37,579 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:50:37,579 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:50:37,580 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Add connection elided, waiting 0, queue 1
+2024-10-14 10:50:37,586 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Add connection elided, waiting 0, queue 1
+2024-10-14 10:50:37,588 DEBUG org.postgresql.Driver [HikariPool-1 connection adder] Connecting with URL: jdbc:postgresql://localhost:5432/Clubdb
+2024-10-14 10:50:37,587 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@3ee82c15: (connection has passed maxLifetime)
+2024-10-14 10:50:37,593 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Add connection elided, waiting 0, queue 1
+2024-10-14 10:50:37,594 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@388a0935: (connection has passed maxLifetime)
+2024-10-14 10:50:37,594 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Add connection elided, waiting 0, queue 5
+2024-10-14 10:50:37,594 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Add connection elided, waiting 0, queue 5
+2024-10-14 10:50:37,594 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@658070f4: (connection has passed maxLifetime)
+2024-10-14 10:50:37,594 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@364de054: (connection has passed maxLifetime)
+2024-10-14 10:50:37,593 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder] PostgreSQL JDBC Driver 42.2.14
+2024-10-14 10:50:37,594 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 connection closer] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:50:37,594 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@770d0aad: (connection has passed maxLifetime)
+2024-10-14 10:50:37,594 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setDefaultFetchSize = 0
+2024-10-14 10:50:37,595 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 connection closer] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:50:37,595 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setPrepareThreshold = 5
+2024-10-14 10:50:37,594 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Add connection elided, waiting 0, queue 7
+2024-10-14 10:50:37,595 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Trying to establish a protocol version 3 connection to localhost:5432
+2024-10-14 10:50:37,595 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Add connection elided, waiting 0, queue 8
+2024-10-14 10:50:37,595 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Add connection elided, waiting 0, queue 8
+2024-10-14 10:50:37,595 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@79cafa3c: (connection has passed maxLifetime)
+2024-10-14 10:50:37,600 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Receive Buffer Size is 65,536
+2024-10-14 10:50:37,773 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@62db0f9b: (connection has passed maxLifetime)
+2024-10-14 10:50:37,773 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 connection closer] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:50:37,773 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@55bcf1ed: (connection has passed maxLifetime)
+2024-10-14 10:50:37,773 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Send Buffer Size is 65,536
+2024-10-14 10:50:37,773 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 connection closer] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:50:37,774 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@6c1cfc68: (connection has passed maxLifetime)
+2024-10-14 10:50:37,774 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 connection closer] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:50:37,774 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@5b7b14f2: (connection has passed maxLifetime)
+2024-10-14 10:50:37,774 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 connection closer] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:50:37,980 DEBUG com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator [HikariPool-1 connection adder] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5161b0d9
+2024-10-14 10:50:37,980 DEBUG org.postgresql.Driver [HikariPool-1 connection adder] Connecting with URL: jdbc:postgresql://localhost:5432/Clubdb
+2024-10-14 10:50:37,980 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder] PostgreSQL JDBC Driver 42.2.14
+2024-10-14 10:50:37,980 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setDefaultFetchSize = 0
+2024-10-14 10:50:37,981 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setPrepareThreshold = 5
+2024-10-14 10:50:37,981 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Trying to establish a protocol version 3 connection to localhost:5432
+2024-10-14 10:50:37,982 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Receive Buffer Size is 65,536
+2024-10-14 10:50:37,982 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Send Buffer Size is 65,536
+2024-10-14 10:50:38,292 DEBUG com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator [HikariPool-1 connection adder] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5fa64485
+2024-10-14 10:50:38,293 DEBUG org.postgresql.Driver [HikariPool-1 connection adder] Connecting with URL: jdbc:postgresql://localhost:5432/Clubdb
+2024-10-14 10:50:38,293 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder] PostgreSQL JDBC Driver 42.2.14
+2024-10-14 10:50:38,293 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setDefaultFetchSize = 0
+2024-10-14 10:50:38,293 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setPrepareThreshold = 5
+2024-10-14 10:50:38,293 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Trying to establish a protocol version 3 connection to localhost:5432
+2024-10-14 10:50:38,294 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Receive Buffer Size is 65,536
+2024-10-14 10:50:38,294 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Send Buffer Size is 65,536
+2024-10-14 10:50:38,400 DEBUG com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator [HikariPool-1 connection adder] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5b99dba9
+2024-10-14 10:50:38,400 DEBUG org.postgresql.Driver [HikariPool-1 connection adder] Connecting with URL: jdbc:postgresql://localhost:5432/Clubdb
+2024-10-14 10:50:38,401 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder] PostgreSQL JDBC Driver 42.2.14
+2024-10-14 10:50:38,401 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setDefaultFetchSize = 0
+2024-10-14 10:50:38,401 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setPrepareThreshold = 5
+2024-10-14 10:50:38,406 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Trying to establish a protocol version 3 connection to localhost:5432
+2024-10-14 10:50:38,407 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Receive Buffer Size is 65,536
+2024-10-14 10:50:38,407 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Send Buffer Size is 65,536
+2024-10-14 10:50:38,511 DEBUG com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator [HikariPool-1 connection adder] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@1e9b4ebe
+2024-10-14 10:50:38,511 DEBUG org.postgresql.Driver [HikariPool-1 connection adder] Connecting with URL: jdbc:postgresql://localhost:5432/Clubdb
+2024-10-14 10:50:38,511 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder] PostgreSQL JDBC Driver 42.2.14
+2024-10-14 10:50:38,512 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setDefaultFetchSize = 0
+2024-10-14 10:50:38,512 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setPrepareThreshold = 5
+2024-10-14 10:50:38,512 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Trying to establish a protocol version 3 connection to localhost:5432
+2024-10-14 10:50:38,513 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Receive Buffer Size is 65,536
+2024-10-14 10:50:38,513 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Send Buffer Size is 65,536
+2024-10-14 10:50:38,739 DEBUG com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator [HikariPool-1 connection adder] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4220c2cc
+2024-10-14 10:50:38,740 DEBUG org.postgresql.Driver [HikariPool-1 connection adder] Connecting with URL: jdbc:postgresql://localhost:5432/Clubdb
+2024-10-14 10:50:38,740 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder] PostgreSQL JDBC Driver 42.2.14
+2024-10-14 10:50:38,741 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setDefaultFetchSize = 0
+2024-10-14 10:50:38,741 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setPrepareThreshold = 5
+2024-10-14 10:50:38,741 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Trying to establish a protocol version 3 connection to localhost:5432
+2024-10-14 10:50:38,742 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Receive Buffer Size is 65,536
+2024-10-14 10:50:38,742 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Send Buffer Size is 65,536
+2024-10-14 10:50:38,858 DEBUG com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator [HikariPool-1 connection adder] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2f4f3461
+2024-10-14 10:50:38,858 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 connection adder] HikariPool-1 - After adding stats (total=6, active=0, idle=6, waiting=0)
+2024-10-14 10:50:38,858 DEBUG org.postgresql.Driver [HikariPool-1 connection adder] Connecting with URL: jdbc:postgresql://localhost:5432/Clubdb
+2024-10-14 10:50:38,858 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder] PostgreSQL JDBC Driver 42.2.14
+2024-10-14 10:50:38,859 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setDefaultFetchSize = 0
+2024-10-14 10:50:38,859 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setPrepareThreshold = 5
+2024-10-14 10:50:38,859 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Trying to establish a protocol version 3 connection to localhost:5432
+2024-10-14 10:50:38,860 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Receive Buffer Size is 65,536
+2024-10-14 10:50:38,860 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Send Buffer Size is 65,536
+2024-10-14 10:50:38,961 DEBUG com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator [HikariPool-1 connection adder] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3a1ee6b2
+2024-10-14 10:50:38,962 DEBUG org.postgresql.Driver [HikariPool-1 connection adder] Connecting with URL: jdbc:postgresql://localhost:5432/Clubdb
+2024-10-14 10:50:38,962 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder] PostgreSQL JDBC Driver 42.2.14
+2024-10-14 10:50:38,962 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setDefaultFetchSize = 0
+2024-10-14 10:50:38,962 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setPrepareThreshold = 5
+2024-10-14 10:50:38,962 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Trying to establish a protocol version 3 connection to localhost:5432
+2024-10-14 10:50:38,963 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Receive Buffer Size is 65,536
+2024-10-14 10:50:38,963 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Send Buffer Size is 65,536
+2024-10-14 10:50:39,105 DEBUG com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator [HikariPool-1 connection adder] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7eb4b1f1
+2024-10-14 10:50:39,105 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 connection adder] HikariPool-1 - After adding stats (total=8, active=0, idle=8, waiting=0)
+2024-10-14 10:50:39,105 DEBUG org.postgresql.Driver [HikariPool-1 connection adder] Connecting with URL: jdbc:postgresql://localhost:5432/Clubdb
+2024-10-14 10:50:39,105 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder] PostgreSQL JDBC Driver 42.2.14
+2024-10-14 10:50:39,240 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setDefaultFetchSize = 0
+2024-10-14 10:50:39,240 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setPrepareThreshold = 5
+2024-10-14 10:50:39,241 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Trying to establish a protocol version 3 connection to localhost:5432
+2024-10-14 10:50:39,242 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Receive Buffer Size is 65,536
+2024-10-14 10:50:39,242 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Send Buffer Size is 65,536
+2024-10-14 10:50:39,615 DEBUG com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator [HikariPool-1 connection adder] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3a462a49
+2024-10-14 10:50:39,615 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 connection adder] HikariPool-1 - After adding stats (total=9, active=0, idle=9, waiting=0)
+2024-10-14 10:50:39,615 DEBUG org.postgresql.Driver [HikariPool-1 connection adder] Connecting with URL: jdbc:postgresql://localhost:5432/Clubdb
+2024-10-14 10:50:39,615 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder] PostgreSQL JDBC Driver 42.2.14
+2024-10-14 10:50:39,616 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setDefaultFetchSize = 0
+2024-10-14 10:50:39,616 DEBUG org.postgresql.jdbc.PgConnection [HikariPool-1 connection adder]   setPrepareThreshold = 5
+2024-10-14 10:50:39,616 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Trying to establish a protocol version 3 connection to localhost:5432
+2024-10-14 10:50:39,617 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Receive Buffer Size is 65,536
+2024-10-14 10:50:39,618 DEBUG org.postgresql.core.v3.ConnectionFactoryImpl [HikariPool-1 connection adder] Send Buffer Size is 65,536
+2024-10-14 10:50:39,767 DEBUG com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator [HikariPool-1 connection adder] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6cfced5c
+2024-10-14 10:51:00,106 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(203)-127.0.0.1] RMI TCP Connection(203)-127.0.0.1: accepted socket from [127.0.0.1:64103]
+2024-10-14 10:51:00,107 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(203)-127.0.0.1] RMI TCP Connection(203)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:51:00,107 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(203)-127.0.0.1] connectionId=rmi://127.0.0.1  1
+2024-10-14 10:51:07,586 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:51:07,588 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:51:15,109 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(203)-127.0.0.1] RMI TCP Connection(203)-127.0.0.1: (port 63027) connection closed
+2024-10-14 10:51:15,109 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(203)-127.0.0.1] RMI TCP Connection(203)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64103,localport=63027]
+2024-10-14 10:51:15,109 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(203)-127.0.0.1] RMI TCP Connection(203)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64103,localport=63027]
+2024-10-14 10:51:15,918 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] Start expire sessions StandardManager at 1728883275918 sessioncount 0
+2024-10-14 10:51:15,919 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] End expire sessions StandardManager processingTime 1 expired sessions: 0
+2024-10-14 10:51:37,599 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:51:37,599 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:52:00,112 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(204)-127.0.0.1] RMI TCP Connection(204)-127.0.0.1: accepted socket from [127.0.0.1:64211]
+2024-10-14 10:52:00,113 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(204)-127.0.0.1] RMI TCP Connection(204)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:52:00,113 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(204)-127.0.0.1] connectionId=rmi://127.0.0.1  1
+2024-10-14 10:52:07,606 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:52:07,607 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:52:15,114 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(204)-127.0.0.1] RMI TCP Connection(204)-127.0.0.1: (port 63027) connection closed
+2024-10-14 10:52:15,115 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(204)-127.0.0.1] RMI TCP Connection(204)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64211,localport=63027]
+2024-10-14 10:52:15,115 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(204)-127.0.0.1] RMI TCP Connection(204)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64211,localport=63027]
+2024-10-14 10:52:16,079 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] Start expire sessions StandardManager at 1728883336079 sessioncount 0
+2024-10-14 10:52:16,080 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] End expire sessions StandardManager processingTime 1 expired sessions: 0
+2024-10-14 10:52:37,610 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:52:37,611 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:53:00,116 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(205)-127.0.0.1] RMI TCP Connection(205)-127.0.0.1: accepted socket from [127.0.0.1:64256]
+2024-10-14 10:53:00,117 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(205)-127.0.0.1] RMI TCP Connection(205)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:53:00,118 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(205)-127.0.0.1] connectionId=rmi://127.0.0.1  1
+2024-10-14 10:53:07,621 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:53:07,621 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:53:15,120 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(205)-127.0.0.1] RMI TCP Connection(205)-127.0.0.1: (port 63027) connection closed
+2024-10-14 10:53:15,121 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(205)-127.0.0.1] RMI TCP Connection(205)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64256,localport=63027]
+2024-10-14 10:53:15,121 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(205)-127.0.0.1] RMI TCP Connection(205)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64256,localport=63027]
+2024-10-14 10:53:16,112 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] Start expire sessions StandardManager at 1728883396112 sessioncount 0
+2024-10-14 10:53:16,113 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] End expire sessions StandardManager processingTime 1 expired sessions: 0
+2024-10-14 10:53:37,630 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:53:37,631 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:54:00,122 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(206)-127.0.0.1] RMI TCP Connection(206)-127.0.0.1: accepted socket from [127.0.0.1:64306]
+2024-10-14 10:54:00,123 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(206)-127.0.0.1] RMI TCP Connection(206)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:54:00,123 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(206)-127.0.0.1] connectionId=rmi://127.0.0.1  1
+2024-10-14 10:54:07,643 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:54:07,643 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:54:15,126 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(206)-127.0.0.1] RMI TCP Connection(206)-127.0.0.1: (port 63027) connection closed
+2024-10-14 10:54:15,126 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(206)-127.0.0.1] RMI TCP Connection(206)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64306,localport=63027]
+2024-10-14 10:54:15,126 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(206)-127.0.0.1] RMI TCP Connection(206)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64306,localport=63027]
+2024-10-14 10:54:16,170 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] Start expire sessions StandardManager at 1728883456170 sessioncount 0
+2024-10-14 10:54:16,204 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] End expire sessions StandardManager processingTime 34 expired sessions: 0
+2024-10-14 10:54:37,651 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:54:37,651 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:54:56,868 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI Scheduler(0)] RMI Scheduler(0): 19ecb60711f40b74:-7f4de426:19280da3fe8:-7fff
+2024-10-14 10:54:56,870 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI Scheduler(0)] RMI Scheduler(0): removing endpoint 19ecb60711f40b74:-7f4de426:19280da3fe8:-7fff from reference set
+2024-10-14 10:54:56,875 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI Unreferenced-0] called
+2024-10-14 10:54:56,876 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI Unreferenced-0] [javax.management.remote.rmi.RMIConnectionImpl@1c096c10: connectionId=rmi://127.0.0.1  1] closing.
+2024-10-14 10:54:56,881 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI Unreferenced-0] [javax.management.remote.rmi.RMIConnectionImpl@1c096c10: connectionId=rmi://127.0.0.1  1] closed.
+2024-10-14 10:54:56,881 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI Unreferenced-0] done
+2024-10-14 10:54:58,195 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: accepted socket from [127.0.0.1:64331]
+2024-10-14 10:54:58,196 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:54:58,196 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: name = "[Ljava.rmi.server.ObjID;", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:54:58,197 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: name = "java.rmi.dgc.Lease", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:54:58,197 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: name = "java.rmi.dgc.VMID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:54:58,197 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: name = "[B", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:54:58,197 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: name = "java.rmi.server.UID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,124 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: (port 63027) op = 82
+2024-10-14 10:55:00,124 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:55:00,125 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: [127.0.0.1] exception: 
+java.rmi.NoSuchObjectException: no such object in table
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:177)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:587)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:828)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:705)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:704)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-10-14 10:55:00,130 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: (port 63027) op = 112
+2024-10-14 10:55:00,131 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: (port 63027) exception: 
+java.io.IOException: unknown transport op 112
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:604)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:828)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:705)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:704)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-10-14 10:55:00,131 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64331,localport=63027]
+2024-10-14 10:55:00,131 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(207)-127.0.0.1] RMI TCP Connection(207)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64331,localport=63027]
+2024-10-14 10:55:00,141 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(208)-127.0.0.1] RMI TCP Connection(208)-127.0.0.1: accepted socket from [127.0.0.1:64332]
+2024-10-14 10:55:00,143 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(208)-127.0.0.1] RMI TCP Connection(208)-127.0.0.1: (port 63023) op = 80
+2024-10-14 10:55:00,150 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: accepted socket from [127.0.0.1:64333]
+2024-10-14 10:55:00,151 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:55:00,151 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "[Ljava.rmi.server.ObjID;", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,152 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "java.rmi.server.ObjID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,152 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "java.rmi.server.UID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,152 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "java.rmi.dgc.Lease", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,152 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "java.rmi.dgc.VMID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,153 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "[B", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,153 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(208)-127.0.0.1] RMI TCP Connection(208)-127.0.0.1: (port 63023) op = 82
+2024-10-14 10:55:00,154 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(208)-127.0.0.1] RMI TCP Connection(208)-127.0.0.1: (port 63023) op = 84
+2024-10-14 10:55:00,154 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:55:00,163 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:55:00,163 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "[Ljava.rmi.server.ObjID;", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,163 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "java.rmi.server.ObjID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,164 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "java.rmi.server.UID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,164 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "java.rmi.dgc.Lease", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,165 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "java.rmi.dgc.VMID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,165 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "[B", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 10:55:00,166 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: (port 63027) op = 84
+2024-10-14 10:55:00,168 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:55:00,168 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "[Ljavax.management.ObjectName;", codebase = ""
+2024-10-14 10:55:00,169 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "[Ljava.rmi.MarshalledObject;", codebase = ""
+2024-10-14 10:55:00,169 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: name = "[Ljavax.security.auth.Subject;", codebase = ""
+2024-10-14 10:55:00,170 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:55:07,655 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:55:07,655 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:55:16,245 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] Start expire sessions StandardManager at 1728883516245 sessioncount 0
+2024-10-14 10:55:16,246 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] End expire sessions StandardManager processingTime 0 expired sessions: 0
+2024-10-14 10:55:28,201 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: (port 63027) connection closed
+2024-10-14 10:55:28,201 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64333,localport=63027]
+2024-10-14 10:55:28,202 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(209)-127.0.0.1] RMI TCP Connection(209)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64333,localport=63027]
+2024-10-14 10:55:30,149 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(208)-127.0.0.1] RMI TCP Connection(208)-127.0.0.1: (port 63023) connection closed
+2024-10-14 10:55:30,149 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(208)-127.0.0.1] RMI TCP Connection(208)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64332,localport=63023]
+2024-10-14 10:55:30,150 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(208)-127.0.0.1] RMI TCP Connection(208)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64332,localport=63023]
+2024-10-14 10:55:37,663 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:55:37,663 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:56:00,176 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(210)-127.0.0.1] RMI TCP Connection(210)-127.0.0.1: accepted socket from [127.0.0.1:64362]
+2024-10-14 10:56:00,176 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(210)-127.0.0.1] RMI TCP Connection(210)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:56:00,177 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(210)-127.0.0.1] connectionId=rmi://127.0.0.1  2
+2024-10-14 10:56:07,671 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:56:07,671 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:56:15,179 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(210)-127.0.0.1] RMI TCP Connection(210)-127.0.0.1: (port 63027) connection closed
+2024-10-14 10:56:15,179 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(210)-127.0.0.1] RMI TCP Connection(210)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64362,localport=63027]
+2024-10-14 10:56:15,180 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(210)-127.0.0.1] RMI TCP Connection(210)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64362,localport=63027]
+2024-10-14 10:56:16,301 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] Start expire sessions StandardManager at 1728883576301 sessioncount 0
+2024-10-14 10:56:16,302 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] End expire sessions StandardManager processingTime 1 expired sessions: 0
+2024-10-14 10:56:37,673 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:56:37,673 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:57:00,182 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(211)-127.0.0.1] RMI TCP Connection(211)-127.0.0.1: accepted socket from [127.0.0.1:64426]
+2024-10-14 10:57:00,182 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(211)-127.0.0.1] RMI TCP Connection(211)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:57:00,183 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(211)-127.0.0.1] connectionId=rmi://127.0.0.1  2
+2024-10-14 10:57:07,689 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:57:07,689 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:57:15,185 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(211)-127.0.0.1] RMI TCP Connection(211)-127.0.0.1: (port 63027) connection closed
+2024-10-14 10:57:15,186 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(211)-127.0.0.1] RMI TCP Connection(211)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64426,localport=63027]
+2024-10-14 10:57:15,186 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(211)-127.0.0.1] RMI TCP Connection(211)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64426,localport=63027]
+2024-10-14 10:57:16,324 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] Start expire sessions StandardManager at 1728883636324 sessioncount 0
+2024-10-14 10:57:16,325 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] End expire sessions StandardManager processingTime 1 expired sessions: 0
+2024-10-14 10:57:37,698 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:57:37,698 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:58:00,186 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(212)-127.0.0.1] RMI TCP Connection(212)-127.0.0.1: accepted socket from [127.0.0.1:64438]
+2024-10-14 10:58:00,187 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(212)-127.0.0.1] RMI TCP Connection(212)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:58:00,188 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(212)-127.0.0.1] connectionId=rmi://127.0.0.1  2
+2024-10-14 10:58:07,704 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:58:07,704 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:58:15,190 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(212)-127.0.0.1] RMI TCP Connection(212)-127.0.0.1: (port 63027) connection closed
+2024-10-14 10:58:15,190 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(212)-127.0.0.1] RMI TCP Connection(212)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64438,localport=63027]
+2024-10-14 10:58:15,191 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(212)-127.0.0.1] RMI TCP Connection(212)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64438,localport=63027]
+2024-10-14 10:58:16,358 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] Start expire sessions StandardManager at 1728883696358 sessioncount 0
+2024-10-14 10:58:16,359 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] End expire sessions StandardManager processingTime 1 expired sessions: 0
+2024-10-14 10:58:37,717 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:58:37,717 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:59:00,192 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(213)-127.0.0.1] RMI TCP Connection(213)-127.0.0.1: accepted socket from [127.0.0.1:64446]
+2024-10-14 10:59:00,193 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(213)-127.0.0.1] RMI TCP Connection(213)-127.0.0.1: (port 63027) op = 80
+2024-10-14 10:59:00,194 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(213)-127.0.0.1] connectionId=rmi://127.0.0.1  2
+2024-10-14 10:59:07,728 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:59:07,728 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 10:59:15,196 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(213)-127.0.0.1] RMI TCP Connection(213)-127.0.0.1: (port 63027) connection closed
+2024-10-14 10:59:15,197 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(213)-127.0.0.1] RMI TCP Connection(213)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64446,localport=63027]
+2024-10-14 10:59:15,197 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(213)-127.0.0.1] RMI TCP Connection(213)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64446,localport=63027]
+2024-10-14 10:59:16,418 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] Start expire sessions StandardManager at 1728883756418 sessioncount 0
+2024-10-14 10:59:16,419 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] End expire sessions StandardManager processingTime 1 expired sessions: 0
+2024-10-14 10:59:37,740 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 10:59:37,740 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 11:00:00,168 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: accepted socket from [127.0.0.1:64452]
+2024-10-14 11:00:00,169 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: (port 63027) op = 80
+2024-10-14 11:00:00,169 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: name = "[Ljava.rmi.server.ObjID;", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:00:00,170 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: name = "java.rmi.dgc.Lease", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:00:00,170 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: name = "java.rmi.dgc.VMID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:00:00,171 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: name = "[B", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:00:00,171 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: name = "java.rmi.server.UID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:00:00,196 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: (port 63027) op = 82
+2024-10-14 11:00:00,196 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: (port 63027) op = 80
+2024-10-14 11:00:00,196 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(214)-127.0.0.1] connectionId=rmi://127.0.0.1  2
+2024-10-14 11:00:07,744 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 11:00:07,744 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 11:00:16,467 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] Start expire sessions StandardManager at 1728883816467 sessioncount 0
+2024-10-14 11:00:16,467 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] End expire sessions StandardManager processingTime 0 expired sessions: 0
+2024-10-14 11:00:30,176 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: (port 63027) connection closed
+2024-10-14 11:00:30,176 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64452,localport=63027]
+2024-10-14 11:00:30,177 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(214)-127.0.0.1] RMI TCP Connection(214)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64452,localport=63027]
+2024-10-14 11:00:37,752 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 11:00:37,752 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 11:01:00,201 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(215)-127.0.0.1] RMI TCP Connection(215)-127.0.0.1: accepted socket from [127.0.0.1:64461]
+2024-10-14 11:01:00,202 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(215)-127.0.0.1] RMI TCP Connection(215)-127.0.0.1: (port 63027) op = 80
+2024-10-14 11:01:00,202 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(215)-127.0.0.1] connectionId=rmi://127.0.0.1  2
+2024-10-14 11:01:07,762 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 11:01:07,763 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 11:01:15,205 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(215)-127.0.0.1] RMI TCP Connection(215)-127.0.0.1: (port 63027) connection closed
+2024-10-14 11:01:15,206 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(215)-127.0.0.1] RMI TCP Connection(215)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64461,localport=63027]
+2024-10-14 11:01:15,207 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(215)-127.0.0.1] RMI TCP Connection(215)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64461,localport=63027]
+2024-10-14 11:01:16,508 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] Start expire sessions StandardManager at 1728883876508 sessioncount 0
+2024-10-14 11:01:16,509 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-2] End expire sessions StandardManager processingTime 1 expired sessions: 0
+2024-10-14 11:01:37,770 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 11:01:37,770 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 11:02:00,207 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(216)-127.0.0.1] RMI TCP Connection(216)-127.0.0.1: accepted socket from [127.0.0.1:64467]
+2024-10-14 11:02:00,207 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(216)-127.0.0.1] RMI TCP Connection(216)-127.0.0.1: (port 63027) op = 80
+2024-10-14 11:02:00,208 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(216)-127.0.0.1] connectionId=rmi://127.0.0.1  2
+2024-10-14 11:02:07,785 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 11:02:07,785 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 11:02:15,209 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(216)-127.0.0.1] RMI TCP Connection(216)-127.0.0.1: (port 63027) connection closed
+2024-10-14 11:02:15,209 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(216)-127.0.0.1] RMI TCP Connection(216)-127.0.0.1: close connection, socket: Socket[addr=/127.0.0.1,port=64467,localport=63027]
+2024-10-14 11:02:15,210 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(216)-127.0.0.1] RMI TCP Connection(216)-127.0.0.1: socket close: Socket[addr=/127.0.0.1,port=64467,localport=63027]
+2024-10-14 11:02:16,565 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] Start expire sessions StandardManager at 1728883936565 sessioncount 0
+2024-10-14 11:02:16,565 DEBUG org.apache.juli.logging.DirectJDKLog [Catalina-utility-1] End expire sessions StandardManager processingTime 0 expired sessions: 0
+2024-10-14 11:02:37,794 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 11:02:37,794 DEBUG com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024-10-14 11:02:54,130 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: accepted socket from [127.0.0.1:64474]
+2024-10-14 11:02:54,131 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: (port 63027) op = 80
+2024-10-14 11:02:54,131 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "[Ljava.rmi.server.ObjID;", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:54,131 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.server.ObjID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:54,132 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.server.UID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:54,132 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.dgc.VMID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:54,132 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "[B", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:54,443 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: (port 63027) op = 82
+2024-10-14 11:02:54,443 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: (port 63027) op = 80
+2024-10-14 11:02:54,444 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "[Ljava.rmi.server.ObjID;", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:54,445 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.server.ObjID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:54,445 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.server.UID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:54,446 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.dgc.VMID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:54,446 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "[B", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,239 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(218)-127.0.0.1] RMI TCP Connection(218)-127.0.0.1: accepted socket from [127.0.0.1:64475]
+2024-10-14 11:02:56,241 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(218)-127.0.0.1] RMI TCP Connection(218)-127.0.0.1: (port 63023) op = 80
+2024-10-14 11:02:56,242 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: (port 63027) op = 82
+2024-10-14 11:02:56,245 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: (port 63027) op = 80
+2024-10-14 11:02:56,245 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "[Ljava.rmi.server.ObjID;", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,246 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.server.ObjID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,246 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.server.UID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,246 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.dgc.Lease", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,247 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.dgc.VMID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,247 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "[B", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,248 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(218)-127.0.0.1] RMI TCP Connection(218)-127.0.0.1: (port 63023) op = 82
+2024-10-14 11:02:56,249 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: (port 63027) op = 80
+2024-10-14 11:02:56,249 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(218)-127.0.0.1] RMI TCP Connection(218)-127.0.0.1: (port 63023) op = 84
+2024-10-14 11:02:56,250 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: (port 63027) op = 80
+2024-10-14 11:02:56,250 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "[Ljava.rmi.server.ObjID;", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,250 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.server.ObjID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,251 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.server.UID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,251 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.dgc.Lease", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,251 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.dgc.VMID", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,251 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "[B", codebase = "", defaultLoader = jdk.internal.loader.ClassLoaders$PlatformClassLoader@27a4c886
+2024-10-14 11:02:56,252 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: (port 63027) op = 84
+2024-10-14 11:02:56,252 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: (port 63027) op = 80
+2024-10-14 11:02:56,254 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: (port 63027) op = 80
+2024-10-14 11:02:56,255 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "javax.management.ObjectName", codebase = ""
+2024-10-14 11:02:56,256 DEBUG sun.rmi.runtime.Log$LoggerLog [RMI TCP Connection(217)-127.0.0.1] RMI TCP Connection(217)-127.0.0.1: name = "java.rmi.MarshalledObject", codebase = ""
+2024-10-14 11:02:56,257 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(217)-127.0.0.1] connectionId=rmi://127.0.0.1  3 unwrapping params with MBean extended ClassLoader.
+2024-10-14 11:02:56,275 DEBUG sun.util.logging.internal.LoggingProviderImpl$JULWrapper [RMI TCP Connection(217)-127.0.0.1] connectionId=rmi://127.0.0.1  3, name=org.springframework.boot:type=Admin,name=SpringApplication, operationName=shutdown, signature=null
+2024-10-14 11:02:56,276 INFO org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(217)-127.0.0.1] Application shutdown requested.
+2024-10-14 11:02:56,278 DEBUG org.springframework.context.support.AbstractApplicationContext [RMI TCP Connection(217)-127.0.0.1] Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@a202ccb, started on Sat Oct 12 18:40:42 IST 2024
+2024-10-14 11:02:56,288 DEBUG org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup [RMI TCP Connection(217)-127.0.0.1] Stopping beans in phase 2147483647
+2024-10-14 11:02:56,299 DEBUG org.springframework.context.support.DefaultLifecycleProcessor [RMI TCP Connection(217)-127.0.0.1] Bean 'webServerGracefulShutdown' completed its stop procedure
+2024-10-14 11:02:56,300 DEBUG org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup [RMI TCP Connection(217)-127.0.0.1] Stopping beans in phase 2147483646
+2024-10-14 11:02:56,383 DEBUG org.springframework.context.support.DefaultLifecycleProcessor [RMI TCP Connection(217)-127.0.0.1] Bean 'webServerStartStop' completed its stop procedure
+2024-10-14 11:02:56,388 DEBUG org.springframework.jmx.export.MBeanExporter [RMI TCP Connection(217)-127.0.0.1] Unregistering JMX-exposed beans on shutdown
+2024-10-14 11:02:56,389 DEBUG org.springframework.jmx.support.MBeanRegistrationSupport [RMI TCP Connection(217)-127.0.0.1] Unregistering JMX-exposed beans
+2024-10-14 11:02:56,393 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [RMI TCP Connection(217)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-14 11:02:56,393 DEBUG org.hibernate.internal.SessionFactoryImpl [RMI TCP Connection(217)-127.0.0.1] HHH000031: Closing
+2024-10-14 11:02:56,396 DEBUG org.hibernate.type.spi.TypeConfiguration$Scope [RMI TCP Connection(217)-127.0.0.1] Un-scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration$Scope@40e0fed2] from SessionFactory [org.hibernate.internal.SessionFactoryImpl@71af3a08]
+2024-10-14 11:02:56,400 DEBUG org.hibernate.service.internal.AbstractServiceRegistryImpl [RMI TCP Connection(217)-127.0.0.1] Implicitly destroying ServiceRegistry on de-registration of all child ServiceRegistries
+2024-10-14 11:02:56,402 DEBUG org.hibernate.boot.registry.internal.BootstrapServiceRegistryImpl [RMI TCP Connection(217)-127.0.0.1] Implicitly destroying Boot-strap registry on de-registration of all child ServiceRegistries
+2024-10-14 11:02:56,404 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [RMI TCP Connection(217)-127.0.0.1] Shutting down ExecutorService 'applicationTaskExecutor'
+2024-10-14 11:02:56,406 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(217)-127.0.0.1] HikariPool-1 - Shutdown initiated...
+2024-10-14 11:02:56,406 DEBUG com.zaxxer.hikari.pool.HikariPool [RMI TCP Connection(217)-127.0.0.1] HikariPool-1 - Before shutdown stats (total=10, active=0, idle=10, waiting=0)
+2024-10-14 11:02:56,409 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@5161b0d9: (connection evicted)
+2024-10-14 11:02:56,410 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@5fa64485: (connection evicted)
+2024-10-14 11:02:56,410 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@5b99dba9: (connection evicted)
+2024-10-14 11:02:56,411 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@1e9b4ebe: (connection evicted)
+2024-10-14 11:02:56,412 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@4220c2cc: (connection evicted)
+2024-10-14 11:02:56,412 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@2f4f3461: (connection evicted)
+2024-10-14 11:02:56,412 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@3a1ee6b2: (connection evicted)
+2024-10-14 11:02:56,413 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@7eb4b1f1: (connection evicted)
+2024-10-14 11:02:56,414 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@3a462a49: (connection evicted)
+2024-10-14 11:02:56,415 DEBUG com.zaxxer.hikari.pool.PoolBase [HikariPool-1 connection closer] HikariPool-1 - Closing connection org.postgresql.jdbc.PgConnection@6cfced5c: (connection evicted)
+2024-10-14 11:02:56,415 DEBUG com.zaxxer.hikari.pool.HikariPool [RMI TCP Connection(217)-127.0.0.1] HikariPool-1 - After shutdown stats (total=0, active=0, idle=0, waiting=0)
+2024-10-14 11:02:56,415 INFO com.zaxxer.hikari.HikariDataSource [RMI TCP Connection(217)-127.0.0.1] HikariPool-1 - Shutdown completed.

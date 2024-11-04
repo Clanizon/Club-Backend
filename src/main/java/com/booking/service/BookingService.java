@@ -10,7 +10,7 @@ import com.booking.model.slot.UserBooking;
 public interface BookingService {
     Object save(ClubSlotBooking clubSlotBooking);
     
-    List<ClubSlotBooking> findAll();
+    List<ClubSlotBooking> findAll(Date slotDate);
 
 	List<ClubSlotBooking> findByUserId(Integer userId);
 

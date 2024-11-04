@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -22,12 +23,14 @@ import com.booking.dao.ClubSlotBookingDao;
 import com.booking.dao.ClubSlotDao;
 import com.booking.dao.UserBookingDao;
 import com.booking.dao.UserDao;
+import com.booking.model.SlotBooked;
 import com.booking.model.slot.ClubSlot;
 import com.booking.model.slot.ClubSlotBooking;
 import com.booking.model.slot.UserBooking;
 import com.booking.model.user.ClubConfig;
 import com.booking.model.user.ClubUser;
 import com.booking.service.BookingService;
+import com.booking.service.BookingUser;
 import com.booking.uimodel.UIResponse;
 
 
@@ -65,8 +68,21 @@ public class BookingServiceImpl implements BookingService {
 			ClubSlotBooking newbooking = new ClubSlotBooking();
 			UIResponse uiResponse = new UIResponse();
 			ClubSlot clubSlot = slotDao.findBySlotId(clubSlotBooking.getSlotId());
-			
 			List<UserBooking> userList= new ArrayList<UserBooking>();
+
+			if(clubSlot != null) {
+			    List<Integer> userIds = clubSlotBooking.getUserIds();
+			    List<UserBooking> userExistingSlot = userbookDao.findByUserIdAndSlotDate(userIds, clubSlotBooking.getSlotDate());
+			    // Check if there are any existing bookings
+			    if (userExistingSlot != null && !userExistingSlot.isEmpty()) {
+			        uiResponse.setStatus("Failure");
+			        uiResponse.setStatusMessage("Already existed");
+			        uiResponse.setResponse(userExistingSlot); // Return the list of existing bookings
+			        return uiResponse; // Return the response if booking already exists
+			    }
+		     }
+				//} 
+		//	List<UserBooking> userList= new ArrayList<UserBooking>();
 			if (clubSlot != null)
 			{
 				clubSlotBooking.setSlotDate(clubSlot.getSlotDate());
@@ -140,6 +156,7 @@ public class BookingServiceImpl implements BookingService {
 		    	uiResponse.setStatusMessage("Invalid Slot Id");
 		    	uiResponse.setResponse("Failure");
 			}
+			
 			return uiResponse;
 		}
 
@@ -147,9 +164,9 @@ public class BookingServiceImpl implements BookingService {
 
 
 		@Override
-		public List<ClubSlotBooking> findAll() {
+		public List<ClubSlotBooking> findAll(Date slotDate) {
 			// TODO Auto-generated method stub
-			List<ClubSlotBooking> slotBookingList = (List<ClubSlotBooking>) slotBookingDao.findAll();
+			List<ClubSlotBooking> slotBookingList = (List<ClubSlotBooking>) slotBookingDao.findBySlotDate(slotDate);
 			if (slotBookingList != null)
 				slotBookingList.forEach(slb -> {
 					if (slb.getSlotId() != null) {
@@ -246,7 +263,7 @@ List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterl
 	@Override
 	public Object deleteBooking(ClubSlotBooking clubSlot) {
 		// TODO Auto-generated method stub
-		 slotBookingDao.updateApprovalStatus("Booking Cancelled",clubSlot.getBookingId());
+		 slotBookingDao.updateApprovalStatusAndCancelledBy(clubSlot.getCancelledBy(),"Booking Cancelled",clubSlot.getBookingId());
 		userbookDao.updateApprovalStatus("Booking Cancelled",clubSlot.getBookingId());
 		
 		if(clubSlot.getBookingType().equals("Secondary")){
@@ -278,7 +295,7 @@ List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterl
 	    // Check if the current time is before the threshold time
 	    if (now.isBefore(thresholdTime)) {
 	        // Update approval status to "Booking Cancelled"
-	        slotBookingDao.updateApprovalStatus("Cancelled By User", clubSlot.getBookingId());
+	        slotBookingDao.updateApprovalStatusAndCancelledBy(clubSlot.getCancelledBy(),"Cancelled By User", clubSlot.getBookingId());
 	        userbookDao.updateApprovalStatus("Cancelled By User", clubSlot.getBookingId());
 
 	        // Check the booking type and update slot status accordingly
@@ -335,6 +352,8 @@ List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterl
 		booking.getUserBooking().forEach(user->{
 			
 				user.setBookingId(booking.getBookingId());
+				user.setUpdatedBy(booking.getUpdatedBy());
+				user.setUpdatedDate(booking.getUpdatedDate());
 			
 				userList.add(user);
 				

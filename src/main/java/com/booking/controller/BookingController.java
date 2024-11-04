@@ -31,7 +31,7 @@ public class BookingController {
 	@RequestMapping(value = "/listbookedslot", method = RequestMethod.POST)
 	public Object ListSlot(@RequestBody ClubSlotBooking clubSlot) throws AuthenticationException {
 
-		return bookingservice.findAll();
+		return bookingservice.findAll(clubSlot.getSlotDate());
 
 	}
 

@@ -41,6 +41,7 @@ C:\Club\Club-Backend\src\main\java\com\booking\model\user\MetaData.java
 C:\Club\Club-Backend\src\main\java\com\booking\config\TokenProvider.java
 C:\Club\Club-Backend\src\main\java\com\booking\model\user\UserDto.java
 C:\Club\Club-Backend\src\main\java\com\booking\model\wallet\WalletAudit.java
+C:\Club\Club-Backend\src\main\java\com\booking\service\BookingUser.java
 C:\Club\Club-Backend\src\main\java\com\booking\config\CORSFilter.java
 C:\Club\Club-Backend\src\main\java\com\booking\controller\SlotController.java
 C:\Club\Club-Backend\src\main\java\com\booking\uimodel\PropertyInvoice.java
