@@ -467,14 +467,14 @@ public class SlotServiceImpl implements SlotService {
 		
 		 try {	
 			Class.forName("org.postgresql.Driver");
-//			conn = DriverManager
-//			            .getConnection("jdbc:postgresql://database-1.cnaee60qc6yl.us-east-2.rds.amazonaws.com/clubdb",
-//			            		userName, password);
+			conn = DriverManager
+			            .getConnection("jdbc:postgresql://database-1.cnaee60qc6yl.us-east-2.rds.amazonaws.com/clubdb",
+			            		userName, password);
 			
 			//////dev db
-			conn = DriverManager
-		            .getConnection("jdbc:postgresql://clandb.ctiytm0zhzt8.ap-south-1.rds.amazonaws.com/ClubDB",
-		            		userName, password);
+//			conn = DriverManager
+//		            .getConnection("jdbc:postgresql://clandb.ctiytm0zhzt8.ap-south-1.rds.amazonaws.com/ClubDB",
+//		            		userName, password);
 ////			  conn.setAutoCommit(false);
 				//String slotSaveSQl= "INSERT INTO public.club_slot( club_name) 	VALUES ( ?)";
 
