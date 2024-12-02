@@ -3,6 +3,7 @@ package com.booking.service;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import com.booking.model.slot.ClubSlotBooking;
 import com.booking.model.slot.UserBooking;
@@ -10,7 +11,7 @@ import com.booking.model.slot.UserBooking;
 public interface BookingService {
     Object save(ClubSlotBooking clubSlotBooking);
     
-    List<ClubSlotBooking> findAll(Date slotDate);
+    List<ClubSlotBooking>  findAll(Date slotDate);
 
 	List<ClubSlotBooking> findByUserId(Integer userId);
 

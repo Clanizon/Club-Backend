@@ -165,31 +165,41 @@ public class BookingServiceImpl implements BookingService {
 
 		@Override
 		public List<ClubSlotBooking> findAll(Date slotDate) {
-			// TODO Auto-generated method stub
-			List<ClubSlotBooking> slotBookingList = (List<ClubSlotBooking>) slotBookingDao.findBySlotDate(slotDate);
-			if (slotBookingList != null)
-				slotBookingList.forEach(slb -> {
-					if (slb.getSlotId() != null) {
-						ClubSlot slotDetail = new ClubSlot();
-						slotDetail = slotDao.findBySlotId(slb.getSlotId());
-						slb.setClubSlot(slotDetail);
-					}
-					if (slb.getUserId() != null) {
-            
-						
-						ClubUser clubuser = new ClubUser();
-						clubuser = userDao.findByUserId(slb.getUserId());
-						slb.setClubUser(clubuser);
-					}
-
-				});
-
-List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterlsit.getClubSlot()!=null)      
-                    .sorted(Comparator.comparing(fo->fo.getClubSlot().getSlotStartTimeStamp()))
-                    .collect(Collectors.toList());
-			return res;
+		    return slotBookingDao.findBySlotDate(slotDate).stream()
+		        .peek(slb -> slb.setClubSlot(slotDao.findBySlotId(slb.getSlotId())))
+		        .peek(slb -> slb.setClubUser(userDao.findByUserId(slb.getUserId())))
+		        .filter(slb -> slb.getClubSlot() != null)
+		        .sorted(Comparator.comparing(slb -> slb.getClubSlot().getSlotStartTimeStamp()))
+		        .collect(Collectors.toList());
 		}
-	
+
+//		@Override
+//		public List<ClubSlotBooking> findAll(Date slotDate) {
+//			// TODO Auto-generated method stub
+//			List<ClubSlotBooking> slotBookingList = (List<ClubSlotBooking>) slotBookingDao.findBySlotDate(slotDate);
+//
+//			if (slotBookingList != null)
+//				slotBookingList.forEach(slb -> {
+//					if (slb.getSlotId() != null) {
+//						ClubSlot slotDetail = new ClubSlot();
+//						//slotDetail = slotDao.findBySlotId(slb.getSlotId());
+//						slb.setClubSlot(slotDetail);
+//					}
+//					if (slb.getUserId() != null) {
+//            
+//						
+//						ClubUser clubuser = new ClubUser();
+//						clubuser = userDao.findByUserId(slb.getUserId());
+//						slb.setClubUser(clubuser);
+//					}
+//
+//				});
+//
+//			List<ClubSlotBooking> res = slotBookingList.stream().filter(filterlsit ->filterlsit.getClubSlot()!=null)      
+//                    .sorted(Comparator.comparing(fo->fo.getClubSlot().getSlotStartTimeStamp()))
+//                    .collect(Collectors.toList());
+//			return res;
+//		}
 	
 	@Override
 	public List<ClubSlotBooking> findByUserId(Integer userId) {
