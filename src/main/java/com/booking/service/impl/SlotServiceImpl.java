@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -40,6 +41,7 @@ import com.booking.model.SlotBooked;
 import com.booking.model.slot.ClubSlot;
 import com.booking.model.slot.ClubSlotBooking;
 import com.booking.model.slot.ClubSlotModel;
+import com.booking.model.slot.HoldRequest;
 import com.booking.model.user.ClubConfig;
 import com.booking.service.SlotService;
 
@@ -72,6 +74,15 @@ public class SlotServiceImpl implements SlotService {
 	
 	@Value( "${spring.datasource.password}" )
 	private String password;
+	
+	@Value( "${hold.username}" )
+	private String holdUserName;
+	
+	@Value( "${hold.username1}" )
+	private String holdUserName1;
+	
+	@Value("${hold.timeout}")
+	private long holdTimeout;
 
 	@Override
 	@Transactional
@@ -780,5 +791,67 @@ public class SlotServiceImpl implements SlotService {
 			return outputMap;
 	}
 
+	@Override
+	public Map<String, Object> updateSlotStatus(HoldRequest holdRequest) {
+		
+		//who is coming in Have a Place holder in the request  
+	    //If (Slot Status)
+		Map<String, Object> outputMap = new HashMap<String, Object>();
+		ClubSlot slotDetails = slotDao.findBySlotId(holdRequest.getSlotId());
+		if(holdRequest.getUserName().equals(holdUserName) || holdRequest.getUserName().equals(holdUserName1)) {//Admin block
+			if(slotDetails.getSlotStatus()!=null && slotDetails.getSlotStatus().equals("Created") || slotDetails.getSlotStatus().equals("Hold")) {
+			            
+			                	try {
+									    slotDetails.setHoldTime(getTimestamp(holdRequest.getUpdatedDate().toLocalDateTime().plusSeconds(holdTimeout)));
+									    System.out.println("------------------------------------"+getTimestamp(holdRequest.getUpdatedDate().toLocalDateTime().plusSeconds(holdTimeout)));
+									    int updatedSlot = slotDao.updateSlotStatusBySlotId("Hold", holdRequest.getSlotId());
+						                outputMap.put("Status", "Success");
+						                outputMap.put("Message", "Slot has holded for Admin");
+						                outputMap.put("Data", updatedSlot);
+								} catch (ParseException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							   
+						
+				
+		    }
+			else {
+			outputMap.put("Status", "Failure");
+			outputMap.put("Message", "This slot is currently in progress for booking. Please select another slot.");
+				}
+		}
+		else { //user block
+			if(slotDetails.getSlotStatus()!=null && slotDetails.getSlotStatus().equals("Created")) {
+			        outputMap.put("Status", "Success");
+			        outputMap.put("Message", "Please proceed to slot book.");
+		     }
+			  else {
+				    outputMap.put("Status", "Failure");
+				    outputMap.put("Message", "This slot is currently in progress for booking. Please select another slot.");
+			  }
+		}
+		return outputMap;
+	}
+
+	
+	
+	public void checkAndUpdateSlots() {
+        Timestamp currentTime = Timestamp.from(Instant.now());
+
+        // Fetch slots that need updating
+        List<ClubSlot> slotsToUpdate = slotDao.findSlotStatusToUpdate(currentTime);
+
+        if (!slotsToUpdate.isEmpty()) {
+            // Log the slots for debugging
+            slotsToUpdate.forEach(slot -> System.out.println("Updating Slot ID: " + slot.getSlotId()));
+
+            // Update the slot status in bulk
+            int updatedCount = slotDao.updateSlotStatus(currentTime);
+            System.out.println(updatedCount + " slots updated to CREATED.");
+        } else {
+            System.out.println("No slots need updating at this time.");
+        }
+    }
 
 }

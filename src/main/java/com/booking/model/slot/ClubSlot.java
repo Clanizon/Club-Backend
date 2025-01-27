@@ -276,6 +276,8 @@ public class ClubSlot implements Serializable {
 	@Column(name="TEE_TIME")
 	private String teeTime;
 	
+	
+	
     public String getTeeTime() {
 		return teeTime;
 	}
@@ -304,7 +306,21 @@ public class ClubSlot implements Serializable {
 	private String slotAvailable;
 
 
+	@Column(name="HOLD_TIME")
+	private Timestamp holdTime;
 
+
+
+
+	public Timestamp getHoldTime() {
+		return holdTime;
+	}
+
+
+
+	public void setHoldTime(Timestamp holdTime) {
+		this.holdTime = holdTime;
+	}
 
 
 

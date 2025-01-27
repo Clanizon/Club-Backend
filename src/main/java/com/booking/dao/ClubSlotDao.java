@@ -4,8 +4,10 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.LockModeType;
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -111,15 +113,20 @@ List<ClubSlotModel> findBySlotStartTimeStampGreaterThanEqualAndSlotStartTimeStam
 	ClubSlot findBySlotId(Integer slotId);
 	
    
-
 	 @Transactional
 	 @Modifying
+	 @Query(value = "UPDATE CLUB_SLOT set SECONDARY_BOOKING=:secondaryBooking , SLOT_STATUS = :slotStatus,primary_booking_id  =:primaryBookingId, PLAYER_COUNT =PLAYER_COUNT +:playerCount where SLOT_ID =:slotId"
+	 		+ " AND SLOT_ID IN (SELECT SLOT_ID FROM CLUB_SLOT WHERE SLOT_ID=:slotId FOR UPDATE)",
+     nativeQuery = true) 
+	 int updateSlotstatus(@Param("slotStatus") String slotStatus,
+			 @Param("slotId") Integer slotId, @Param("playerCount") Integer playerCount,@Param("secondaryBooking") String secondaryBooking,@Param("primaryBookingId") Integer primaryBookingId);
 	 
+	 @Transactional
+	 @Modifying
 	 @Query(value = "UPDATE CLUB_SLOT set SECONDARY_BOOKING=:secondaryBooking , SLOT_STATUS = :slotStatus,primary_booking_id  =:primaryBookingId, PLAYER_COUNT =PLAYER_COUNT +:playerCount where SLOT_ID =:slotId",
      nativeQuery = true) 
 	 int updateSlotStatus(@Param("slotStatus") String slotStatus,
 			 @Param("slotId") Integer slotId, @Param("playerCount") Integer playerCount,@Param("secondaryBooking") String secondaryBooking,@Param("primaryBookingId") Integer primaryBookingId);
-	 
 	 
 	 @Transactional
 	 @Modifying
@@ -142,10 +149,21 @@ List<ClubSlotModel> findBySlotStartTimeStampGreaterThanEqualAndSlotStartTimeStam
 //	 @Transactional
 //	 @Query(value = "DELETE FROM club_slot cs WHERE cs.slot_start_timestmp >= :curDate AND cs.slot_start_timestmp <= :stop AND cs.tee_time = :teeTime AND DAYOFWEEK(cs.slot_start_timestmp) IN (:slotDays)", nativeQuery = true)
 //	 int deleteSlot(@Param("curDate") Timestamp curDate, @Param("stop") Timestamp stop, @Param("teeTime") String teeTime, @Param("slotDays") List<Integer> slotDays);
-//
+
 	 @Modifying
 	    @Transactional
 	    @Query(value = "DELETE FROM club_slot cs WHERE cs.slot_start_timestmp >= :curDate AND cs.slot_start_timestmp <= :stop AND cs.tee_time = :teeTime AND EXTRACT(DOW FROM slot_start_timestmp) IN (:slotDays)", nativeQuery = true)
 	    int deleteSlotsWithinDateRangeAndOnSpecificDays(@Param("curDate") Timestamp curDate, @Param("stop") Timestamp stop,@Param("teeTime") String teeTime,@Param("slotDays") List<Integer> slotDays);
 
+	 @Query(value = "SELECT s FROM Slot s WHERE s.slotStatus = 'HOLD' AND s.lastUpdateTime < :currentTime", nativeQuery = true)
+	 List<ClubSlot> findSlotStatusToUpdate(@Param("currentTime") Timestamp currentTime);
+	 
+	 @Transactional
+	 @Modifying
+	 @Query(value = "UPDATE CLUB_SLOT cs SET cs.slot_status = 'Created', cs.updated_date = :currentTime WHERE cs.slot_status = 'Hold' AND cs.updated_date  < :currentTime", nativeQuery = true)
+	 int updateSlotStatus(@Param("currentTime") Timestamp currentTime);
+	 
+	 
+	 
+	 
 }

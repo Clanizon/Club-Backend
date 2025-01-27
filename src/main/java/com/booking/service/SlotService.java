@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.booking.model.slot.ClubSlot;
+import com.booking.model.slot.HoldRequest;
 
 public interface SlotService {
 	Map<String, Object> save(ClubSlot clubSlot);
@@ -25,6 +26,6 @@ public interface SlotService {
 
 	Map<String, Object> delete(ClubSlot clubSlot);
 
-
+	Map<String, Object> updateSlotStatus(HoldRequest clubSlot);
 	
 }

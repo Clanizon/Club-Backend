@@ -31,7 +31,7 @@ import com.booking.service.UserService;
 import com.booking.uimodel.OTPModel;
 import com.booking.uimodel.UIResponse;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "https://teetimebgc.com", maxAge = 3600)
 @RestController
 @RequestMapping("/users")
 public class UserController {

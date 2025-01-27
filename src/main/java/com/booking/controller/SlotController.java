@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.booking.model.slot.ClubSlot;
+import com.booking.model.slot.HoldRequest;
 import com.booking.service.SlotService;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "https://teetimebgc.com", maxAge = 3600)
 @RestController
 @RequestMapping("/slot")
 public class SlotController {
@@ -109,6 +110,12 @@ public class SlotController {
         return slotservice.updateSlotAvailability(clubSlot);
        
     }
-    
+    @RequestMapping(value = "/slotholdforadmin", method = RequestMethod.POST)
+    public Object slotHoldForAdmin(@RequestBody HoldRequest clubSlot) throws AuthenticationException {
+
+       
+        return slotservice.updateSlotStatus(clubSlot);
+       
+    }
     
 }
