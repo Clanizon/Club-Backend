@@ -802,7 +802,7 @@ public class SlotServiceImpl implements SlotService {
 			if(slotDetails.getSlotStatus()!=null && slotDetails.getSlotStatus().equals("Created") || slotDetails.getSlotStatus().equals("Hold")) {
 			            
 			                	try {
-									    slotDetails.setHoldTime(getTimestamp(holdRequest.getUpdatedDate().toLocalDateTime().plusSeconds(holdTimeout)));
+									    slotDetails.setHoldTime(new Timestamp(holdRequest.getUpdatedDate().getTime() + holdTimeout));
 									    System.out.println("------------------------------------"+getTimestamp(holdRequest.getUpdatedDate().toLocalDateTime().plusSeconds(holdTimeout)));
 									    int updatedSlot = slotDao.updateSlotStatusBySlotId("Hold", holdRequest.getSlotId());
 						                outputMap.put("Status", "Success");
@@ -822,6 +822,16 @@ public class SlotServiceImpl implements SlotService {
 				}
 		}
 		else { //user block
+			 if(slotDetails != null && "Hold".equals(slotDetails.getSlotStatus())) {
+					Timestamp currentTime;
+					currentTime = Timestamp.from(Instant.now());
+
+                    Timestamp holdTime = slotDetails.getHoldTime();
+                      if(holdTime != null && currentTime.after(holdTime)) {
+					      slotDetails.setSlotStatus("Created");
+					       slotDao.save(slotDetails);
+                          }
+			 }
 			if(slotDetails.getSlotStatus()!=null && slotDetails.getSlotStatus().equals("Created")) {
 			        outputMap.put("Status", "Success");
 			        outputMap.put("Message", "Please proceed to slot book.");
@@ -830,10 +840,11 @@ public class SlotServiceImpl implements SlotService {
 				    outputMap.put("Status", "Failure");
 				    outputMap.put("Message", "This slot is currently in progress for booking. Please select another slot.");
 			  }
+		
 		}
 		return outputMap;
 	}
-
+	
 	
 	
 	public void checkAndUpdateSlots() {

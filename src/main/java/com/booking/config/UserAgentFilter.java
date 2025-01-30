@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserAgentFilter implements Filter  {
-//	implements Filter
+public class UserAgentFilter implements Filter   {
+	//implements Filter
     private static final String ALLOWED_ORIGIN = "https://teetimebgc.com";
 
 	@Override

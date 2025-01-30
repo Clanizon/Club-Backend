@@ -2,6 +2,7 @@ C:\Club\Club-Backend\src\main\java\com\booking\logger\SpringLoggingAutoConfigura
 C:\Club\Club-Backend\src\main\java\com\booking\uimodel\UIMetaData.java
 C:\Club\Club-Backend\src\main\java\com\booking\util\EncryptionUtil.java
 C:\Club\Club-Backend\src\main\java\com\booking\model\user\LoginUser.java
+C:\Club\Club-Backend\src\main\java\com\booking\config\UserAgentFilter.java
 C:\Club\Club-Backend\src\main\java\com\booking\logger\SpringLoggingFilter.java
 C:\Club\Club-Backend\src\main\java\com\booking\model\slot\ClubSlotBooking.java
 C:\Club\Club-Backend\src\main\java\com\booking\service\impl\RoleServiceImpl.java
@@ -34,8 +35,10 @@ C:\Club\Club-Backend\src\main\java\com\booking\uimodel\AgreementModel.java
 C:\Club\Club-Backend\src\main\java\com\booking\service\UserService.java
 C:\Club\Club-Backend\src\main\java\com\booking\service\impl\SlotServiceImpl.java
 C:\Club\Club-Backend\src\main\java\com\booking\model\user\ClubConfig.java
+C:\Club\Club-Backend\src\main\java\com\booking\model\slot\HoldRequest.java
 C:\Club\Club-Backend\src\main\java\com\booking\dao\ClubSlotDao.java
 C:\Club\Club-Backend\src\main\java\com\booking\logger\SpringRequestWrapper.java
+C:\Club\Club-Backend\src\main\java\com\booking\model\slot\BookingHistoryResponse.java
 C:\Club\Club-Backend\src\main\java\com\booking\model\MetaData.java
 C:\Club\Club-Backend\src\main\java\com\booking\model\user\MetaData.java
 C:\Club\Club-Backend\src\main\java\com\booking\config\TokenProvider.java

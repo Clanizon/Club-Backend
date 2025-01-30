@@ -2,6 +2,7 @@ package com.booking.service.impl;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -78,7 +79,8 @@ public class BookingServiceImpl implements BookingService {
 			UIResponse uiResponse = new UIResponse();
 			ClubSlot clubSlot = slotDao.findBySlotId(clubSlotBooking.getSlotId());
 			List<UserBooking> userList= new ArrayList<UserBooking>();
-
+			Timestamp currentTime = Timestamp.from(Instant.now());
+			
 			if(clubSlot != null) {
 			    List<Integer> userIds = clubSlotBooking.getUserIds();
 			    List<UserBooking> userExistingSlot = userbookDao.findByUserIdAndSlotDate(userIds, clubSlotBooking.getSlotDate());
@@ -95,8 +97,13 @@ public class BookingServiceImpl implements BookingService {
 			if (clubSlot != null)
 			{
 				clubSlotBooking.setSlotDate(clubSlot.getSlotDate());
-								if((clubSlot.getSlotStatus().equals("Created") || clubSlot.getSlotStatus().equals("Hold")) && (!clubSlotBooking.getCreatedBy().equals(holdUserName)
-										|| clubSlotBooking.getCreatedBy().equals(holdUserName)) && (!clubSlotBooking.getCreatedBy().equals(holdUserName1)) || clubSlotBooking.getCreatedBy().equals(holdUserName1)) {
+								if(clubSlot.getSlotStatus().equals("Created") 
+										|| (clubSlot.getSlotStatus().equals("Hold") && 
+												( clubSlotBooking.getCreatedBy().equals(holdUserName) || 
+														clubSlotBooking.getCreatedBy().equals(holdUserName1)|| 
+														    currentTime.after(clubSlot.getHoldTime() )) )) {
+									  
+									
 									    if(clubSlotBooking.getBookingType().equals("Primary"))
 									    {
 													newbooking = slotBookingDao.save(clubSlotBooking);
