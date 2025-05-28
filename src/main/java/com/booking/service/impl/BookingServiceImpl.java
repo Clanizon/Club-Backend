@@ -106,6 +106,23 @@ public class BookingServiceImpl implements BookingService {
 									
 									    if(clubSlotBooking.getBookingType().equals("Primary"))
 									    {
+									    	
+									    	if(syncEnabled) {
+												if(clubSlotBooking.getPlayerCount().equals(4) || clubSlotBooking.getSecondaryBooking().equals("N")) {
+													slotDao.updateSlotstatus("Secondary Booked", clubSlotBooking.getSlotId(),clubSlotBooking.getPlayerCount(),clubSlotBooking.getSecondaryBooking(),clubSlotBooking.getPrimaryBookingId());
+												}else {
+													slotDao.updateSlotstatus("Primary Booked", clubSlotBooking.getSlotId(),clubSlotBooking.getPlayerCount(),clubSlotBooking.getSecondaryBooking(),clubSlotBooking.getPrimaryBookingId());
+
+												      }
+											}
+											else {
+											    if(clubSlotBooking.getPlayerCount().equals(4) || clubSlotBooking.getSecondaryBooking().equals("N")) {
+												   slotDao.updateSlotStatus("Secondary Booked", clubSlotBooking.getSlotId(),clubSlotBooking.getPlayerCount(),clubSlotBooking.getSecondaryBooking(),clubSlotBooking.getPrimaryBookingId());
+											    }else {
+												   slotDao.updateSlotStatus("Primary Booked", clubSlotBooking.getSlotId(),clubSlotBooking.getPlayerCount(),clubSlotBooking.getSecondaryBooking(),clubSlotBooking.getPrimaryBookingId());
+
+											          }
+											    }
 													newbooking = slotBookingDao.save(clubSlotBooking);
 													int id=newbooking.getBookingId();
 													
@@ -118,22 +135,7 @@ public class BookingServiceImpl implements BookingService {
 														});
 														userbookDao.saveAll(userList);
 													}
-													if(syncEnabled) {
-														if(clubSlotBooking.getPlayerCount().equals(4) || clubSlotBooking.getSecondaryBooking().equals("N")) {
-															slotDao.updateSlotstatus("Secondary Booked", clubSlotBooking.getSlotId(),clubSlotBooking.getPlayerCount(),clubSlotBooking.getSecondaryBooking(),clubSlotBooking.getPrimaryBookingId());
-														}else {
-															slotDao.updateSlotstatus("Primary Booked", clubSlotBooking.getSlotId(),clubSlotBooking.getPlayerCount(),clubSlotBooking.getSecondaryBooking(),clubSlotBooking.getPrimaryBookingId());
-
-														      }
-													}
-													else {
-													    if(clubSlotBooking.getPlayerCount().equals(4) || clubSlotBooking.getSecondaryBooking().equals("N")) {
-														   slotDao.updateSlotStatus("Secondary Booked", clubSlotBooking.getSlotId(),clubSlotBooking.getPlayerCount(),clubSlotBooking.getSecondaryBooking(),clubSlotBooking.getPrimaryBookingId());
-													    }else {
-														   slotDao.updateSlotStatus("Primary Booked", clubSlotBooking.getSlotId(),clubSlotBooking.getPlayerCount(),clubSlotBooking.getSecondaryBooking(),clubSlotBooking.getPrimaryBookingId());
-
-													          }
-													    }
+													
 													newbooking.setClubSlot(clubSlot);
 											    	uiResponse.setStatus("SUCCESS");
 											    	uiResponse.setStatusMessage("Primary Booking Created Successfuly");

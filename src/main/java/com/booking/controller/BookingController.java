@@ -1,5 +1,7 @@
 package com.booking.controller;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.booking.model.slot.ClubSlot;
 import com.booking.model.slot.ClubSlotBooking;
 import com.booking.service.BookingService;
-import com.booking.service.SlotService;
 
 @CrossOrigin(origins = "https://teetimebgc.com", maxAge = 3600)
 @RestController
@@ -20,12 +20,33 @@ public class BookingController {
 
 	@Autowired
 	BookingService bookingservice;
+	
+	
+	private static final ConcurrentHashMap<Integer, Object> slotLocks = new ConcurrentHashMap<>();
+
 
 	@RequestMapping(value = "/createbooking", method = RequestMethod.POST)
 	public Object AddSlot(@RequestBody ClubSlotBooking booking) {
+	    Integer slotId = booking.getSlotId();
+	    Object newLock = new Object();
 
-		return bookingservice.save(booking);
+	    Object existingLock = slotLocks.putIfAbsent(slotId, newLock);
 
+	    if (existingLock == null) {
+	        // 🟢 First request for this slot — no need to synchronize
+	        try {
+	            return bookingservice.save(booking);
+	        } finally {
+	            // 🧹 Clean up only if you were the one who added the lock
+	            slotLocks.remove(slotId, newLock);
+	        }
+	    } else {
+	        // 🔐 Slot already being booked — wait for the lock holder
+	        synchronized (existingLock) {
+	            // Don't remove the lock here — you're not the owner
+	            return bookingservice.save(booking);
+	        }
+	    }
 	}
 
 	@RequestMapping(value = "/listbookedslot", method = RequestMethod.POST)
