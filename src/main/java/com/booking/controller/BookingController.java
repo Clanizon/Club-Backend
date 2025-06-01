@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booking.model.slot.ClubSlotBooking;
 import com.booking.service.BookingService;
 
-@CrossOrigin(origins = "https://teetimebgc.com", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/booking")
 public class BookingController {
@@ -23,31 +23,44 @@ public class BookingController {
 	
 	
 	private static final ConcurrentHashMap<Integer, Object> slotLocks = new ConcurrentHashMap<>();
-
-
-	@RequestMapping(value = "/createbooking", method = RequestMethod.POST)
-	public Object AddSlot(@RequestBody ClubSlotBooking booking) {
-	    Integer slotId = booking.getSlotId();
-	    Object newLock = new Object();
-
-	    Object existingLock = slotLocks.putIfAbsent(slotId, newLock);
-
-	    if (existingLock == null) {
-	        // 🟢 First request for this slot — no need to synchronize
-	        try {
-	            return bookingservice.save(booking);
-	        } finally {
-	            // 🧹 Clean up only if you were the one who added the lock
-	            slotLocks.remove(slotId, newLock);
-	        }
-	    } else {
-	        // 🔐 Slot already being booked — wait for the lock holder
-	        synchronized (existingLock) {
-	            // Don't remove the lock here — you're not the owner
-	            return bookingservice.save(booking);
-	        }
-	    }
-	}
+	
+    // Thread-safe map to store per-slot locks
+    public BookingController(BookingService bookingservice) {
+        this.bookingservice = bookingservice;
+    }
+        @RequestMapping(value = "/createbooking", method = RequestMethod.POST)
+        public Object addSlot(@RequestBody ClubSlotBooking booking) {
+            Integer slotId = booking.getSlotId();
+            // Atomically get or create a lock object for the slot
+            Object lock = slotLocks.computeIfAbsent(slotId, id -> new Object());
+            synchronized (lock) {
+                try {
+                    return bookingservice.save(booking);
+                } finally {
+                  //  slotLocks.remove(slotId, lock); // Only if no one else is waiting — tricky
+                    // Optional: lock cleanup logic
+                    // Consider adding cleanup only if no other threads are waiting
+                    // For simplicity, you might accept slight memory growth
+                }
+            }
+        }
+   
+	
+	@RequestMapping(value = "/createbookingold", method = RequestMethod.POST)
+    public Object addSlot1(@RequestBody ClubSlotBooking booking) {
+        Integer slotId = booking.getSlotId();
+        // Atomically get or create a lock object for the slot
+        Object lock = slotLocks.computeIfAbsent(slotId, id -> new Object());
+        synchronized (lock) {
+            try {
+                return bookingservice.save(booking);
+            } finally {
+                // Optional: lock cleanup logic
+                // Consider adding cleanup only if no other threads are waiting
+                // For simplicity, you might accept slight memory growth
+            }
+        }
+    }
 
 	@RequestMapping(value = "/listbookedslot", method = RequestMethod.POST)
 	public Object ListSlot(@RequestBody ClubSlotBooking clubSlot) throws AuthenticationException {

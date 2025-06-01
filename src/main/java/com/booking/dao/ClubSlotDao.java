@@ -148,7 +148,7 @@ List<ClubSlotModel> findBySlotStartTimeStampGreaterThanEqualAndSlotStartTimeStam
 
 	 @Modifying
 	    @Transactional
-	    @Query(value = "DELETE FROM club_slot cs WHERE cs.slot_start_timestmp >= :curDate AND cs.slot_start_timestmp <= :stop AND cs.tee_time = :teeTime AND EXTRACT(DOW FROM slot_start_timestmp) IN (:slotDays)", nativeQuery = true)
+	    @Query(value = "DELETE FROM club_slot cs WHERE cs.slot_start_timestmp >= :curDate AND cs.slot_start_timestmp <= :stop AND cs.tee_time = :teeTime AND EXTRACT(DOW FROM cs.slot_start_timestmp) IN (:slotDays) AND CAST(cs.slot_start_timestmp AS time) >= CAST(:curDate AS time) AND CAST(cs.slot_start_timestmp AS time) <= CAST(:stop AS time)", nativeQuery = true)
 	    int deleteSlotsWithinDateRangeAndOnSpecificDays(@Param("curDate") Timestamp curDate, @Param("stop") Timestamp stop,@Param("teeTime") String teeTime,@Param("slotDays") List<Integer> slotDays);
 
 	 @Query(value = "SELECT s FROM Slot s WHERE s.slotStatus = 'HOLD' AND s.lastUpdateTime < :currentTime", nativeQuery = true)
