@@ -133,6 +133,26 @@ List<ClubSlotModel> findBySlotStartTimeStampGreaterThanEqualAndSlotStartTimeStam
 	 
 	 
 	 
+	 
+	 
+	 @Transactional
+	 @Modifying
+	 @Query(value = "UPDATE club_slot SET secondary_booking = :secondaryBooking, slot_status = :slotStatus, primary_booking_id = :primaryBookingId, player_count = player_count + :playerCount, booking_available_at = :bookingAvailableAt WHERE slot_id = :slotId", 
+	        nativeQuery = true)
+	 int updateSlotStatusForCancel(
+	     @Param("slotStatus") String slotStatus,
+	     @Param("slotId") Integer slotId,
+	     @Param("playerCount") Integer playerCount,
+	     @Param("secondaryBooking") String secondaryBooking,
+	     @Param("primaryBookingId") Integer primaryBookingId,
+	     @Param("bookingAvailableAt") Timestamp bookingAvailableAt
+	 );
+
+
+
+
+
+	 
 	 @Transactional
 	 @Modifying
 	 @Query(value = "UPDATE CLUB_SLOT set SLOT_AVAILABLE = :slotAvailable where DATE(SLOT_DATE) = DATE(:slotDate);",

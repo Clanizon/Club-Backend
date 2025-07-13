@@ -11,7 +11,7 @@ import com.booking.dao.ClubConfigDao;
 import com.booking.model.slot.ClubSlotBooking;
 import com.booking.model.user.ClubConfig;
 
-@CrossOrigin(origins = "https://teetimebgc.com", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/config")
 public class ConfigController {

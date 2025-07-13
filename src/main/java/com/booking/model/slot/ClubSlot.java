@@ -308,6 +308,11 @@ public class ClubSlot implements Serializable {
 
 	@Column(name="HOLD_TIME")
 	private Timestamp holdTime;
+	
+	
+	@Column(name="booking_available_at")
+	private Timestamp bookingAvaiableTime;
+	
 
 
 
@@ -332,6 +337,18 @@ public class ClubSlot implements Serializable {
 
 	public void setSlotAvailable(String slotAvailable) {
 		this.slotAvailable = slotAvailable;
+	}
+
+
+
+	public Timestamp getBookingAvaiableTime() {
+		return bookingAvaiableTime;
+	}
+
+
+
+	public void setBookingAvaiableTime(Timestamp bookingAvaiableTime) {
+		this.bookingAvaiableTime = bookingAvaiableTime;
 	}
 
 

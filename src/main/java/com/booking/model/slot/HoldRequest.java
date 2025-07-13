@@ -12,6 +12,21 @@ public class HoldRequest {
 	}
 	private Integer slotId;
 	private String userName;
+	
+	private String userEmail;
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+	private Integer userId;
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 	private Timestamp updatedDate;
 	public Integer getSlotId() {
 		return slotId;

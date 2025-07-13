@@ -25,6 +25,9 @@ public interface UserDao extends CrudRepository<ClubUser, Long> {
 
 	ClubUser findByUserId(Integer userId);
 	
+	
+	ClubUser findByUserIdAndOtp(Integer userId,String otp);
+	
 	@Transactional
 	Object deleteByUserId(Integer userId);
 	
@@ -50,6 +53,13 @@ public interface UserDao extends CrudRepository<ClubUser, Long> {
 	 @Query(value = "UPDATE club_user set user_password =:password where user_email = :userId",
 	            nativeQuery = true)
 	int updatePassword(@Param("userId") String userId,@Param("password") String password);
+	
+	
+	@Transactional
+	 @Modifying
+	 @Query(value = "UPDATE club_user set otp =:otp where user_id = :userId",
+	            nativeQuery = true)
+	int updateOTP(@Param("userId") Integer userId,@Param("otp") String otp);
 	
 	@Transactional
 	 @Modifying

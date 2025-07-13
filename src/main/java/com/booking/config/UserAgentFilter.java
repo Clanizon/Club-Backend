@@ -54,12 +54,7 @@ public class UserAgentFilter implements Filter   {
 	        // Extract the Origin header
 	        String originHeader = httpRequest.getHeader("Origin");
 
-	        if (originHeader == null || !originHeader.equals(ALLOWED_ORIGIN)) {
-	            // Block the request if Origin header is missing or invalid
-	            httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-	            httpResponse.getWriter().write("Access Forbidden: Invalid or missing Origin header.");
-	            return;
-	        }
+	       
 
 	        // Allow the request to proceed
 	        chain.doFilter(request, response);

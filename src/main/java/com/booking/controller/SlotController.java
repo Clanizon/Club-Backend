@@ -12,7 +12,7 @@ import com.booking.model.slot.ClubSlot;
 import com.booking.model.slot.HoldRequest;
 import com.booking.service.SlotService;
 
-@CrossOrigin(origins = "https://teetimebgc.com", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/slot")
 public class SlotController {

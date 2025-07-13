@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -81,16 +83,42 @@ public class BookingServiceImpl implements BookingService {
 			List<UserBooking> userList= new ArrayList<UserBooking>();
 			Timestamp currentTime = Timestamp.from(Instant.now());
 			
+			
+			if(clubSlotBooking.getAdminBooking()!=null &&clubSlotBooking.getAdminBooking().equals("Y") ){
+				//ADMin NO OTP Validation 
+			}
+			else {//OTP for user 
+						if (clubSlotBooking.getOtp()==null || clubSlotBooking.getOtp().isEmpty()) {
+					        uiResponse.setStatus("Failure");
+					        uiResponse.setStatusMessage("OTP validation Failed");
+					        return uiResponse; 
+					    }
+						if(!(clubSlotBooking.getOtp().isEmpty())) {
+							
+							ClubUser user=userDao.findByUserIdAndOtp(clubSlotBooking.getUserId(),clubSlotBooking.getOtp());
+							if(user!=null && user.getUserId().equals(clubSlotBooking.getUserId()) ) {//OTP Successful
+								
+							}else {
+								    uiResponse.setStatus("Failure");
+							        uiResponse.setStatusMessage("OTP validation Failed");
+							        return uiResponse; 
+							}
+							
+						}
+			}
+			
 			if(clubSlot != null) {
 			    List<Integer> userIds = clubSlotBooking.getUserIds();
 			    List<UserBooking> userExistingSlot = userbookDao.findByUserIdAndSlotDate(userIds, clubSlotBooking.getSlotDate());
-			    // Check if there are any existing bookings
+			    // Check if there are any existing bookingsa
 			    if (userExistingSlot != null && !userExistingSlot.isEmpty()) {
 			        uiResponse.setStatus("Failure");
-			        uiResponse.setStatusMessage("Already existed");
+			        uiResponse.setStatusMessage("Try another slot, Booking already exists");
 			        uiResponse.setResponse(userExistingSlot); // Return the list of existing bookings
 			        return uiResponse; // Return the response if booking already exists
 			    }
+			    
+			    
 		     }
 				//} 
 		//	List<UserBooking> userList= new ArrayList<UserBooking>();
@@ -344,7 +372,26 @@ public class BookingServiceImpl implements BookingService {
 
 	        // Check the booking type and update slot status accordingly
 //	        if (bookingType.equals("Primary")) {
-	            slotDao.updateSlotStatus("Created", clubSlot.getSlotId(), -(clubSlot.getPlayerCount()), "Y", clubSlot.getBookingId());
+	        ZoneId indiaZone = ZoneId.of("Asia/Kolkata");
+	        ZoneId utcZone = ZoneId.of("UTC");
+
+	        // 1. Convert stored UTC timestamp to ZonedDateTime in IST
+	        ZonedDateTime slotStartUtc = clubSlot.getSlotStartTimeStamp().toInstant().atZone(utcZone);
+	        ZonedDateTime slotStartIst = slotStartUtc.withZoneSameInstant(indiaZone);
+
+	        // 2. Subtract 1 day and set 8:00 PM IST
+	        ZonedDateTime bookingAvailableIst = slotStartIst
+	            .minusDays(1)
+	            .withHour(20)
+	            .withMinute(0)
+	            .withSecond(0)
+	            .withNano(0);
+
+	        // 3. Convert back to UTC for DB storage
+	        ZonedDateTime bookingAvailableUtc = bookingAvailableIst.withZoneSameInstant(utcZone);
+	        Timestamp bookingAvailableAt = Timestamp.from(bookingAvailableUtc.toInstant());
+	 
+	            slotDao.updateSlotStatusForCancel("Created", clubSlot.getSlotId(), -(clubSlot.getPlayerCount()), "Y", clubSlot.getBookingId(),bookingAvailableAt);
 	            outputMap.put("Status", "Successfully Deleted");
 	        } else {
 	        	outputMap.put("Status", "Failed");

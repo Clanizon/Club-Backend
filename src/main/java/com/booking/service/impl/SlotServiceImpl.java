@@ -28,6 +28,8 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.SerializationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,7 @@ import com.booking.dao.ClubConfigDao;
 import com.booking.dao.ClubSlotBookingDao;
 import com.booking.dao.ClubSlotDao;
 import com.booking.dao.UserBookingDao;
+import com.booking.dao.UserDao;
 import com.booking.model.SlotBooked;
 import com.booking.model.slot.ClubSlot;
 import com.booking.model.slot.ClubSlotBooking;
@@ -44,18 +47,36 @@ import com.booking.model.slot.ClubSlotModel;
 import com.booking.model.slot.HoldRequest;
 import com.booking.model.user.ClubConfig;
 import com.booking.service.SlotService;
+import com.booking.service.UserService;
+import com.booking.util.EmailService;
+import com.booking.util.SendEmailSmtp;
 
 @Service(value = "SlotService")
 public class SlotServiceImpl implements SlotService {
 
+	
+    private static final Logger logger = LoggerFactory.getLogger(SlotService.class);
+
 	@Autowired
 	private ClubSlotDao slotDao;
+	
+	  @Autowired	
+		private SendEmailSmtp sendEmailSmtpService;
 
 	@Autowired
 	private ClubSlotBookingDao bookingDao;
 
 	@Autowired
 	private ClubConfigDao clubConfigDao;
+	
+	@Autowired
+	EmailService emailService;
+
+    @Autowired
+    private UserDao userDao;
+    
+    @Autowired
+    private UserService userService;
 
 	@Autowired
 	private UserBookingDao userBookingDao;
@@ -607,6 +628,22 @@ public class SlotServiceImpl implements SlotService {
 		List<ClubSlot> slotList = slotDao
 				.findBySlotStartTimeStampAfterAndSlotAvailableAndSlotStatusNotOrderBySlotStartTimeStampAsc(timestampnow, "Y","Blocked for VIP");
 		slotList.forEach(slot -> {
+			Timestamp availableAt = slot.getBookingAvaiableTime();
+
+		    if (availableAt != null) {
+		        ZonedDateTime availableAtZdt = availableAt.toInstant().atZone(ZoneId.of("UTC")).withZoneSameInstant(zoneId);
+		        ZonedDateTime nowIst = Instant.now().atZone(ZoneId.of("UTC")).withZoneSameInstant(zoneId);
+
+		        if (availableAtZdt.isAfter(nowIst)) {
+		            LocalDate bookingDate = availableAtZdt.toLocalDate();
+		            String timePart = availableAtZdt.format(formatter);
+
+		            slot.setBookingMessage("Booking starts at " + bookingDate.format(formatterdisp) + " Time " + timePart);
+		            slot.setSlotStarted("N"); // Block from booking
+		        }
+		    }
+			
+			
 			if (slot.getSlotStartTimeStamp().after(futureTimeStamp)) { //Success only 04-07-2023 18:30:30 UTC
 		
 			long diffdays =findDiffDays(futureTimeStamp,slot.getSlotStartTimeStamp()); //Future Always depends on config
@@ -833,8 +870,15 @@ public class SlotServiceImpl implements SlotService {
                           }
 			 }
 			if(slotDetails.getSlotStatus()!=null && slotDetails.getSlotStatus().equals("Created")) {
-			        outputMap.put("Status", "Success");
-			        outputMap.put("Message", "Please proceed to slot book.");
+				       if(holdRequest.getUserId() !=null) {
+				    	   String token=emailService.generateOtp(6);
+				           userDao.updateOTP(holdRequest.getUserId(),token);
+				           sendEmailSmtpService.sendBookingOTPEmail(holdRequest.getUserEmail(), token, holdRequest.getUserName());
+				           logger.info("OTP email sent successfully to {}",holdRequest.getUserEmail());
+				           outputMap.put("Status", "Success");				           
+					       outputMap.put("Message", "Please proceed to slot book.");
+				       }
+			           
 		     }
 			  else {
 				    outputMap.put("Status", "Failure");

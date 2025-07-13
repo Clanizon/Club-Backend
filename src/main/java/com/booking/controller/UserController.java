@@ -31,7 +31,7 @@ import com.booking.service.UserService;
 import com.booking.uimodel.OTPModel;
 import com.booking.uimodel.UIResponse;
 
-@CrossOrigin(origins = "https://teetimebgc.com", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -71,7 +71,7 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(authentication);
         ClubUser user= userService.findOne( loginUser.getUserMobile());
-       // user.setUserPassword(token);
+        user.setUserPassword(token);
         return user;
         //return ResponseEntity.ok(new AuthToken(token));
     }

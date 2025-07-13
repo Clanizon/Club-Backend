@@ -1,17 +1,23 @@
 package com.booking.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.booking.model.user.ClubUser;
 import com.booking.model.user.UserDto;
+import com.booking.service.impl.UserServiceImpl;
+
+
 
 @Service
 public class SendEmailSmtp {
 	@Autowired
 	EmailService emailService;
-	
+    private static final Logger logger = LoggerFactory.getLogger(SendEmailSmtp.class);
+
 
 	@Value( "${spring.env.name}" )
 	private String env;
@@ -27,6 +33,27 @@ public class SendEmailSmtp {
 		{
 			
 			emailService.sendEmail(to,"Forgot Password",bodyMessage,"");	
+		}
+		else {
+			emailService.sendTestEmail(to,"Forgot Password",bodyMessage,"");
+		}
+		
+		System.out.println("Email sent successfully.");
+		}catch (Exception e) {
+			System.out.println("Email sent Exception :"+ e.getMessage());
+		}	
+	}
+    public  void sendBookingOTPEmail(String to,String otp,String userName) {
+	
+		
+		String bodyMessage=createBodyMessageForgotBookingOTP(userName,otp);
+		
+		try {
+		
+		if(env.equals("prod"))
+		{
+			
+			emailService.sendEmail(to,"BGC Golf: One-Time Password",bodyMessage,"");	
 		}
 		else {
 			emailService.sendTestEmail(to,"Forgot Password",bodyMessage,"");
@@ -67,6 +94,21 @@ public class SendEmailSmtp {
 			emailMessage.append(newline);
 			emailMessage.append(newline);
 			emailMessage.append("Token : "+otp);
+			return emailMessage.toString();
+			
+		}
+		
+		
+		public String createBodyMessageForgotBookingOTP(String userName,String otp) {
+			String newline ="<br>"; 
+			String bodyMessage="Hello ";
+			StringBuffer emailMessage = new StringBuffer(bodyMessage);
+			emailMessage.append(userName);
+			emailMessage.append(newline);
+			emailMessage.append("Here is your OTP for securing a slot in the BGC Golf Application:");
+			emailMessage.append(newline);
+			emailMessage.append(newline);
+			emailMessage.append("OTP : "+otp);
 			return emailMessage.toString();
 			
 		}

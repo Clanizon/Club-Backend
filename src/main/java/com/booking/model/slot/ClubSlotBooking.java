@@ -27,6 +27,22 @@ import com.booking.model.user.ClubUser;
 public class ClubSlotBooking implements Serializable {
 
 
+	public String getAdminBooking() {
+		return adminBooking;
+	}
+
+	public void setAdminBooking(String adminBooking) {
+		this.adminBooking = adminBooking;
+	}
+
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -121,6 +137,15 @@ public class ClubSlotBooking implements Serializable {
 	
 	@Transient
 	private Timestamp slotStartTimeStamp;
+	
+	
+	@Transient
+	private String otp;
+	
+	@Transient
+	private String adminBooking;
+	
+	
 	
 
 
